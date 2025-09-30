@@ -1,0 +1,12 @@
+# Esta pasta deve conter as imagens do site
+# Substitua os placeholders pelas imagens reais
+
+# Imagens necessárias:
+# - placeholder-1.jpg até placeholder-27.jpg
+# - Ou use data: URIs no HTML para imagens pequenas
+# - Ou substitua por URLs externas
+
+# Para gerar placeholders rapidamente, você pode usar:
+# - https://picsum.photos/400/300 (imagens aleatórias)
+# - https://via.placeholder.com/400x300 (placeholders simples)
+# - Ou criar SVGs inline no HTML

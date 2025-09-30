@@ -1,0 +1,553 @@
+[
+  {
+    "model": "equipe.cargo",
+    "pk": 1,
+    "fields": {
+      "nome": "Prefeito de Nova Friburgo",
+      "descricao": "Chefe do Executivo Municipal, responsável pela administração geral da cidade",
+      "nivel_hierarquico": 1,
+      "ativo": true,
+      "criado_em": "2025-09-29T10:00:00Z",
+      "atualizado_em": "2025-09-29T10:00:00Z"
+    }
+  },
+  {
+    "model": "equipe.cargo",
+    "pk": 2,
+    "fields": {
+      "nome": "Secretário de Ciência, Tecnologia, Inovação e Desenvolvimento Econômico",
+      "descricao": "Responsável pela pasta de ciência, tecnologia e inovação do município",
+      "nivel_hierarquico": 2,
+      "ativo": true,
+      "criado_em": "2025-09-29T10:00:00Z",
+      "atualizado_em": "2025-09-29T10:00:00Z"
+    }
+  },
+  {
+    "model": "equipe.cargo",
+    "pk": 3,
+    "fields": {
+      "nome": "Especialista em Gestão Estratégica",
+      "descricao": "Profissional responsável por projetos estratégicos e gestão de iniciativas",
+      "nivel_hierarquico": 3,
+      "ativo": true,
+      "criado_em": "2025-09-29T10:00:00Z",
+      "atualizado_em": "2025-09-29T10:00:00Z"
+    }
+  },
+  {
+    "model": "equipe.cargo",
+    "pk": 4,
+    "fields": {
+      "nome": "Especialista em Inovação e Tecnologia",
+      "descricao": "Profissional focado em desenvolvimento tecnológico e inovação",
+      "nivel_hierarquico": 3,
+      "ativo": true,
+      "criado_em": "2025-09-29T10:00:00Z",
+      "atualizado_em": "2025-09-29T10:00:00Z"
+    }
+  },
+  {
+    "model": "equipe.cargo",
+    "pk": 5,
+    "fields": {
+      "nome": "Especialista em Desenvolvimento Tecnológico",
+      "descricao": "Profissional especializado em implementação de soluções tecnológicas",
+      "nivel_hierarquico": 3,
+      "ativo": true,
+      "criado_em": "2025-09-29T10:00:00Z",
+      "atualizado_em": "2025-09-29T10:00:00Z"
+    }
+  },
+  {
+    "model": "equipe.cargo",
+    "pk": 6,
+    "fields": {
+      "nome": "Especialista em Transformação Digital",
+      "descricao": "Profissional focado em digitalização e modernização de processos",
+      "nivel_hierarquico": 3,
+      "ativo": true,
+      "criado_em": "2025-09-29T10:00:00Z",
+      "atualizado_em": "2025-09-29T10:00:00Z"
+    }
+  },
+  {
+    "model": "equipe.cargo",
+    "pk": 7,
+    "fields": {
+      "nome": "Especialista em Gestão de Projetos",
+      "descricao": "Profissional responsável pelo planejamento e execução de projetos",
+      "nivel_hierarquico": 3,
+      "ativo": true,
+      "criado_em": "2025-09-29T10:00:00Z",
+      "atualizado_em": "2025-09-29T10:00:00Z"
+    }
+  },
+  {
+    "model": "equipe.cargo",
+    "pk": 8,
+    "fields": {
+      "nome": "Especialista em Incubação de Empresas",
+      "descricao": "Profissional focado em mentoria e desenvolvimento de startups",
+      "nivel_hierarquico": 3,
+      "ativo": true,
+      "criado_em": "2025-09-29T10:00:00Z",
+      "atualizado_em": "2025-09-29T10:00:00Z"
+    }
+  },
+  {
+    "model": "equipe.cargo",
+    "pk": 9,
+    "fields": {
+      "nome": "Especialista em Soluções Digitais",
+      "descricao": "Profissional especializado em desenvolvimento de sistemas digitais",
+      "nivel_hierarquico": 3,
+      "ativo": true,
+      "criado_em": "2025-09-29T10:00:00Z",
+      "atualizado_em": "2025-09-29T10:00:00Z"
+    }
+  },
+  {
+    "model": "equipe.cargo",
+    "pk": 10,
+    "fields": {
+      "nome": "Especialista em Empreendedorismo",
+      "descricao": "Profissional focado em fomento ao empreendedorismo local",
+      "nivel_hierarquico": 3,
+      "ativo": true,
+      "criado_em": "2025-09-29T10:00:00Z",
+      "atualizado_em": "2025-09-29T10:00:00Z"
+    }
+  },
+  {
+    "model": "equipe.cargo",
+    "pk": 11,
+    "fields": {
+      "nome": "Especialista em Projetos Inovadores",
+      "descricao": "Profissional responsável por desenvolvimento de projetos inovadores",
+      "nivel_hierarquico": 3,
+      "ativo": true,
+      "criado_em": "2025-09-29T10:00:00Z",
+      "atualizado_em": "2025-09-29T10:00:00Z"
+    }
+  },
+  {
+    "model": "equipe.areaespecialidade",
+    "pk": 1,
+    "fields": {
+      "nome": "Gestão Estratégica",
+      "icone": "fas fa-chess-king",
+      "cor": "#fbbf24",
+      "ativo": true
+    }
+  },
+  {
+    "model": "equipe.areaespecialidade",
+    "pk": 2,
+    "fields": {
+      "nome": "Liderança",
+      "icone": "fas fa-users-cog",
+      "cor": "#60a5fa",
+      "ativo": true
+    }
+  },
+  {
+    "model": "equipe.areaespecialidade",
+    "pk": 3,
+    "fields": {
+      "nome": "Desenvolvimento",
+      "icone": "fas fa-chart-line",
+      "cor": "#34d399",
+      "ativo": true
+    }
+  },
+  {
+    "model": "equipe.areaespecialidade",
+    "pk": 4,
+    "fields": {
+      "nome": "Inovação",
+      "icone": "fas fa-lightbulb",
+      "cor": "#fbbf24",
+      "ativo": true
+    }
+  },
+  {
+    "model": "equipe.areaespecialidade",
+    "pk": 5,
+    "fields": {
+      "nome": "Tecnologia",
+      "icone": "fas fa-microchip",
+      "cor": "#60a5fa",
+      "ativo": true
+    }
+  },
+  {
+    "model": "equipe.areaespecialidade",
+    "pk": 6,
+    "fields": {
+      "nome": "Startups",
+      "icone": "fas fa-rocket",
+      "cor": "#34d399",
+      "ativo": true
+    }
+  },
+  {
+    "model": "equipe.areaespecialidade",
+    "pk": 7,
+    "fields": {
+      "nome": "Gestão de Projetos",
+      "icone": "fas fa-cogs",
+      "cor": "#34d399",
+      "ativo": true
+    }
+  },
+  {
+    "model": "equipe.areaespecialidade",
+    "pk": 8,
+    "fields": {
+      "nome": "Transformação Digital",
+      "icone": "fas fa-digital-tachograph",
+      "cor": "#fbbf24",
+      "ativo": true
+    }
+  },
+  {
+    "model": "equipe.areaespecialidade",
+    "pk": 9,
+    "fields": {
+      "nome": "Mentoria",
+      "icone": "fas fa-users",
+      "cor": "#34d399",
+      "ativo": true
+    }
+  },
+  {
+    "model": "equipe.areaespecialidade",
+    "pk": 10,
+    "fields": {
+      "nome": "Incubação",
+      "icone": "fas fa-seedling",
+      "cor": "#fbbf24",
+      "ativo": true
+    }
+  },
+  {
+    "model": "equipe.areaespecialidade",
+    "pk": 11,
+    "fields": {
+      "nome": "Soluções Digitais",
+      "icone": "fas fa-code",
+      "cor": "#fbbf24",
+      "ativo": true
+    }
+  },
+  {
+    "model": "equipe.areaespecialidade",
+    "pk": 12,
+    "fields": {
+      "nome": "Gestão Pública",
+      "icone": "fas fa-city",
+      "cor": "#60a5fa",
+      "ativo": true
+    }
+  },
+  {
+    "model": "equipe.areaespecialidade",
+    "pk": 13,
+    "fields": {
+      "nome": "Sistemas Inteligentes",
+      "icone": "fas fa-brain",
+      "cor": "#34d399",
+      "ativo": true
+    }
+  },
+  {
+    "model": "equipe.areaespecialidade",
+    "pk": 14,
+    "fields": {
+      "nome": "Empreendedorismo",
+      "icone": "fas fa-lightbulb",
+      "cor": "#fbbf24",
+      "ativo": true
+    }
+  },
+  {
+    "model": "equipe.areaespecialidade",
+    "pk": 15,
+    "fields": {
+      "nome": "Aceleração",
+      "icone": "fas fa-tachometer-alt",
+      "cor": "#60a5fa",
+      "ativo": true
+    }
+  },
+  {
+    "model": "equipe.areaespecialidade",
+    "pk": 16,
+    "fields": {
+      "nome": "Ecossistema",
+      "icone": "fas fa-network-wired",
+      "cor": "#34d399",
+      "ativo": true
+    }
+  },
+  {
+    "model": "equipe.areaespecialidade",
+    "pk": 17,
+    "fields": {
+      "nome": "Projetos Inovadores",
+      "icone": "fas fa-project-diagram",
+      "cor": "#fbbf24",
+      "ativo": true
+    }
+  },
+  {
+    "model": "equipe.areaespecialidade",
+    "pk": 18,
+    "fields": {
+      "nome": "Desenvolvimento Sustentável",
+      "icone": "fas fa-leaf",
+      "cor": "#60a5fa",
+      "ativo": true
+    }
+  },
+  {
+    "model": "equipe.areaespecialidade",
+    "pk": 19,
+    "fields": {
+      "nome": "Impacto Social",
+      "icone": "fas fa-globe",
+      "cor": "#34d399",
+      "ativo": true
+    }
+  },
+  {
+    "model": "equipe.membroequipe",
+    "pk": 1,
+    "fields": {
+      "nome_completo": "Johnny Maycon Silva Santos",
+      "nome_exibicao": "Johnny Maycon",
+      "cargo": 1,
+      "tipo": "lideranca",
+      "biografia": "Prefeito de Nova Friburgo em seu segundo mandato. Apaixonado por Nova Friburgo. Engenheiro Mecânico formado pela UERJ / IPRJ em 2014. Características pessoais: atuação \"mão na massa\", audacioso e de ação, participativo, contato corpo a corpo com o povo e muita energia no trabalho de governar um município com aproximadamente 200.000 habitantes.",
+      "foto_url": "https://pontistartups.tec.br/wp-content/uploads/sites/1578/2021/08/Sem-Titulo-1-3.png",
+      "anos_experiencia": 12,
+      "projetos_concluidos": 40,
+      "taxa_sucesso": 95,
+      "ordem_exibicao": 1,
+      "ativo": true,
+      "destaque": true,
+      "slug": "johnny-maycon",
+      "criado_em": "2025-09-29T10:00:00Z",
+      "atualizado_em": "2025-09-29T10:00:00Z"
+    }
+  },
+  {
+    "model": "equipe.membroequipe",
+    "pk": 2,
+    "fields": {
+      "nome_completo": "Walter José Ferreira de Oliveira",
+      "nome_exibicao": "Walter Oliveira",
+      "cargo": 2,
+      "tipo": "lideranca",
+      "biografia": "Secretário Municipal de Ciência, Tecnologia, Inovação e Desenvolvimento Econômico, liderando projetos de transformação digital e desenvolvimento tecnológico em Nova Friburgo. Focado na integração digital da estrutura organizacional da Prefeitura Municipal e no fomento ao empreendedorismo tecnológico.",
+      "foto_url": "https://pontistartups.tec.br/wp-content/uploads/sites/1578/2021/08/22-foto-WJFO.png",
+      "anos_experiencia": 18,
+      "projetos_concluidos": 60,
+      "metrica_personalizada_nome": "Tecnologias",
+      "metrica_personalizada_valor": "15+",
+      "ordem_exibicao": 2,
+      "ativo": true,
+      "destaque": true,
+      "slug": "walter-oliveira",
+      "criado_em": "2025-09-29T10:00:00Z",
+      "atualizado_em": "2025-09-29T10:00:00Z"
+    }
+  },
+  {
+    "model": "equipe.membroequipe",
+    "pk": 3,
+    "fields": {
+      "nome_completo": "Sérgio Tadeu Miranda",
+      "nome_exibicao": "Sérgio Tadeu Miranda",
+      "cargo": 5,
+      "tipo": "equipe",
+      "biografia": "Especialista em desenvolvimento tecnológico e inovação, com vasta experiência em projetos estratégicos da SECTIDE. Atua diretamente na implementação de soluções tecnológicas que transformam processos analógicos em digitais, contribuindo significativamente para a modernização da gestão pública de Nova Friburgo e desenvolvimento do ecossistema de inovação local.",
+      "foto_url": "",
+      "anos_experiencia": 15,
+      "projetos_concluidos": 50,
+      "metrica_personalizada_nome": "Tecnologias",
+      "metrica_personalizada_valor": "10+",
+      "ordem_exibicao": 3,
+      "ativo": true,
+      "destaque": false,
+      "slug": "sergio-tadeu-miranda",
+      "criado_em": "2025-09-29T10:00:00Z",
+      "atualizado_em": "2025-09-29T10:00:00Z"
+    }
+  },
+  {
+    "model": "equipe.membroequipe",
+    "pk": 4,
+    "fields": {
+      "nome_completo": "Thayan Hebert Carestiato",
+      "nome_exibicao": "Thayan Hebert Carestiato",
+      "cargo": 6,
+      "tipo": "equipe",
+      "biografia": "Profissional focado em transformação digital e desenvolvimento de startups no ecossistema de inovação de Nova Friburgo. Especialista em implementação de soluções digitais inovadoras, mentoria de empresas tecnológicas e desenvolvimento de estratégias para modernização de processos. Contribui ativamente para o crescimento do hub de inovação PONTI.",
+      "foto_url": "",
+      "metrica_personalizada_nome": "Startups Mentoradas",
+      "metrica_personalizada_valor": "25+",
+      "taxa_sucesso": 80,
+      "anos_experiencia": 12,
+      "ordem_exibicao": 4,
+      "ativo": true,
+      "destaque": false,
+      "slug": "thayan-hebert-carestiato",
+      "criado_em": "2025-09-29T10:00:00Z",
+      "atualizado_em": "2025-09-29T10:00:00Z"
+    }
+  },
+  {
+    "model": "equipe.membroequipe",
+    "pk": 5,
+    "fields": {
+      "nome_completo": "João Toledo",
+      "nome_exibicao": "João Toledo",
+      "cargo": 7,
+      "tipo": "equipe",
+      "biografia": "Especialista em gestão de projetos e desenvolvimento econômico, atuando na estruturação do hub de inovação PONTI. Responsável pelo planejamento estratégico e execução de iniciativas que promovem o crescimento econômico sustentável.",
+      "foto_url": "",
+      "projetos_concluidos": 40,
+      "taxa_sucesso": 95,
+      "metrica_personalizada_nome": "Anos PONTI",
+      "metrica_personalizada_valor": "8+",
+      "ordem_exibicao": 5,
+      "ativo": true,
+      "destaque": false,
+      "slug": "joao-toledo",
+      "criado_em": "2025-09-29T10:00:00Z",
+      "atualizado_em": "2025-09-29T10:00:00Z"
+    }
+  },
+  {
+    "model": "equipe.membroequipe",
+    "pk": 6,
+    "fields": {
+      "nome_completo": "Roberto Calvano",
+      "nome_exibicao": "Roberto Calvano",
+      "cargo": 8,
+      "tipo": "equipe",
+      "biografia": "Profissional experiente em incubação de empresas e mentoria empresarial no setor tecnológico. Especialista em desenvolvimento de negócios inovadores, com foco na criação e aceleração de startups de base tecnológica.",
+      "foto_url": "",
+      "metrica_personalizada_nome": "Empresas Incubadas",
+      "metrica_personalizada_valor": "60+",
+      "taxa_sucesso": 85,
+      "anos_experiencia": 20,
+      "ordem_exibicao": 6,
+      "ativo": true,
+      "destaque": false,
+      "slug": "roberto-calvano",
+      "criado_em": "2025-09-29T10:00:00Z",
+      "atualizado_em": "2025-09-29T10:00:00Z"
+    }
+  },
+  {
+    "model": "equipe.membroequipe",
+    "pk": 7,
+    "fields": {
+      "nome_completo": "Felippe Schenquel",
+      "nome_exibicao": "Felippe Schenquel",
+      "cargo": 9,
+      "tipo": "equipe",
+      "biografia": "Especialista em inovação tecnológica e desenvolvimento de soluções digitais para a administração pública. Atua na criação e implementação de sistemas inteligentes que otimizam processos governamentais.",
+      "foto_url": "",
+      "metrica_personalizada_nome": "Sistemas Criados",
+      "metrica_personalizada_valor": "30+",
+      "anos_experiencia": 15,
+      "ordem_exibicao": 7,
+      "ativo": true,
+      "destaque": false,
+      "slug": "felippe-schenquel",
+      "criado_em": "2025-09-29T10:00:00Z",
+      "atualizado_em": "2025-09-29T10:00:00Z"
+    }
+  },
+  {
+    "model": "equipe.membroequipe",
+    "pk": 8,
+    "fields": {
+      "nome_completo": "Yago Medeiros",
+      "nome_exibicao": "Yago Medeiros",
+      "cargo": 10,
+      "tipo": "equipe",
+      "biografia": "Profissional focado em empreendedorismo e aceleração de startups no ecossistema de inovação local. Especialista em identificação de oportunidades de negócios e conexão entre empreendedores e investidores.",
+      "foto_url": "",
+      "metrica_personalizada_nome": "Empreendedores",
+      "metrica_personalizada_valor": "100+",
+      "taxa_sucesso": 70,
+      "ordem_exibicao": 8,
+      "ativo": true,
+      "destaque": false,
+      "slug": "yago-medeiros",
+      "criado_em": "2025-09-29T10:00:00Z",
+      "atualizado_em": "2025-09-29T10:00:00Z"
+    }
+  },
+  {
+    "model": "equipe.membroequipe",
+    "pk": 9,
+    "fields": {
+      "nome_completo": "Eduardo Salarini",
+      "nome_exibicao": "Eduardo Salarini",
+      "cargo": 11,
+      "tipo": "equipe",
+      "biografia": "Especialista em tecnologia e desenvolvimento de projetos inovadores para o crescimento econômico da região. Atua na concepção e implementação de iniciativas tecnológicas que geram impacto social e econômico positivo.",
+      "foto_url": "",
+      "projetos_concluidos": 35,
+      "taxa_sucesso": 90,
+      "metrica_personalizada_nome": "Anos PONTI",
+      "metrica_personalizada_valor": "10+",
+      "ordem_exibicao": 9,
+      "ativo": true,
+      "destaque": false,
+      "slug": "eduardo-salarini",
+      "criado_em": "2025-09-29T10:00:00Z",
+      "atualizado_em": "2025-09-29T10:00:00Z"
+    }
+  },
+  {
+    "model": "equipe.liderancadestaque",
+    "pk": 1,
+    "fields": {
+      "membro": 1,
+      "titulo_especial": "Prefeito de Nova Friburgo",
+      "descricao_lideranca": "Prefeito de Nova Friburgo em seu segundo mandato. Apaixonado por Nova Friburgo. Engenheiro Mecânico formado pela UERJ / IPRJ em 2014. Características pessoais: atuação \"mão na massa\", audacioso e de ação, participativo, contato corpo a corpo com o povo e muita energia no trabalho de governar um município com aproximadamente 200.000 habitantes.",
+      "ordem_lideranca": 1,
+      "exibir_na_lideranca": true,
+      "estatistica_1_nome": "2º Mandato",
+      "estatistica_1_valor": "2025",
+      "estatistica_2_nome": "Habitantes",
+      "estatistica_2_valor": "200K+",
+      "criado_em": "2025-09-29T10:00:00Z",
+      "atualizado_em": "2025-09-29T10:00:00Z"
+    }
+  },
+  {
+    "model": "equipe.liderancadestaque",
+    "pk": 2,
+    "fields": {
+      "membro": 2,
+      "titulo_especial": "Secretário de Ciência e Tecnologia",
+      "descricao_lideranca": "Secretário Municipal de Ciência, Tecnologia, Inovação e Desenvolvimento Econômico, liderando projetos de transformação digital e desenvolvimento tecnológico em Nova Friburgo. Focado na integração digital da estrutura organizacional da Prefeitura Municipal e no fomento ao empreendedorismo tecnológico.",
+      "ordem_lideranca": 2,
+      "exibir_na_lideranca": true,
+      "estatistica_1_nome": "Projetos",
+      "estatistica_1_valor": "60+",
+      "estatistica_2_nome": "Tecnologias",
+      "estatistica_2_valor": "15+",
+      "criado_em": "2025-09-29T10:00:00Z",
+      "atualizado_em": "2025-09-29T10:00:00Z"
+    }
+  }
+]
