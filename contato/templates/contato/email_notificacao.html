@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Novo Contato - PONTI</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8fafc;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            background: linear-gradient(135deg, #1e40af, #3b82f6);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 700;
+        }
+        .content {
+            padding: 30px;
+        }
+        .info-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f8fafc;
+            border-radius: 8px;
+            border-left: 4px solid #3b82f6;
+        }
+        .info-item strong {
+            color: #1e40af;
+            display: block;
+            margin-bottom: 5px;
+        }
+        .message-box {
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .footer {
+            background: #f1f5f9;
+            padding: 20px;
+            text-align: center;
+            color: #64748b;
+            font-size: 14px;
+        }
+        .status-badge {
+            display: inline-block;
+            background: #ef4444;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 Novo Contato Recebido</h1>
+            <p style="margin: 10px 0 0 0; opacity: 0.9;">PONTI Hub de Inovação</p>
+        </div>
+        
+        <div class="content">
+            <p>Um novo contato foi recebido através do site. Veja os detalhes abaixo:</p>
+            
+            <div class="info-item">
+                <strong>Nome:</strong>
+                {{ contato.nome }}
+            </div>
+            
+            <div class="info-item">
+                <strong>E-mail:</strong>
+                <a href="mailto:{{ contato.email }}" style="color: #1e40af; text-decoration: none;">{{ contato.email }}</a>
+            </div>
+            
+            {% if contato.telefone %}
+            <div class="info-item">
+                <strong>Telefone:</strong>
+                <a href="tel:{{ contato.telefone }}" style="color: #1e40af; text-decoration: none;">{{ contato.telefone }}</a>
+            </div>
+            {% endif %}
+            
+            <div class="info-item">
+                <strong>Assunto:</strong>
+                {{ contato.get_assunto_display }}
+            </div>
+            
+            <div class="info-item">
+                <strong>Data/Hora:</strong>
+                {{ data_formatada }}
+            </div>
+            
+            <div class="info-item">
+                <strong>Status:</strong>
+                <span class="status-badge">{{ contato.get_status_display }}</span>
+            </div>
+            
+            <div class="message-box">
+                <strong style="color: #1e40af; margin-bottom: 10px; display: block;">Mensagem:</strong>
+                <p style="margin: 0; white-space: pre-line;">{{ contato.mensagem }}</p>
+            </div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <a href="mailto:{{ contato.email }}?subject=Re: {{ contato.get_assunto_display }}" 
+                   style="background: linear-gradient(135deg, #1e40af, #3b82f6); color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; display: inline-block; font-weight: 600;">
+                    📧 Responder por E-mail
+                </a>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p style="margin: 0;">
+                <strong>PONTI Hub de Inovação</strong><br>
+                Este e-mail foi gerado automaticamente pelo sistema de contatos.
+            </p>
+            {% if contato.ip_origem %}
+            <p style="margin: 10px 0 0 0; font-size: 12px; color: #94a3b8;">
+                IP de origem: {{ contato.ip_origem }}
+            </p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
