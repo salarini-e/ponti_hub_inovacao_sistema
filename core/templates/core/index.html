@@ -10,6 +10,152 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
 </head>
 <body>
+    <!-- Notificações Django Messages -->
+    {% if messages %}
+        <div class="django-notifications-container">
+            {% for message in messages %}
+                <div class="django-notification django-notification-{{ message.tags }}" id="notification-{{ forloop.counter }}">
+                    <div class="notification-content">
+                        <i class="fas fa-{% if message.tags == 'success' %}check-circle{% elif message.tags == 'warning' %}exclamation-triangle{% elif message.tags == 'error' or message.tags == 'danger' %}exclamation-circle{% else %}info-circle{% endif %}"></i>
+                        <span class="notification-message">{{ message }}</span>
+                        <button type="button" class="notification-close" onclick="this.parentElement.parentElement.remove()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        
+        <style>
+            .django-notifications-container {
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                z-index: 10000;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                max-width: 400px;
+            }
+            
+            .django-notification {
+                padding: 16px 24px;
+                border-radius: 12px;
+                color: white;
+                font-weight: 600;
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+                backdrop-filter: blur(10px);
+                animation: slideInRight 0.3s ease-out, fadeOut 0.3s ease-in 4.7s forwards;
+                position: relative;
+                overflow: hidden;
+            }
+            
+            .django-notification-success {
+                background: linear-gradient(135deg, #10b981, #059669);
+            }
+            
+            .django-notification-warning {
+                background: linear-gradient(135deg, #f59e0b, #d97706);
+            }
+            
+            .django-notification-error,
+            .django-notification-danger {
+                background: linear-gradient(135deg, #ef4444, #dc2626);
+            }
+            
+            .django-notification-info {
+                background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            }
+            
+            .notification-content {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+            }
+            
+            .notification-content i:first-child {
+                font-size: 1.2rem;
+                flex-shrink: 0;
+            }
+            
+            .notification-message {
+                flex: 1;
+                line-height: 1.4;
+            }
+            
+            .notification-close {
+                background: none;
+                border: none;
+                color: white;
+                font-size: 1.2rem;
+                cursor: pointer;
+                padding: 0;
+                margin-left: auto;
+                flex-shrink: 0;
+                opacity: 0.8;
+                transition: opacity 0.2s ease;
+            }
+            
+            .notification-close:hover {
+                opacity: 1;
+            }
+            
+            @keyframes slideInRight {
+                from {
+                    transform: translateX(400px);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+            
+            @keyframes fadeOut {
+                from {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+                to {
+                    opacity: 0;
+                    transform: translateX(400px);
+                }
+            }
+            
+            /* Responsividade */
+            @media (max-width: 768px) {
+                .django-notifications-container {
+                    top: 10px;
+                    right: 10px;
+                    left: 10px;
+                    max-width: none;
+                }
+                
+                .django-notification {
+                    padding: 12px 16px;
+                }
+                
+                .notification-message {
+                    font-size: 14px;
+                }
+            }
+        </style>
+        
+        <script>
+            // Auto-remover notificações Django após 5 segundos
+            document.addEventListener('DOMContentLoaded', function() {
+                const notifications = document.querySelectorAll('.django-notification');
+                notifications.forEach(function(notification, index) {
+                    setTimeout(function() {
+                        if (notification.parentElement) {
+                            notification.remove();
+                        }
+                    }, 5000 + (index * 100)); // Escalonar a remoção se houver múltiplas notificações
+                });
+            });
+        </script>
+    {% endif %}
+    
     <!-- Header baseado na referência navbar.png -->
     <header class="header-ponti">
         <div class="header-top">
@@ -2072,7 +2218,7 @@
                                     {% elif edital.status == 'aberto' %}0 4px 12px rgba(16, 185, 129, 0.6)
                                     {% elif edital.status == 'encerrado' %}0 4px 12px rgba(107, 114, 128, 0.6)
                                     {% else %}0 3px 10px rgba(139, 92, 246, 0.5)
-                                    {% endif %}; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);{% if edital.status == 'aberto' %} animation: pulse 2s infinite;{% endif %}">{{ edital.get_status_display|upper }}</span>
+                                    {% endif %}; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);">{{ edital.get_status_display|upper }}</span>
                             </div>
                             <div style="text-align: center; font-size: 14px; color: {% if edital.status == 'aberto' and edital.data_encerramento|timeuntil %}#ef4444{% elif edital.status == 'encerrado' %}rgba(255, 255, 255, 0.7){% else %}#ffffff{% endif %}; font-weight: {% if edital.status == 'aberto' %}800{% else %}700{% endif %}; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);">
                                 {% if edital.status == 'encerrado' %}
@@ -2171,10 +2317,10 @@
                                         DOWNLOAD DO EDITAL
                                     </button>
                                     
-                                    <button style="width: 100%; background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(15px); color: white; padding: 12px; border: none; border-radius: 20px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.3s ease;">
+                                    <a href="/editais/notificar/{{ edital.slug }}/" style="display: block; width: 100%; background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(15px); color: white; padding: 12px; border: none; border-radius: 20px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; text-decoration: none; text-align: center;">
                                         <i class="fas fa-bell" style="margin-right: 8px;"></i>
                                         NOTIFICAR QUANDO LANÇAR
-                                    </button>
+                                    </a>
                                     {% elif edital.status == 'encerrado' %}
                                     <button style="width: 100%; background: linear-gradient(135deg, #6b7280, #4b5563); color: white; padding: 15px; border: none; border-radius: 20px; font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 10px 25px rgba(107, 114, 128, 0.2); margin-bottom: 10px;">
                                         <i class="fas fa-download" style="margin-right: 10px;"></i>
@@ -2191,10 +2337,10 @@
                                         EM ELABORAÇÃO
                                     </button>
                                     
-                                    <button style="width: 100%; background: linear-gradient(135deg, #8b5cf6, #7c3aed); color: white; padding: 12px; border: none; border-radius: 20px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.3s ease;">
+                                    <a href="/editais/notificar/{{ edital.slug }}/" style="display: block; width: 100%; background: linear-gradient(135deg, #8b5cf6, #7c3aed); color: white; padding: 12px; border: none; border-radius: 20px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.3s ease; text-decoration: none; text-align: center;">
                                         <i class="fas fa-bell" style="margin-right: 8px;"></i>
                                         MANIFESTAR INTERESSE
-                                    </button>
+                                    </a>
                                     {% endif %}
                                 </div>
                             </div>
@@ -2935,13 +3081,15 @@
                     notification.style.background = 'linear-gradient(135deg, #10b981, #059669)';
                 } else if (type === 'error') {
                     notification.style.background = 'linear-gradient(135deg, #ef4444, #dc2626)';
+                } else if (type === 'warning') {
+                    notification.style.background = 'linear-gradient(135deg, #f59e0b, #d97706)';
                 } else {
                     notification.style.background = 'linear-gradient(135deg, #3b82f6, #1d4ed8)';
                 }
                 
                 notification.innerHTML = `
                     <div style="display: flex; align-items: center; gap: 12px;">
-                        <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}" style="font-size: 1.2rem;"></i>
+                        <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : type === 'warning' ? 'exclamation-triangle' : 'info-circle'}" style="font-size: 1.2rem;"></i>
                         <span>${message}</span>
                         <button onclick="this.parentElement.parentElement.remove()" style="background: none; border: none; color: white; font-size: 1.2rem; cursor: pointer; padding: 0; margin-left: auto;">
                             <i class="fas fa-times"></i>

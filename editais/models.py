@@ -378,16 +378,34 @@ class NotificacaoEdital(models.Model):
         verbose_name="Edital"
     )
     
+    # Dados pessoais
+    cpf = models.CharField(
+        max_length=14,
+        blank=False,
+        null=True,
+        verbose_name="CPF",
+        help_text="CPF do interessado (xxx.xxx.xxx-xx)"
+    )
+    
+    nome_completo = models.CharField(
+        max_length=150,
+        blank=True,
+        null=True,
+        verbose_name="Nome Completo"
+    )
+    
     email = models.EmailField(
         verbose_name="E-mail"
     )
     
-    nome = models.CharField(
-        max_length=100,
+    telefone_whatsapp = models.CharField(
+        max_length=20,
         blank=True,
-        verbose_name="Nome"
+        verbose_name="Telefone/WhatsApp",
+        help_text="Telefone ou WhatsApp (opcional)"
     )
     
+    # Metadados
     data_solicitacao = models.DateTimeField(
         default=timezone.now,
         verbose_name="Data da Solicitação"
@@ -404,10 +422,54 @@ class NotificacaoEdital(models.Model):
         verbose_name="Data da Notificação"
     )
     
+    # Dados adicionais
+    ip_endereco = models.GenericIPAddressField(
+        blank=True,
+        null=True,
+        verbose_name="Endereço IP",
+        help_text="IP do usuário que fez a solicitação"
+    )
+    
+    user_agent = models.TextField(
+        blank=True,
+        verbose_name="User Agent",
+        help_text="Informações do navegador"
+    )
+    
     class Meta:
         verbose_name = "Notificação de Edital"
         verbose_name_plural = "Notificações de Editais"
-        unique_together = ['edital', 'email']
+        unique_together = ['edital', 'cpf']
+        ordering = ['-data_solicitacao']
+    
+    def __str__(self):
+        return f"{self.nome_completo} - {self.edital.titulo}"
+    
+    def clean(self):
+        """Validação customizada"""
+        from django.core.exceptions import ValidationError
+        import re
+        
+        # Validar CPF (formato básico)
+        if self.cpf:
+            # Remove caracteres especiais
+            cpf_limpo = re.sub(r'[^0-9]', '', self.cpf)
+            if len(cpf_limpo) != 11:
+                raise ValidationError({'cpf': 'CPF deve ter 11 dígitos.'})
+            
+            # Formatar CPF
+            self.cpf = f"{cpf_limpo[:3]}.{cpf_limpo[3:6]}.{cpf_limpo[6:9]}-{cpf_limpo[9:]}"
+    
+    def save(self, *args, **kwargs):
+        self.clean()
+        super().save(*args, **kwargs)
+    
+    @property
+    def cpf_mascarado(self):
+        """Retorna CPF mascarado para exibição"""
+        if self.cpf:
+            return f"{self.cpf[:3]}.***.**{self.cpf[-2:]}"
+        return ""
     
     def __str__(self):
         return f"{self.email} - {self.edital.titulo}"

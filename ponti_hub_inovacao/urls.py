@@ -23,6 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('core.urls')),
     path('contato/', include('contato.urls')),
+    path('editais/', include('editais.urls')),
 ]
 
 # Servir arquivos de mídia durante o desenvolvimento

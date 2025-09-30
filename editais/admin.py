@@ -50,8 +50,8 @@ class AreaInteresseAdmin(admin.ModelAdmin):
 class NotificacaoEditalInline(admin.TabularInline):
     model = NotificacaoEdital
     extra = 0
-    readonly_fields = ['data_solicitacao', 'data_notificacao']
-    fields = ['email', 'nome', 'data_solicitacao', 'notificado', 'data_notificacao']
+    readonly_fields = ['data_solicitacao', 'data_notificacao', 'ip_endereco', 'user_agent']
+    fields = ['cpf', 'nome_completo', 'email', 'telefone_whatsapp', 'data_solicitacao', 'notificado', 'data_notificacao']
 
 
 @admin.register(Edital)
@@ -237,11 +237,11 @@ class EditalAdmin(admin.ModelAdmin):
 @admin.register(NotificacaoEdital)
 class NotificacaoEditalAdmin(admin.ModelAdmin):
     list_display = [
-        'email', 'nome', 'edital', 'data_solicitacao', 
+        'nome_completo', 'cpf_mascarado', 'email', 'edital', 'data_solicitacao', 
         'notificado_display', 'data_notificacao'
     ]
     list_filter = ['notificado', 'data_solicitacao', 'edital__categoria']
-    search_fields = ['email', 'nome', 'edital__titulo']
+    search_fields = ['nome_completo', 'email', 'cpf', 'edital__titulo']
     date_hierarchy = 'data_solicitacao'
     readonly_fields = ['data_solicitacao']
     
