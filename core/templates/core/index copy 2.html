@@ -532,7 +532,7 @@
             
             <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 2;">
                 <!-- Header da Seção -->
-                <div style="text-align: center; margin-bottom: 100px;">                        
+                <div style="text-align: center; margin-bottom: 100px;">
                         <div style="display: inline-block; background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(15px); color: white; padding: 14px 35px; border-radius: 50px; font-size: 14px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 30px; border: 1px solid rgba(255, 255, 255, 0.25); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);">
                             🏛️ Liderança
                         </div>
@@ -540,8 +540,8 @@
                         Conheça Nossa <br>
                         <span style="background: linear-gradient(135deg, #fbbf24, #f59e0b, #d97706); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-shadow: none;">Liderança Visionária</span>
                     </h2> -->
-                    <p style="font-size: 18px; line-height: 1.6; color: rgba(255, 255, 255, 0.9); max-width: 600px; margin: 0 auto; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);">
-                        Conheça nossa liderança visionária focada na transformação digital e desenvolvimento tecnológico
+                    <p style="font-size: 22px; line-height: 1.6; color: rgba(255, 255, 255, 0.9); max-width: 700px; margin: 0 auto; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);">
+                        Nosso foco é na transformação digital com desenvolvimento científico, tecnológico, inovador e econômico
                     </p>
                 </div>
                 
@@ -549,60 +549,29 @@
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 60px; margin-bottom: 60px;">
                     {% for lider in lideranca %}
                     <!-- Card {{ lider.membro.nome_exibicao }} -->
-                    <div style="background: linear-gradient(145deg, #ffffff, #f8fafc); border-radius: 30px; padding: 45px; border: 1px solid rgba(59, 130, 246, 0.2); position: relative; overflow: hidden; box-shadow: 0 20px 50px rgba(30, 64, 175, 0.15); transition: all 0.4s ease; text-align: center; transform: translateY(0);">
-                        <!-- Background pattern sutil -->
-                        <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: url('/static/assets/images/bg-valores.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; opacity: 0.05; z-index: 1; border-radius: 30px;"></div>
+                    <div style="background: linear-gradient(145deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.08)); backdrop-filter: blur(25px); border-radius: 30px; padding: 40px; border: 1px solid rgba(255, 255, 255, 0.25); position: relative; overflow: hidden; box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25); transition: all 0.4s ease; transform: translateY(0); text-align: center;">
+                        <!-- Efeito brilho animado -->
+                        <div style="position: absolute; top: -100%; left: -100%; width: 300%; height: 300%; background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.08), transparent); transform: rotate(-45deg); transition: all 0.8s ease; opacity: 0;"></div>
                         
-                        <!-- Badge premium no canto -->
-                        <div style="position: absolute; top: 25px; right: 25px; background: linear-gradient(135deg, #3b82f6, #2563eb); padding: 8px 16px; border-radius: 20px; font-size: 11px; font-weight: 700; color: white; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4); z-index: 3;">
-                            {{ lider.get_titulo|truncatechars:10 }}
-                        </div>
-                        
-                        <!-- Container da foto com moldura elegante -->
-                        <div style="position: relative; z-index: 2; margin-bottom: 35px;">
-                            <div style="width: 140px; height: 140px; margin: 0 auto; border-radius: 50%; padding: 6px; background: linear-gradient(135deg, #3b82f6, #2563eb, #1e40af); box-shadow: 0 20px 40px rgba(59, 130, 246, 0.3);">
-                                <div style="width: 100%; height: 100%; border-radius: 50%; overflow: hidden; border: 3px solid #ffffff; position: relative;">
-                                    <img src="{{ lider.membro.get_foto_url }}" alt="{{ lider.membro.nome_exibicao }}" style="width: 100%; height: 100%; object-fit: cover; transition: all 0.4s ease;">
-                                    <div style="position: absolute; inset: 0; background: linear-gradient(45deg, rgba(59, 130, 246, 0.1), transparent); opacity: 0; transition: all 0.4s ease;"></div>
-                                </div>
+                        <!-- Foto no topo -->
+                        <div style="margin-bottom: 30px; position: relative; display: inline-block;">
+                            <div style="width: 180px; height: 180px; border-radius: 30px; overflow: hidden; border: 4px solid rgba(255, 255, 255, 0.3); box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3); transition: all 0.4s ease; position: relative; margin: 0 auto;">
+                                <img src="{{ lider.membro.get_foto_url }}" alt="{{ lider.membro.nome_exibicao }} - {{ lider.get_titulo }}" style="width: 100%; height: 100%; object-fit: cover; transition: all 0.4s ease;">
                             </div>
                         </div>
                         
-                        <!-- Informações do líder -->
-                        <div style="position: relative; z-index: 2;">
-                            <h3 style="font-size: 28px; font-weight: 900; margin-bottom: 12px; background: linear-gradient(135deg, #1e40af, #2563eb); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+                        <!-- Informações -->
+                        <div style="position: relative;">
+                            <h3 style="font-size: 28px; font-weight: 800; margin-bottom: 12px; background: linear-gradient(135deg, #ffffff, #ffffff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);">
                                 {{ lider.membro.nome_exibicao }}
                             </h3>
-                            
-                            <div style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 25px; padding: 12px 24px; margin-bottom: 25px; display: inline-block;">
-                                <p style="font-size: 14px; font-weight: 700; color: #1e40af; margin: 0; text-transform: uppercase; letter-spacing: 1.5px;">
-                                    {{ lider.get_titulo }}
-                                </p>
-                            </div>
-                            
-                            <p style="font-size: 16px; line-height: 1.8; color: #4b5563; margin: 0; text-align: justify; font-weight: 400;">
+                            <p style="font-size: 16px; font-weight: 600; color: {% if forloop.first %}#fbbf24{% else %}#60a5fa{% endif %}; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 1px; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);">
+                                {{ lider.get_titulo }}
+                            </p>
+                            <p style="font-size: 15px; line-height: 1.7; color: rgba(255, 255, 255, 0.9); margin: 0; text-align: justify; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);">
                                 {{ lider.descricao_lideranca }}
                             </p>
                         </div>
-                        
-                        <!-- Estatísticas ou badges de especialidade -->
-                        <!-- <div style="margin-top: 30px; display: flex; gap: 15px; justify-content: center; position: relative; z-index: 2;">
-                            <div style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.2); border-radius: 15px; padding: 10px 16px; text-align: center; min-width: 80px;">
-                                <div style="font-size: 18px; font-weight: 800; color: #1e40af; margin-bottom: 4px;">5+</div>
-                                <div style="font-size: 11px; color: #6b7280; text-transform: uppercase; letter-spacing: 1px;">Anos</div>
-                            </div>
-                            <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 15px; padding: 10px 16px; text-align: center; min-width: 80px;">
-                                <div style="font-size: 18px; font-weight: 800; color: #059669; margin-bottom: 4px;">20+</div>
-                                <div style="font-size: 11px; color: #6b7280; text-transform: uppercase; letter-spacing: 1px;">Projetos</div>
-                            </div>
-                            <div style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.2); border-radius: 15px; padding: 10px 16px; text-align: center; min-width: 80px;">
-                                <div style="font-size: 18px; font-weight: 800; color: #2563eb; margin-bottom: 4px;">100%</div>
-                                <div style="font-size: 11px; color: #6b7280; text-transform: uppercase; letter-spacing: 1px;">Dedicação</div>
-                            </div>
-                        </div>
-                         -->
-                        <!-- Linha decorativa inferior -->
-                        <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, transparent, #3b82f6, #2563eb, #1e40af, transparent);"></div>
                     </div>
                     {% endfor %}
                 </div>
@@ -620,19 +589,7 @@
                     75% { transform: translateY(-10px) rotate(-1deg); }
                 }
                 
-                /* Hover effects para os cards de liderança */
-                div[style*="background: linear-gradient(145deg, #ffffff, #f8fafc)"]:hover {
-                    /* transform: translateY(-10px) scale(1.02) !important; */
-                    box-shadow: 0 35px 70px rgba(59, 130, 246, 0.2) !important;
-                    border-color: rgba(59, 130, 246, 0.4) !important;
-                }
-                
-                
-                div[style*="background: linear-gradient(145deg, #ffffff, #f8fafc)"]:hover div[style*="position: absolute; inset: 0"] {
-                    opacity: 1 !important;
-                }
-                
-                /* Hover effects para os cards antigos (se existirem) */
+                /* Hover effects para os cards */
                 .leadership div[style*="background: linear-gradient(145deg, rgba(255, 255, 255, 0.12)"]:hover {
                     transform: translateY(-20px) scale(1.02) !important;
                     background: linear-gradient(145deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.12)) !important;
@@ -827,7 +784,7 @@
 
                 <!-- Descrição Principal -->
                 <div style="margin-bottom: 80px; text-align: center;">
-                    <div style="background: linear-gradient(145deg, #ffffff, #f8fafc); border-radius: 25px; padding: 50px; box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1); border: 2px solid #e2e8f0; position: relative; overflow: hidden; transition: all 0.4s ease;">
+                    <div style="background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(15px); border-radius: 25px; padding: 50px; box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1); border: 1px solid rgba(255, 255, 255, 0.5); position: relative; overflow: hidden; transition: all 0.4s ease;">
                         <!-- Elemento decorativo interno -->
                         <div style="position: absolute; top: -50%; right: -20%; width: 200px; height: 200px; background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), transparent); border-radius: 50%; z-index: 1;"></div>
                         <p style="font-size: 18px; line-height: 1.8; color: #374151; text-align: justify; margin: 0; position: relative; z-index: 2; font-weight: 500; margin-bottom: 40px;">
@@ -840,7 +797,7 @@
 
                 <!-- <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 40px; margin-bottom: 60px;">
                     
-                    <div style="background: linear-gradient(145deg, #ffffff, #f8fafc); border-radius: 25px; padding: 40px; border: 2px solid #e2e8f0; position: relative; overflow: hidden; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1); transition: all 0.4s ease; text-align: center; transform: translateY(0);">
+                    <div style="background: linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7)); backdrop-filter: blur(20px); border-radius: 25px; padding: 40px; border: 1px solid rgba(255, 255, 255, 0.5); position: relative; overflow: hidden; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1); transition: all 0.4s ease; text-align: center; transform: translateY(0);">
                         <div style="position: absolute; top: -100%; left: -100%; width: 300%; height: 300%; background: linear-gradient(45deg, transparent, rgba(59, 130, 246, 0.05), transparent); transform: rotate(-45deg); transition: all 0.8s ease; opacity: 0;"></div>
                         
                         <div style="position: absolute; top: 20px; right: 20px; width: 60px; height: 60px; background: linear-gradient(135deg, #3b82f6, #1d4ed8); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; color: white; opacity: 0.8; box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);">
@@ -866,7 +823,7 @@
                         </div>
                     </div>
 
-                    <div style="background: linear-gradient(145deg, #ffffff, #f8fafc); border-radius: 25px; padding: 40px; border: 2px solid #e2e8f0; position: relative; overflow: hidden; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1); transition: all 0.4s ease; text-align: center; transform: translateY(0);">
+                    <div style="background: linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7)); backdrop-filter: blur(20px); border-radius: 25px; padding: 40px; border: 1px solid rgba(255, 255, 255, 0.5); position: relative; overflow: hidden; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1); transition: all 0.4s ease; text-align: center; transform: translateY(0);">
                         <div style="position: absolute; top: -100%; left: -100%; width: 300%; height: 300%; background: linear-gradient(45deg, transparent, rgba(30, 64, 175, 0.05), transparent); transform: rotate(-45deg); transition: all 0.8s ease; opacity: 0;"></div>
                         
                         <div style="position: absolute; top: 20px; right: 20px; width: 60px; height: 60px; background: linear-gradient(135deg, #1e40af, #1e3a8a); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; color: white; opacity: 0.8; box-shadow: 0 8px 20px rgba(30, 64, 175, 0.3);">
@@ -1123,9 +1080,8 @@
             </script>
         </section>
 
-        <!-- Nossa Equipe Section -->
-        <section id="team" style="padding: 120px 0; background-image: linear-gradient(135deg, rgba(30, 58, 138, 0.85) 0%, rgba(30, 64, 175, 0.85) 50%, rgba(59, 130, 246, 0.85) 100%), url('https://watrip.com.br/wp-content/uploads/2024/11/IMG_4456.jpg'); background-size: cover; background-position: center; background-attachment: fixed; position: relative; overflow: hidden; color: white;">
-            
+        <!-- Team Section -->
+        <section id="team" style="padding: 120px 0; background-image: linear-gradient(135deg, rgba(30, 58, 138, 0.85) 0%, rgba(30, 64, 175, 0.85) 50%, rgba(59, 130, 246, 0.85) 100%), url('https://www.serranewsrj.com.br/wp-content/uploads/2024/07/391677410_10161307689339577_8039473372581061613_n-1130x580.jpg'); background-size: cover; background-position: center; background-attachment: fixed; position: relative; overflow: hidden; color: white;">
             <!-- Background decorativo animado -->
             <div style="position: absolute; top: -200px; right: -200px; width: 500px; height: 500px; background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%); border-radius: 50%; z-index: 1; animation: float 15s ease-in-out infinite;"></div>
             <div style="position: absolute; bottom: -150px; left: -150px; width: 400px; height: 400px; background: radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, transparent 70%); border-radius: 50%; z-index: 1; animation: float 20s ease-in-out infinite reverse;"></div>
@@ -1133,213 +1089,567 @@
             
             <div style="max-width: 1400px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 2;">
                 <!-- Header da Seção -->
-                <div style="text-align: center; margin-bottom: 60px;">
+                <div style="text-align: center; margin-bottom: 80px;">
                     <div style="display: inline-block; background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(15px); color: white; padding: 14px 35px; border-radius: 50px; font-size: 14px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 30px; border: 1px solid rgba(255, 255, 255, 0.25); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);">
                         👥 Nossa Equipe
                     </div>
-                    <p style="font-size: clamp(1rem, 2.5vw, 1.3rem); color: rgba(255, 255, 255, 0.9); max-width: 800px; margin: 0 auto; line-height: 1.6; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);">
-                        Conheça os profissionais dedicados que impulsionam<br>a inovação e transformação digital em Nova Friburgo
+                    <!-- <h2 style="font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 900; line-height: 1.2; margin-bottom: 25px; color: white; text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4); max-width: 1000px; margin: 0 auto 25px;">
+                        
+                    </h2> -->
+                    <p style="font-size: 18px; line-height: 1.6; color: rgba(255, 255, 255, 0.9); max-width: 700px; margin: 0 auto; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);">
+                        CONHEÇA A EQUIPE PONTI QUE LIDERA OS PROJETOS DA SECRETARIA DE CIÊNCIA, TECNOLOGIA, INOVAÇÃO E DESENVOLVIMENTO ECONÔMICO
                     </p>
                 </div>
 
-                <!-- Layout Principal: Listagem + Detalhamento em um único card -->
-                <div style="background: linear-gradient(145deg, #ffffff, #f8fafc); border-radius: 25px; padding: 0; border: 2px solid #e2e8f0; box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15); overflow: hidden;">
+                <!-- Container Unificado com Abas Laterais -->
+                <div style="background: linear-gradient(145deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.08)); backdrop-filter: blur(25px); border-radius: 30px; border: 1px solid rgba(255, 255, 255, 0.25); box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25); overflow: hidden; position: relative;">
                     
-                    <div style="display: flex; min-height: 600px;">
+                    <!-- Layout Principal: Abas Laterais + Conteúdo Central -->
+                    <div style="display: grid; grid-template-columns: 380px 1fr; min-height: 700px;">
                         
-                        <!-- Lista Lateral de Membros -->
-                        <div style="flex: 0 0 400px; background: linear-gradient(135deg, #f8fafc, #f1f5f9); border-right: 2px solid #e2e8f0; max-height: 600px; overflow-y: auto;">
+                        <!-- Abas Laterais (Lista de Membros) -->
+                        <div style="background: rgba(255, 255, 255, 0.08); border-right: 1px solid rgba(255, 255, 255, 0.15); padding: 40px 30px; position: relative;">
+                            <!-- Título das Abas -->
                             
-                            <!-- Cabeçalho da Lista -->
-                                <!-- <div style="background: linear-gradient(135deg, #3b82f6, #2563eb); padding: 20px; text-align: center; border-bottom: 2px solid #1e40af;">
-                                    <h3 style="color: white; font-size: 18px; font-weight: 800; margin: 0; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);">
-                                        Membros da Equipe
-                                    </h3>
-                                </div> -->
-
-                            <!-- Lista de Membros -->
-                            <div class="team-list" style="padding: 25px;">
+                            
+                            <!-- Lista de Abas (Membros) -->
+                            <div id="team-tabs" style="display: flex; flex-direction: column; gap: 8px;">
                                 {% for membro in todos_membros %}
-                                <div class="team-member-item" data-member="{{ forloop.counter0 }}" style="display: flex; align-items: center; gap: 15px; padding: 18px; border-radius: 15px; cursor: pointer; transition: all 0.3s ease; border: 2px solid transparent; margin-bottom: 8px;">
+                                <!-- Aba {{ membro.nome_exibicao }} -->
+                                <div class="team-tab{% if forloop.first %} active{% endif %}" data-member="{{ membro.slug }}" style="display: flex; align-items: center; gap: 15px; padding: 18px 20px; border-radius: 18px; cursor: pointer; transition: all 0.3s ease; border-left: 4px solid {% if forloop.first %}#fbbf24{% else %}transparent{% endif %}; background: {% if forloop.first %}linear-gradient(135deg, rgba(251, 191, 36, 0.2), rgba(251, 191, 36, 0.1)){% else %}rgba(255, 255, 255, 0.05){% endif %}; position: relative; overflow: hidden;">
+                                    <!-- Indicador de aba ativa -->
+                                    <div style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); width: 8px; height: 8px; background: #fbbf24; border-radius: 50%; box-shadow: 0 0 10px rgba(251, 191, 36, 0.6);{% if not forloop.first %} display: none;{% endif %}"></div>
                                     
-                                    <!-- Avatar -->
-                                    <div style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden; border: 2px solid #e2e8f0; flex-shrink: 0;">
-                                        {% if membro.foto %}
-                                            <img src="{{ membro.get_foto_url }}" alt="{{ membro.nome_exibicao }}" style="width: 100%; height: 100%; object-fit: cover;">
-                                        {% else %}
-                                            <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #3b82f6, #2563eb); display: flex; align-items: center; justify-content: center; color: white; font-weight: 800; font-size: 18px;">
-                                                {{ membro.nome_exibicao|first|upper }}
-                                            </div>
-                                        {% endif %}
+                                    <div style="flex: 1;">
+                                        <h4 style="font-size: 15px; font-weight: 700; margin: 0 0 4px 0; color: white; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);">{{ membro.nome_exibicao }}</h4>
                                     </div>
-                                    
-                                    <!-- Info Básica -->
-                                    <div style="flex: 1; min-width: 0;">
-                                        <h4 style="margin: 0; font-size: 16px; font-weight: 700; color: #1f2937; line-height: 1.2; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                                            {{ membro.nome_exibicao }}
-                                        </h4>
-                                        <p style="margin: 4px 0 0 0; font-size: 13px; color: #6b7280; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                                            {% if membro.cargo %}{{ membro.cargo.nome }}{% else %}Membro da Equipe{% endif %}
-                                        </p>
-                                    </div>
-                                    
-                                    <!-- Indicador de Status -->
-                                    <div style="width: 8px; height: 8px; background: #10b981; border-radius: 50%; flex-shrink: 0;"></div>
                                 </div>
-                                {% empty %}
-                                <!-- <div style="text-align: center; padding: 40px 20px; color: #6b7280;">
-                                    <i class="fas fa-users" style="font-size: 2rem; margin-bottom: 15px; opacity: 0.5;"></i>
-                                    <p style="margin: 0; font-size: 14px;">Equipe em formação</p>
-                                </div> -->
                                 {% endfor %}
                             </div>
                         </div>
 
-                        <!-- Área de Detalhamento do Membro -->
-                        <div style="flex: 1; padding: 40px; background: #ffffff;">
+                        <!-- Área de Conteúdo (Detalhes do Membro Selecionado) -->
+                        <div id="member-content" style="padding: 50px; position: relative; overflow: hidden; min-height: 700px; display: flex; align-items: center; justify-content: center;">
                             
+                            <!-- Conteúdo do Membro Selecionado -->
                             {% for membro in todos_membros %}
-                            <!-- Detalhes do Membro {{ forloop.counter }} -->
-                            <div class="member-details" data-member="{{ forloop.counter0 }}" style="{% if not forloop.first %}display: none;{% endif %}">
-                                
-                                <!-- Header do Perfil -->
-                                <div style="display: flex; gap: 30px; margin-bottom: 35px; align-items: center;">
-                                    
-                                    <!-- Foto Principal -->
+                            <div class="member-content {% if forloop.first %}active{% endif %}" id="{{ membro.slug }}-content" style="{% if forloop.first %}opacity: 1; transform: translateY(0);{% else %}display: none; opacity: 0; transform: translateY(20px);{% endif %} transition: all 0.5s ease; width: 100%;">
+                                <div style="display: flex; gap: 40px; align-items: flex-start;  ">
                                     <div style="flex-shrink: 0;">
-                                        <div style="width: 140px; height: 140px; border-radius: 50%; padding: 6px; background: linear-gradient(135deg, #3b82f6, #2563eb); box-shadow: 0 20px 40px rgba(59, 130, 246, 0.3);">
-                                            <div style="width: 100%; height: 100%; border-radius: 50%; overflow: hidden; border: 3px solid #ffffff;">
-                                                {% if membro.foto %}
-                                                    <img src="{{ membro.get_foto_url }}" alt="{{ membro.nome_exibicao }}" style="width: 100%; height: 100%; object-fit: cover;">
-                                                {% else %}
-                                                    <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #6b7280, #4b5563); display: flex; align-items: center; justify-content: center; color: white; font-weight: 900; font-size: 48px;">
-                                                        {{ membro.nome_exibicao|first|upper }}
-                                                    </div>
-                                                {% endif %}
+                                        {% if membro.foto or membro.foto_url %}
+                                        <!-- <div style="width: 220px; height: 220px; border-radius: 25px; overflow: hidden; box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3); border: 4px solid #fbbf24; position: relative;">
+                                            <img src="{% if membro.foto %}{{ membro.foto.url }}{% elif membro.foto_url %}{{membro.foto_url}}{% else %}/static/assets/images/avatar.svg{% endif %}" alt="{{ membro.nome }}" style="width: 100%; height: 100%; object-fit: cover;">                                            
+                                            <div style="position: absolute; inset: 0; background: linear-gradient(45deg, transparent 60%, rgba(251, 191, 36, 0.2)); pointer-events: none;"></div>
+                                        </div> -->
+                                        {% endif %}
+                                    </div>
+                                    <div style="flex: 1;">
+                                        <h3 style="font-size: 36px; font-weight: 900; margin-bottom: 15px; color: white; text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3); line-height: 1.1;">
+                                            {{ membro.nome_exibicao }}
+                                        </h3>
+                                        <p style="font-size: 20px; font-weight: 700; color: #fbbf24; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 1.5px; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);">
+                                            {{ membro.cargo.nome }}
+                                        </p>
+                                        <p style="font-size: 16px; line-height: 1.8; color: rgba(255, 255, 255, 0.95); margin-bottom: 35px; text-align: justify; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);">
+                                            {{ membro.biografia }}
+                                        </p>
+                                        
+                                        <!-- Competências em destaque -->
+                                        <!-- <div style="margin-bottom: 30px;">
+                                            <h4 style="font-size: 16px; font-weight: 700; color: rgba(255, 255, 255, 0.9); margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px;">Áreas de Especialidade</h4>
+                                            <div style="display: flex; flex-wrap: wrap; gap: 12px;">
+                                                {% for especialidade in membro.areas_especialidade.all %}
+                                                <span style="background: linear-gradient(135deg, rgba(251, 191, 36, 0.2), rgba(251, 191, 36, 0.1)); color: #fbbf24; padding: 10px 18px; border-radius: 20px; font-size: 13px; font-weight: 600; border: 1px solid rgba(251, 191, 36, 0.3); box-shadow: 0 4px 15px rgba(251, 191, 36, 0.2);">
+                                                    <i class="{{ especialidade.icone }}" style="margin-right: 10px;"></i>{{ especialidade.nome }}
+                                                </span>
+                                                {% endfor %}
+                                            </div>
+                                        </div> -->
+                                        
+                                        <!-- Estatísticas ou informações adicionais -->
+                                        <!-- {% with stats=membro.get_estatisticas %}
+                                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 15px;">
+                                            <div style="text-align: center; padding: 20px; background: rgba(255, 255, 255, 0.08); border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.1);">
+                                                <div style="font-size: 28px; font-weight: 900; color: #fbbf24; margin-bottom: 5px;">{{ stats.anos_experiencia }}+</div>
+                                                <p style="font-size: 11px; color: rgba(255, 255, 255, 0.8); margin: 0; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">Anos de Experiência</p>
+                                            </div>
+                                            <div style="text-align: center; padding: 20px; background: rgba(255, 255, 255, 0.08); border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.1);">
+                                                <div style="font-size: 28px; font-weight: 900; color: #60a5fa; margin-bottom: 5px;">{{ stats.projetos_concluidos }}+</div>
+                                                <p style="font-size: 11px; color: rgba(255, 255, 255, 0.8); margin: 0; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">Projetos Concluídos</p>
+                                            </div>
+                                            <div style="text-align: center; padding: 20px; background: rgba(255, 255, 255, 0.08); border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.1);">
+                                                <div style="font-size: 28px; font-weight: 900; color: #34d399; margin-bottom: 5px;">{{ stats.taxa_sucesso }}%</div>
+                                                <p style="font-size: 11px; color: rgba(255, 255, 255, 0.8); margin: 0; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">Taxa de Sucesso</p>
+                                            </div>
+                                        </div>
+                                        {% endwith %} -->
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+
+                            <!-- Detalhes do Walter Oliveira -->
+                            <div class="member-content" id="walter-content" style="display: none; opacity: 0; transform: translateY(20px); transition: all 0.5s ease; width: 100%;">
+                                <div style="display: flex; gap: 40px; align-items: flex-start;">
+                                    <div style="flex-shrink: 0;">
+                                        <div style="width: 220px; height: 220px; border-radius: 25px; overflow: hidden; box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3); border: 4px solid #fbbf24; position: relative;">
+                                            <img src="https://pontistartups.tec.br/wp-content/uploads/sites/1578/2021/08/22-foto-WJFO.png" alt="Walter Oliveira" style="width: 100%; height: 100%; object-fit: cover;">
+                                            <!-- Overlay decorativo -->
+                                            <div style="position: absolute; inset: 0; background: linear-gradient(45deg, transparent 60%, rgba(251, 191, 36, 0.2)); pointer-events: none;"></div>
+                                        </div>
+                                    </div>
+                                    <div style="flex: 1;">
+                                        <h3 style="font-size: 36px; font-weight: 900; margin-bottom: 15px; color: white; text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3); line-height: 1.1;">
+                                            Walter Oliveira
+                                        </h3>
+                                        <p style="font-size: 20px; font-weight: 700; color: #fbbf24; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 1.5px; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);">
+                                            Especialista em Inovação e Tecnologia
+                                        </p>
+                                        <p style="font-size: 16px; line-height: 1.8; color: rgba(255, 255, 255, 0.95); margin-bottom: 35px; text-align: justify; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);">
+                                            Especialista em inovação tecnológica e desenvolvimento de soluções avançadas para o hub PONTI. Atua na concepção e implementação de estratégias inovadoras que promovem a transformação digital e o crescimento do ecossistema de startups em Nova Friburgo, contribuindo significativamente para a modernização do ambiente de negócios local.
+                                        </p>
+                                        
+                                        <!-- Competências em destaque -->
+                                        <div style="margin-bottom: 30px;">
+                                            <h4 style="font-size: 16px; font-weight: 700; color: rgba(255, 255, 255, 0.9); margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px;">Áreas de Especialidade</h4>
+                                            <div style="display: flex; flex-wrap: wrap; gap: 12px;">
+                                                <span style="background: linear-gradient(135deg, rgba(251, 191, 36, 0.2), rgba(251, 191, 36, 0.1)); color: #fbbf24; padding: 10px 18px; border-radius: 20px; font-size: 13px; font-weight: 600; border: 1px solid rgba(251, 191, 36, 0.3); box-shadow: 0 4px 15px rgba(251, 191, 36, 0.2);">
+                                                    <i class="fas fa-lightbulb" style="margin-right: 10px;"></i>Inovação
+                                                </span>
+                                                <span style="background: linear-gradient(135deg, rgba(96, 165, 250, 0.2), rgba(96, 165, 250, 0.1)); color: #60a5fa; padding: 10px 18px; border-radius: 20px; font-size: 13px; font-weight: 600; border: 1px solid rgba(96, 165, 250, 0.3); box-shadow: 0 4px 15px rgba(96, 165, 250, 0.2);">
+                                                    <i class="fas fa-microchip" style="margin-right: 10px;"></i>Tecnologia
+                                                </span>
+                                                <span style="background: linear-gradient(135deg, rgba(52, 211, 153, 0.2), rgba(52, 211, 153, 0.1)); color: #34d399; padding: 10px 18px; border-radius: 20px; font-size: 13px; font-weight: 600; border: 1px solid rgba(52, 211, 153, 0.3); box-shadow: 0 4px 15px rgba(52, 211, 153, 0.2);">
+                                                    <i class="fas fa-rocket" style="margin-right: 10px;"></i>Startups
+                                                </span>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Estatísticas ou informações adicionais -->
+                                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 15px;">
+                                            <div style="text-align: center; padding: 20px; background: rgba(255, 255, 255, 0.08); border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.1);">
+                                                <div style="font-size: 28px; font-weight: 900; color: #fbbf24; margin-bottom: 5px;">18+</div>
+                                                <p style="font-size: 11px; color: rgba(255, 255, 255, 0.8); margin: 0; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">Anos de Experiência</p>
+                                            </div>
+                                            <div style="text-align: center; padding: 20px; background: rgba(255, 255, 255, 0.08); border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.1);">
+                                                <div style="font-size: 28px; font-weight: 900; color: #60a5fa; margin-bottom: 5px;">60+</div>
+                                                <p style="font-size: 11px; color: rgba(255, 255, 255, 0.8); margin: 0; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">Projetos Inovadores</p>
+                                            </div>
+                                            <div style="text-align: center; padding: 20px; background: rgba(255, 255, 255, 0.08); border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.1);">
+                                                <div style="font-size: 28px; font-weight: 900; color: #34d399; margin-bottom: 5px;">15+</div>
+                                                <p style="font-size: 11px; color: rgba(255, 255, 255, 0.8); margin: 0; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">Tecnologias</p>
                                             </div>
                                         </div>
                                     </div>
-                                    
-                                    <!-- Informações Principais -->
-                                    <div style="flex: 1;">
-                                        <h2 style="font-size: 32px; font-weight: 900; margin-bottom: 12px; background: linear-gradient(135deg, #1e40af, #2563eb); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1.1;">
-                                            {{ membro.nome_exibicao }}
-                                        </h2>
-                                        
-                                        {% if membro.cargo %}
-                                        <div style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 20px; padding: 12px 20px; margin-bottom: 20px; display: inline-block;">
-                                            <p style="font-size: 14px; font-weight: 700; color: #1e40af; margin: 0; text-transform: uppercase; letter-spacing: 1px;">
-                                                {{ membro.cargo.nome }}
-                                            </p>
+                                </div>
+                            </div>
+
+                            <!-- Detalhes do Sérgio -->
+                            <div class="member-content" id="sergio-content" style="display: none; opacity: 0; transform: translateY(20px); transition: all 0.5s ease; width: 100%;">
+                                <div style="display: flex; gap: 40px; align-items: flex-start;">
+                                    <div style="flex-shrink: 0;">
+                                        <div style="width: 220px; height: 220px; border-radius: 25px; overflow: hidden; box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3); border: 4px solid #fbbf24; position: relative;">
+                                            <img src="/static/assets/images/placeholder-9.jpg" alt="Sérgio Tadeu Miranda" style="width: 100%; height: 100%; object-fit: cover;">
+                                            <!-- Overlay decorativo -->
+                                            <div style="position: absolute; inset: 0; background: linear-gradient(45deg, transparent 60%, rgba(251, 191, 36, 0.2)); pointer-events: none;"></div>
                                         </div>
-                                        {% endif %}
-                                        
-                                        {% if membro.biografia %}
-                                        <p style="font-size: 16px; line-height: 1.7; color: #4b5563; margin: 0; text-align: justify;">
-                                            {{ membro.biografia|truncatewords:30 }}
+                                    </div>
+                                    <div style="flex: 1;">
+                                        <h3 style="font-size: 36px; font-weight: 900; margin-bottom: 15px; color: white; text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3); line-height: 1.1;">
+                                            Sérgio Tadeu Miranda
+                                        </h3>
+                                        <p style="font-size: 20px; font-weight: 700; color: #fbbf24; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 1.5px; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);">
+                                            Especialista em Desenvolvimento Tecnológico
                                         </p>
-                                        {% endif %}
+                                        <p style="font-size: 16px; line-height: 1.8; color: rgba(255, 255, 255, 0.95); margin-bottom: 35px; text-align: justify; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);">
+                                            Especialista em desenvolvimento tecnológico e inovação, com vasta experiência em projetos estratégicos da SECTIDE. Atua diretamente na implementação de soluções tecnológicas que transformam processos analógicos em digitais, contribuindo significativamente para a modernização da gestão pública de Nova Friburgo e desenvolvimento do ecossistema de inovação local.
+                                        </p>
+                                        
+                                        <!-- Competências em destaque -->
+                                        <div style="margin-bottom: 30px;">
+                                            <h4 style="font-size: 16px; font-weight: 700; color: rgba(255, 255, 255, 0.9); margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px;">Áreas de Especialidade</h4>
+                                            <div style="display: flex; flex-wrap: wrap; gap: 12px;">
+                                                <span style="background: linear-gradient(135deg, rgba(251, 191, 36, 0.2), rgba(251, 191, 36, 0.1)); color: #fbbf24; padding: 10px 18px; border-radius: 20px; font-size: 13px; font-weight: 600; border: 1px solid rgba(251, 191, 36, 0.3); box-shadow: 0 4px 15px rgba(251, 191, 36, 0.2);">
+                                                    <i class="fas fa-microchip" style="margin-right: 10px;"></i>Tecnologia
+                                                </span>
+                                                <span style="background: linear-gradient(135deg, rgba(96, 165, 250, 0.2), rgba(96, 165, 250, 0.1)); color: #60a5fa; padding: 10px 18px; border-radius: 20px; font-size: 13px; font-weight: 600; border: 1px solid rgba(96, 165, 250, 0.3); box-shadow: 0 4px 15px rgba(96, 165, 250, 0.2);">
+                                                    <i class="fas fa-lightbulb" style="margin-right: 10px;"></i>Inovação
+                                                </span>
+                                                <span style="background: linear-gradient(135deg, rgba(52, 211, 153, 0.2), rgba(52, 211, 153, 0.1)); color: #34d399; padding: 10px 18px; border-radius: 20px; font-size: 13px; font-weight: 600; border: 1px solid rgba(52, 211, 153, 0.3); box-shadow: 0 4px 15px rgba(52, 211, 153, 0.2);">
+                                                    <i class="fas fa-cogs" style="margin-right: 10px;"></i>Gestão de Projetos
+                                                </span>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Estatísticas ou informações adicionais -->
+                                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 15px;">
+                                            <div style="text-align: center; padding: 20px; background: rgba(255, 255, 255, 0.08); border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.1);">
+                                                <div style="font-size: 28px; font-weight: 900; color: #fbbf24; margin-bottom: 5px;">15+</div>
+                                                <p style="font-size: 11px; color: rgba(255, 255, 255, 0.8); margin: 0; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">Anos de Experiência</p>
+                                            </div>
+                                            <div style="text-align: center; padding: 20px; background: rgba(255, 255, 255, 0.08); border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.1);">
+                                                <div style="font-size: 28px; font-weight: 900; color: #60a5fa; margin-bottom: 5px;">50+</div>
+                                                <p style="font-size: 11px; color: rgba(255, 255, 255, 0.8); margin: 0; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">Projetos Concluídos</p>
+                                            </div>
+                                            <div style="text-align: center; padding: 20px; background: rgba(255, 255, 255, 0.08); border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.1);">
+                                                <div style="font-size: 28px; font-weight: 900; color: #34d399; margin-bottom: 5px;">10+</div>
+                                                <p style="font-size: 11px; color: rgba(255, 255, 255, 0.8); margin: 0; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">Tecnologias</p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+                            </div>
 
-                                <!-- Especialidades -->
-                                {% if membro.areas_especialidade.exists %}
-                                <div style="margin-bottom: 30px;">
-                                    <h3 style="font-size: 18px; font-weight: 800; color: #1f2937; margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
-                                        <i class="fas fa-tools" style="color: #3b82f6;"></i>
-                                        Especialidades
+                            <!-- Detalhes do Thayan -->
+                            <div class="member-content" id="thayan-content" style="display: none; opacity: 0; transform: translateY(20px); transition: all 0.5s ease; width: 100%;">
+                                <div style="display: flex; gap: 40px; align-items: flex-start;">
+                                    <div style="flex-shrink: 0;">
+                                        <div style="width: 220px; height: 220px; border-radius: 25px; overflow: hidden; box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3); border: 4px solid #fbbf24; position: relative;">
+                                            <img src="/static/assets/images/placeholder-10.jpg" alt="Thayan Hebert Carestiato" style="width: 100%; height: 100%; object-fit: cover;">
+                                            <!-- Overlay decorativo -->
+                                            <div style="position: absolute; inset: 0; background: linear-gradient(45deg, transparent 60%, rgba(251, 191, 36, 0.2)); pointer-events: none;"></div>
+                                        </div>
+                                    </div>
+                                    <div style="flex: 1;">
+                                        <h3 style="font-size: 36px; font-weight: 900; margin-bottom: 15px; color: white; text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3); line-height: 1.1;">
+                                            Thayan Hebert Carestiato
+                                        </h3>
+                                        <p style="font-size: 20px; font-weight: 700; color: #fbbf24; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 1.5px; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);">
+                                            Especialista em Transformação Digital
+                                        </p>
+                                        <p style="font-size: 16px; line-height: 1.8; color: rgba(255, 255, 255, 0.95); margin-bottom: 35px; text-align: justify; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);">
+                                            Profissional focado em transformação digital e desenvolvimento de startups no ecossistema de inovação de Nova Friburgo. Especialista em implementação de soluções digitais inovadoras, mentoria de empresas tecnológicas e desenvolvimento de estratégias para modernização de processos. Contribui ativamente para o crescimento do hub de inovação PONTI.
+                                        </p>
+                                        
+                                        <!-- Competências em destaque -->
+                                        <div style="margin-bottom: 30px;">
+                                            <h4 style="font-size: 16px; font-weight: 700; color: rgba(255, 255, 255, 0.9); margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px;">Áreas de Especialidade</h4>
+                                            <div style="display: flex; flex-wrap: wrap; gap: 12px;">
+                                                <span style="background: linear-gradient(135deg, rgba(251, 191, 36, 0.2), rgba(251, 191, 36, 0.1)); color: #fbbf24; padding: 10px 18px; border-radius: 20px; font-size: 13px; font-weight: 600; border: 1px solid rgba(251, 191, 36, 0.3); box-shadow: 0 4px 15px rgba(251, 191, 36, 0.2);">
+                                                    <i class="fas fa-digital-tachograph" style="margin-right: 10px;"></i>Transformação Digital
+                                                </span>
+                                                <span style="background: linear-gradient(135deg, rgba(96, 165, 250, 0.2), rgba(96, 165, 250, 0.1)); color: #60a5fa; padding: 10px 18px; border-radius: 20px; font-size: 13px; font-weight: 600; border: 1px solid rgba(96, 165, 250, 0.3); box-shadow: 0 4px 15px rgba(96, 165, 250, 0.2);">
+                                                    <i class="fas fa-rocket" style="margin-right: 10px;"></i>Startups
+                                                </span>
+                                                <span style="background: linear-gradient(135deg, rgba(52, 211, 153, 0.2), rgba(52, 211, 153, 0.1)); color: #34d399; padding: 10px 18px; border-radius: 20px; font-size: 13px; font-weight: 600; border: 1px solid rgba(52, 211, 153, 0.3); box-shadow: 0 4px 15px rgba(52, 211, 153, 0.2);">
+                                                    <i class="fas fa-users" style="margin-right: 10px;"></i>Mentoria
+                                                </span>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Estatísticas ou informações adicionais -->
+                                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 15px;">
+                                            <div style="text-align: center; padding: 20px; background: rgba(255, 255, 255, 0.08); border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.1);">
+                                                <div style="font-size: 28px; font-weight: 900; color: #fbbf24; margin-bottom: 5px;">25+</div>
+                                                <p style="font-size: 11px; color: rgba(255, 255, 255, 0.8); margin: 0; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">Startups Mentoradas</p>
+                                            </div>
+                                            <div style="text-align: center; padding: 20px; background: rgba(255, 255, 255, 0.08); border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.1);">
+                                                <div style="font-size: 28px; font-weight: 900; color: #60a5fa; margin-bottom: 5px;">80%</div>
+                                                <p style="font-size: 11px; color: rgba(255, 255, 255, 0.8); margin: 0; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">Taxa de Sucesso</p>
+                                            </div>
+                                            <div style="text-align: center; padding: 20px; background: rgba(255, 255, 255, 0.08); border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.1);">
+                                                <div style="font-size: 28px; font-weight: 900; color: #34d399; margin-bottom: 5px;">12+</div>
+                                                <p style="font-size: 11px; color: rgba(255, 255, 255, 0.8); margin: 0; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">Anos no Mercado</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Outros membros (conteúdo similar simplificado) -->
+                            <div class="member-content" id="joao-content" style="display: none; opacity: 0; transform: translateY(20px); transition: all 0.5s ease; width: 100%;">
+                                <div style="display: flex; gap: 40px; align-items: flex-start;">
+                                    <div style="flex-shrink: 0;">
+                                        <div style="width: 220px; height: 220px; border-radius: 25px; overflow: hidden; box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3); border: 4px solid #fbbf24; position: relative;">
+                                            <img src="/static/assets/images/placeholder-11.jpg" alt="João Toledo" style="width: 100%; height: 100%; object-fit: cover;">
+                                            <!-- Overlay decorativo -->
+                                            <div style="position: absolute; inset: 0; background: linear-gradient(45deg, transparent 60%, rgba(251, 191, 36, 0.2)); pointer-events: none;"></div>
+                                        </div>
+                                    </div>
+                                    <div style="flex: 1;">
+                                        <h3 style="font-size: 36px; font-weight: 900; margin-bottom: 15px; color: white; text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3); line-height: 1.1;">João Toledo</h3>
+                                        <p style="font-size: 20px; font-weight: 700; color: #fbbf24; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 1.5px; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);">Especialista em Gestão de Projetos</p>
+                                        <p style="font-size: 16px; line-height: 1.8; color: rgba(255, 255, 255, 0.95); margin-bottom: 35px; text-align: justify; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);">
+                                            Especialista em gestão de projetos e desenvolvimento econômico, atuando na estruturação do hub de inovação PONTI. Responsável pelo planejamento estratégico e execução de iniciativas que promovem o crescimento econômico sustentável.
+                                        </p>
+                                        
+                                        <!-- Competências em destaque -->
+                                        <div style="margin-bottom: 30px;">
+                                            <h4 style="font-size: 16px; font-weight: 700; color: rgba(255, 255, 255, 0.9); margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px;">Áreas de Especialidade</h4>
+                                            <div style="display: flex; flex-wrap: wrap; gap: 12px;">
+                                                <span style="background: linear-gradient(135deg, rgba(251, 191, 36, 0.2), rgba(251, 191, 36, 0.1)); color: #fbbf24; padding: 10px 18px; border-radius: 20px; font-size: 13px; font-weight: 600; border: 1px solid rgba(251, 191, 36, 0.3); box-shadow: 0 4px 15px rgba(251, 191, 36, 0.2);">
+                                                    <i class="fas fa-tasks" style="margin-right: 10px;"></i>Gestão de Projetos
+                                                </span>
+                                                <span style="background: linear-gradient(135deg, rgba(96, 165, 250, 0.2), rgba(96, 165, 250, 0.1)); color: #60a5fa; padding: 10px 18px; border-radius: 20px; font-size: 13px; font-weight: 600; border: 1px solid rgba(96, 165, 250, 0.3); box-shadow: 0 4px 15px rgba(96, 165, 250, 0.2);">
+                                                    <i class="fas fa-chart-line" style="margin-right: 10px;"></i>Desenvolvimento
+                                                </span>
+                                                <span style="background: linear-gradient(135deg, rgba(52, 211, 153, 0.2), rgba(52, 211, 153, 0.1)); color: #34d399; padding: 10px 18px; border-radius: 20px; font-size: 13px; font-weight: 600; border: 1px solid rgba(52, 211, 153, 0.3); box-shadow: 0 4px 15px rgba(52, 211, 153, 0.2);">
+                                                    <i class="fas fa-bullseye" style="margin-right: 10px;"></i>Estratégia
+                                                </span>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Estatísticas ou informações adicionais -->
+                                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 15px;">
+                                            <div style="text-align: center; padding: 20px; background: rgba(255, 255, 255, 0.08); border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.1);">
+                                                <div style="font-size: 28px; font-weight: 900; color: #fbbf24; margin-bottom: 5px;">40+</div>
+                                                <p style="font-size: 11px; color: rgba(255, 255, 255, 0.8); margin: 0; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">Projetos Liderados</p>
+                                            </div>
+                                            <div style="text-align: center; padding: 20px; background: rgba(255, 255, 255, 0.08); border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.1);">
+                                                <div style="font-size: 28px; font-weight: 900; color: #60a5fa; margin-bottom: 5px;">95%</div>
+                                                <p style="font-size: 11px; color: rgba(255, 255, 255, 0.8); margin: 0; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">Taxa de Sucesso</p>
+                                            </div>
+                                            <div style="text-align: center; padding: 20px; background: rgba(255, 255, 255, 0.08); border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.1);">
+                                                <div style="font-size: 28px; font-weight: 900; color: #34d399; margin-bottom: 5px;">8+</div>
+                                                <p style="font-size: 11px; color: rgba(255, 255, 255, 0.8); margin: 0; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">Anos PONTI</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="member-content" id="roberto-content" style="display: none; opacity: 0; transform: translateY(20px); transition: all 0.5s ease; width: 100%;">
+                                <div style="display: flex; gap: 40px; align-items: flex-start;">
+                                    <div style="flex-shrink: 0;">
+                                        <div style="width: 220px; height: 220px; border-radius: 25px; overflow: hidden; box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3); border: 4px solid #fbbf24; position: relative;">
+                                            <img src="/static/assets/images/placeholder-12.jpg" alt="Roberto Calvano" style="width: 100%; height: 100%; object-fit: cover;">
+                                            <!-- Overlay decorativo -->
+                                            <div style="position: absolute; inset: 0; background: linear-gradient(45deg, transparent 60%, rgba(251, 191, 36, 0.2)); pointer-events: none;"></div>
+                                        </div>
+                                    </div>
+                                    <div style="flex: 1;">
+                                        <h3 style="font-size: 36px; font-weight: 900; margin-bottom: 15px; color: white; text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3); line-height: 1.1;">Roberto Calvano</h3>
+                                        <p style="font-size: 20px; font-weight: 700; color: #fbbf24; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 1.5px; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);">Especialista em Incubação de Empresas</p>
+                                        <p style="font-size: 16px; line-height: 1.8; color: rgba(255, 255, 255, 0.95); margin-bottom: 35px; text-align: justify; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);">
+                                            Profissional experiente em incubação de empresas e mentoria empresarial no setor tecnológico. Especialista em desenvolvimento de negócios inovadores, com foco na criação e aceleração de startups de base tecnológica.
+                                        </p>
+                                        
+                                        <!-- Competências em destaque -->
+                                        <div style="margin-bottom: 30px;">
+                                            <h4 style="font-size: 16px; font-weight: 700; color: rgba(255, 255, 255, 0.9); margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px;">Áreas de Especialidade</h4>
+                                            <div style="display: flex; flex-wrap: wrap; gap: 12px;">
+                                                <span style="background: linear-gradient(135deg, rgba(251, 191, 36, 0.2), rgba(251, 191, 36, 0.1)); color: #fbbf24; padding: 10px 18px; border-radius: 20px; font-size: 13px; font-weight: 600; border: 1px solid rgba(251, 191, 36, 0.3); box-shadow: 0 4px 15px rgba(251, 191, 36, 0.2);">
+                                                    <i class="fas fa-seedling" style="margin-right: 10px;"></i>Incubação
+                                                </span>
+                                                <span style="background: linear-gradient(135deg, rgba(96, 165, 250, 0.2), rgba(96, 165, 250, 0.1)); color: #60a5fa; padding: 10px 18px; border-radius: 20px; font-size: 13px; font-weight: 600; border: 1px solid rgba(96, 165, 250, 0.3); box-shadow: 0 4px 15px rgba(96, 165, 250, 0.2);">
+                                                    <i class="fas fa-users" style="margin-right: 10px;"></i>Mentoria
+                                                </span>
+                                                <span style="background: linear-gradient(135deg, rgba(52, 211, 153, 0.2), rgba(52, 211, 153, 0.1)); color: #34d399; padding: 10px 18px; border-radius: 20px; font-size: 13px; font-weight: 600; border: 1px solid rgba(52, 211, 153, 0.3); box-shadow: 0 4px 15px rgba(52, 211, 153, 0.2);">
+                                                    <i class="fas fa-rocket" style="margin-right: 10px;"></i>Startups
+                                                </span>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Estatísticas ou informações adicionais -->
+                                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 15px;">
+                                            <div style="text-align: center; padding: 20px; background: rgba(255, 255, 255, 0.08); border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.1);">
+                                                <div style="font-size: 28px; font-weight: 900; color: #fbbf24; margin-bottom: 5px;">60+</div>
+                                                <p style="font-size: 11px; color: rgba(255, 255, 255, 0.8); margin: 0; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">Empresas Incubadas</p>
+                                            </div>
+                                            <div style="text-align: center; padding: 20px; background: rgba(255, 255, 255, 0.08); border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.1);">
+                                                <div style="font-size: 28px; font-weight: 900; color: #60a5fa; margin-bottom: 5px;">85%</div>
+                                                <p style="font-size: 11px; color: rgba(255, 255, 255, 0.8); margin: 0; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">Taxa de Graduação</p>
+                                            </div>
+                                            <div style="text-align: center; padding: 20px; background: rgba(255, 255, 255, 0.08); border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.1);">
+                                                <div style="font-size: 28px; font-weight: 900; color: #34d399; margin-bottom: 5px;">20+</div>
+                                                <p style="font-size: 11px; color: rgba(255, 255, 255, 0.8); margin: 0; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">Anos Experiência</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="member-content" id="felippe-content" style="display: none; opacity: 0; transform: translateY(20px); transition: all 0.5s ease; width: 100%;">
+                                <div style="display: flex; gap: 40px; align-items: flex-start;">
+                                    <div style="flex-shrink: 0;">
+                                        <div style="width: 220px; height: 220px; border-radius: 25px; overflow: hidden; box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3); border: 4px solid #fbbf24; position: relative;">
+                                            <img src="/static/assets/images/placeholder-13.jpg" alt="Felippe Schenquel" style="width: 100%; height: 100%; object-fit: cover;">
+                                            <!-- Overlay decorativo -->
+                                            <div style="position: absolute; inset: 0; background: linear-gradient(45deg, transparent 60%, rgba(251, 191, 36, 0.2)); pointer-events: none;"></div>
+                                        </div>
+                                    </div>
+                                    <div style="flex: 1;">
+                                        <h3 style="font-size: 36px; font-weight: 900; margin-bottom: 15px; color: white; text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3); line-height: 1.1;">Felippe Schenquel</h3>
+                                        <p style="font-size: 20px; font-weight: 700; color: #fbbf24; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 1.5px; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);">Especialista em Soluções Digitais</p>
+                                        <p style="font-size: 16px; line-height: 1.8; color: rgba(255, 255, 255, 0.95); margin-bottom: 35px; text-align: justify; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);">
+                                            Especialista em inovação tecnológica e desenvolvimento de soluções digitais para a administração pública. Atua na criação e implementação de sistemas inteligentes que otimizam processos governamentais.
+                                        </p>
+                                        
+                                        <!-- Competências em destaque -->
+                                        <div style="margin-bottom: 30px;">
+                                            <h4 style="font-size: 16px; font-weight: 700; color: rgba(255, 255, 255, 0.9); margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px;">Áreas de Especialidade</h4>
+                                            <div style="display: flex; flex-wrap: wrap; gap: 12px;">
+                                                <span style="background: linear-gradient(135deg, rgba(251, 191, 36, 0.2), rgba(251, 191, 36, 0.1)); color: #fbbf24; padding: 10px 18px; border-radius: 20px; font-size: 13px; font-weight: 600; border: 1px solid rgba(251, 191, 36, 0.3); box-shadow: 0 4px 15px rgba(251, 191, 36, 0.2);">
+                                                    <i class="fas fa-code" style="margin-right: 10px;"></i>Soluções Digitais
+                                                </span>
+                                                <span style="background: linear-gradient(135deg, rgba(96, 165, 250, 0.2), rgba(96, 165, 250, 0.1)); color: #60a5fa; padding: 10px 18px; border-radius: 20px; font-size: 13px; font-weight: 600; border: 1px solid rgba(96, 165, 250, 0.3); box-shadow: 0 4px 15px rgba(96, 165, 250, 0.2);">
+                                                    <i class="fas fa-city" style="margin-right: 10px;"></i>Gestão Pública
+                                                </span>
+                                                <span style="background: linear-gradient(135deg, rgba(52, 211, 153, 0.2), rgba(52, 211, 153, 0.1)); color: #34d399; padding: 10px 18px; border-radius: 20px; font-size: 13px; font-weight: 600; border: 1px solid rgba(52, 211, 153, 0.3); box-shadow: 0 4px 15px rgba(52, 211, 153, 0.2);">
+                                                    <i class="fas fa-brain" style="margin-right: 10px;"></i>Sistemas Inteligentes
+                                                </span>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Estatísticas ou informações adicionais -->
+                                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 15px;">
+                                            <div style="text-align: center; padding: 20px; background: rgba(255, 255, 255, 0.08); border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.1);">
+                                                <div style="font-size: 28px; font-weight: 900; color: #fbbf24; margin-bottom: 5px;">30+</div>
+                                                <p style="font-size: 11px; color: rgba(255, 255, 255, 0.8); margin: 0; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">Sistemas Criados</p>
+                                            </div>
+                                            <div style="text-align: center; padding: 20px; background: rgba(255, 255, 255, 0.08); border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.1);">
+                                                <div style="font-size: 28px; font-weight: 900; color: #60a5fa; margin-bottom: 5px;">100%</div>
+                                                <p style="font-size: 11px; color: rgba(255, 255, 255, 0.8); margin: 0; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">Uptime</p>
+                                            </div>
+                                            <div style="text-align: center; padding: 20px; background: rgba(255, 255, 255, 0.08); border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.1);">
+                                                <div style="font-size: 28px; font-weight: 900; color: #34d399; margin-bottom: 5px;">15+</div>
+                                                <p style="font-size: 11px; color: rgba(255, 255, 255, 0.8); margin: 0; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">Linguagens</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="member-content" id="yago-content" style="display: none; opacity: 0; transform: translateY(20px); transition: all 0.5s ease; width: 100%;">
+                                <div style="display: flex; gap: 40px; align-items: flex-start;">
+                                    <div style="flex-shrink: 0;">
+                                        <div style="width: 220px; height: 220px; border-radius: 25px; overflow: hidden; box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3); border: 4px solid #fbbf24; position: relative;">
+                                            <img src="/static/assets/images/placeholder-14.jpg" alt="Yago Medeiros" style="width: 100%; height: 100%; object-fit: cover;">
+                                            <!-- Overlay decorativo -->
+                                            <div style="position: absolute; inset: 0; background: linear-gradient(45deg, transparent 60%, rgba(251, 191, 36, 0.2)); pointer-events: none;"></div>
+                                        </div>
+                                    </div>
+                                    <div style="flex: 1;">
+                                        <h3 style="font-size: 36px; font-weight: 900; margin-bottom: 15px; color: white; text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3); line-height: 1.1;">Yago Medeiros</h3>
+                                        <p style="font-size: 20px; font-weight: 700; color: #fbbf24; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 1.5px; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);">Especialista em Empreendedorismo</p>
+                                        <p style="font-size: 16px; line-height: 1.8; color: rgba(255, 255, 255, 0.95); margin-bottom: 35px; text-align: justify; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);">
+                                            Profissional focado em empreendedorismo e aceleração de startups no ecossistema de inovação local. Especialista em identificação de oportunidades de negócios e conexão entre empreendedores e investidores.
+                                        </p>
+                                        
+                                        <!-- Competências em destaque -->
+                                        <div style="margin-bottom: 30px;">
+                                            <h4 style="font-size: 16px; font-weight: 700; color: rgba(255, 255, 255, 0.9); margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px;">Áreas de Especialidade</h4>
+                                            <div style="display: flex; flex-wrap: wrap; gap: 12px;">
+                                                <span style="background: linear-gradient(135deg, rgba(251, 191, 36, 0.2), rgba(251, 191, 36, 0.1)); color: #fbbf24; padding: 10px 18px; border-radius: 20px; font-size: 13px; font-weight: 600; border: 1px solid rgba(251, 191, 36, 0.3); box-shadow: 0 4px 15px rgba(251, 191, 36, 0.2);">
+                                                    <i class="fas fa-lightbulb" style="margin-right: 10px;"></i>Empreendedorismo
+                                                </span>
+                                                <span style="background: linear-gradient(135deg, rgba(96, 165, 250, 0.2), rgba(96, 165, 250, 0.1)); color: #60a5fa; padding: 10px 18px; border-radius: 20px; font-size: 13px; font-weight: 600; border: 1px solid rgba(96, 165, 250, 0.3); box-shadow: 0 4px 15px rgba(96, 165, 250, 0.2);">
+                                                    <i class="fas fa-tachometer-alt" style="margin-right: 10px;"></i>Aceleração
+                                                </span>
+                                                <span style="background: linear-gradient(135deg, rgba(52, 211, 153, 0.2), rgba(52, 211, 153, 0.1)); color: #34d399; padding: 10px 18px; border-radius: 20px; font-size: 13px; font-weight: 600; border: 1px solid rgba(52, 211, 153, 0.3); box-shadow: 0 4px 15px rgba(52, 211, 153, 0.2);">
+                                                    <i class="fas fa-network-wired" style="margin-right: 10px;"></i>Ecossistema
+                                                </span>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Estatísticas ou informações adicionais -->
+                                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 15px;">
+                                            <div style="text-align: center; padding: 20px; background: rgba(255, 255, 255, 0.08); border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.1);">
+                                                <div style="font-size: 28px; font-weight: 900; color: #fbbf24; margin-bottom: 5px;">100+</div>
+                                                <p style="font-size: 11px; color: rgba(255, 255, 255, 0.8); margin: 0; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">Empreendedores</p>
+                                            </div>
+                                            <div style="text-align: center; padding: 20px; background: rgba(255, 255, 255, 0.08); border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.1);">
+                                                <div style="font-size: 28px; font-weight: 900; color: #60a5fa; margin-bottom: 5px;">R$5M</div>
+                                                <p style="font-size: 11px; color: rgba(255, 255, 255, 0.8); margin: 0; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">Investimentos</p>
+                                            </div>
+                                            <div style="text-align: center; padding: 20px; background: rgba(255, 255, 255, 0.08); border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.1);">
+                                                <div style="font-size: 28px; font-weight: 900; color: #34d399; margin-bottom: 5px;">70%</div>
+                                                <p style="font-size: 11px; color: rgba(255, 255, 255, 0.8); margin: 0; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">Taxa Sucesso</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="member-content" id="eduardo-content" style="display: none; opacity: 0; transform: translateY(20px); transition: all 0.5s ease; width: 100%;">
+                                <div style="display: flex; gap: 40px; align-items: flex-start;">
+                                    <div style="flex-shrink: 0;">
+                                        <div style="width: 220px; height: 220px; border-radius: 25px; overflow: hidden; box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3); border: 4px solid #fbbf24; position: relative;">
+                                            <img src="/static/assets/images/placeholder-15.jpg" alt="Eduardo Salarini" style="width: 100%; height: 100%; object-fit: cover;">
+                                            <!-- Overlay decorativo -->
+                                            <div style="position: absolute; inset: 0; background: linear-gradient(45deg, transparent 60%, rgba(251, 191, 36, 0.2)); pointer-events: none;"></div>
+                                        </div>
+                                    </div>
+                                    <div style="flex: 1;">
+                                        <h3 style="font-size: 36px; font-weight: 900; margin-bottom: 15px; color: white; text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3); line-height: 1.1;">Eduardo Salarini</h3>
+                                        <p style="font-size: 20px; font-weight: 700; color: #fbbf24; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 1.5px; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);">Especialista em Projetos Inovadores</p>
+                                        <p style="font-size: 16px; line-height: 1.8; color: rgba(255, 255, 255, 0.95); margin-bottom: 35px; text-align: justify; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);">
+                                            Especialista em tecnologia e desenvolvimento de projetos inovadores para o crescimento econômico da região. Atua na concepção e implementação de iniciativas tecnológicas que geram impacto social e econômico positivo.
+                                        </p>
+                                        
+                                        <!-- Competências em destaque -->
+                                        <div style="margin-bottom: 30px;">
+                                            <h4 style="font-size: 16px; font-weight: 700; color: rgba(255, 255, 255, 0.9); margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px;">Áreas de Especialidade</h4>
+                                            <div style="display: flex; flex-wrap: wrap; gap: 12px;">
+                                                <span style="background: linear-gradient(135deg, rgba(251, 191, 36, 0.2), rgba(251, 191, 36, 0.1)); color: #fbbf24; padding: 10px 18px; border-radius: 20px; font-size: 13px; font-weight: 600; border: 1px solid rgba(251, 191, 36, 0.3); box-shadow: 0 4px 15px rgba(251, 191, 36, 0.2);">
+                                                    <i class="fas fa-project-diagram" style="margin-right: 10px;"></i>Projetos Inovadores
+                                                </span>
+                                                <span style="background: linear-gradient(135deg, rgba(96, 165, 250, 0.2), rgba(96, 165, 250, 0.1)); color: #60a5fa; padding: 10px 18px; border-radius: 20px; font-size: 13px; font-weight: 600; border: 1px solid rgba(96, 165, 250, 0.3); box-shadow: 0 4px 15px rgba(96, 165, 250, 0.2);">
+                                                    <i class="fas fa-leaf" style="margin-right: 10px;"></i>Desenvolvimento Sustentável
+                                                </span>
+                                                <span style="background: linear-gradient(135deg, rgba(52, 211, 153, 0.2), rgba(52, 211, 153, 0.1)); color: #34d399; padding: 10px 18px; border-radius: 20px; font-size: 13px; font-weight: 600; border: 1px solid rgba(52, 211, 153, 0.3); box-shadow: 0 4px 15px rgba(52, 211, 153, 0.2);">
+                                                    <i class="fas fa-globe" style="margin-right: 10px;"></i>Impacto Social
+                                                </span>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Estatísticas ou informações adicionais -->
+                                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 15px;">
+                                            <div style="text-align: center; padding: 20px; background: rgba(255, 255, 255, 0.08); border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.1);">
+                                                <div style="font-size: 28px; font-weight: 900; color: #fbbf24; margin-bottom: 5px;">35+</div>
+                                                <p style="font-size: 11px; color: rgba(255, 255, 255, 0.8); margin: 0; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">Projetos Inovadores</p>
+                                            </div>
+                                            <div style="text-align: center; padding: 20px; background: rgba(255, 255, 255, 0.08); border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.1);">
+                                                <div style="font-size: 28px; font-weight: 900; color: #60a5fa; margin-bottom: 5px;">90%</div>
+                                                <p style="font-size: 11px; color: rgba(255, 255, 255, 0.8); margin: 0; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">Impacto Positivo</p>
+                                            </div>
+                                            <div style="text-align: center; padding: 20px; background: rgba(255, 255, 255, 0.08); border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.1);">
+                                                <div style="font-size: 28px; font-weight: 900; color: #34d399; margin-bottom: 5px;">10+</div>
+                                                <p style="font-size: 11px; color: rgba(255, 255, 255, 0.8); margin: 0; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">Anos PONTI</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                        {% for membro in todos_membros %}
+                        <div class="member-detail" id="{{ membro.slug }}-detail" style="display: none; opacity: 0; transform: translateY(20px); transition: all 0.5s ease;">
+                            <div style="display: flex; gap: 40px; align-items: flex-start;">
+                                <div style="flex-shrink: 0;">
+                                    <div style="width: 200px; height: 200px; border-radius: 25px; overflow: hidden; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2); border: 4px solid rgba(255, 255, 255, 0.3);">
+                                        <img src="{% if membro.foto %}{{ membro.foto.url }}{% else %}/static/assets/images/avatar.svg{% endif %}" alt="{{ membro.nome }}" style="width: 100%; height: 100%; object-fit: cover;">
+                                    </div>
+                                </div>
+                                <div style="flex: 1;">
+                                    <h3 style="font-size: 32px; font-weight: 900; margin-bottom: 15px; color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);">
+                                        {{ membro.nome }}
                                     </h3>
-                                    <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                                    <p style="font-size: 18px; font-weight: 600; color: #fbbf24; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 1px; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);">
+                                        {{ membro.cargo.nome }}
+                                    </p>
+                                    <p style="font-size: 16px; line-height: 1.8; color: rgba(255, 255, 255, 0.9); margin-bottom: 30px; text-align: justify; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);">
+                                        {{ membro.biografia }}
+                                    </p>
+                                    <div style="display: flex; flex-wrap: wrap; gap: 12px;">
                                         {% for especialidade in membro.areas_especialidade.all %}
-                                        <span style="background: linear-gradient(135deg, #3b82f6, #2563eb); color: white; padding: 8px 16px; border-radius: 18px; font-size: 13px; font-weight: 600; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);">
-                                            {% if especialidade.icone %}<i class="{{ especialidade.icone }}" style="margin-right: 5px;"></i>{% endif %}
-                                            {{ especialidade.nome }}
+                                        <span style="background: rgba(255, 255, 255, 0.1); color: rgba(255, 255, 255, 0.9); padding: 8px 16px; border-radius: 15px; font-size: 12px; font-weight: 600; border: 1px solid rgba(255, 255, 255, 0.2);">
+                                            <i class="{{ especialidade.icone }}" style="margin-right: 8px;"></i>{{ especialidade.nome }}
                                         </span>
                                         {% endfor %}
                                     </div>
                                 </div>
-                                {% endif %}
-
-                                <!-- Estatísticas -->
-                                {% if membro.get_estatisticas %}
-                                <div style="margin-bottom: 30px;">
-                                    <!-- <h3 style="font-size: 18px; font-weight: 800; color: #1f2937; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
-                                        <i class="fas fa-chart-bar" style="color: #3b82f6;"></i>
-                                        Conquistas
-                                    </h3> -->
-                                    <!-- <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px;">
-                                        {% for stat in membro.get_estatisticas %}
-                                        <div style="background: rgba(255, 255, 255, 0.8); border: 1px solid #e2e8f0; border-radius: 15px; padding: 20px; text-align: center; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-                                            <div style="font-size: 24px; font-weight: 900; color: {{ stat.cor|default:'#3b82f6' }}; margin-bottom: 8px;">
-                                                {{ stat.valor }}
-                                            </div>
-                                            <div style="font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; line-height: 1.2;">
-                                                {{ stat.label }}
-                                            </div>
-                                        </div>
-                                        {% endfor %}
-                                    </div> -->
-                                </div>
-                                {% else %}
-                                <!-- Estatísticas padrão -->
-                                <div style="margin-bottom: 30px;">
-                                    <!-- <h3 style="font-size: 18px; font-weight: 800; color: #1f2937; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
-                                        <i class="fas fa-chart-bar" style="color: #3b82f6;"></i>
-                                        Conquistas
-                                    </h3> -->
-                                    <!-- <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px;">
-                                        <div style="background: rgba(255, 255, 255, 0.8); border: 1px solid #e2e8f0; border-radius: 15px; padding: 20px; text-align: center; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-                                            <div style="font-size: 24px; font-weight: 900; color: #fbbf24; margin-bottom: 8px;">
-                                                {{ membro.anos_experiencia|default:"5+" }}
-                                            </div>
-                                            <div style="font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; line-height: 1.2;">
-                                                Anos
-                                            </div>
-                                        </div>
-                                        <div style="background: rgba(255, 255, 255, 0.8); border: 1px solid #e2e8f0; border-radius: 15px; padding: 20px; text-align: center; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-                                            <div style="font-size: 24px; font-weight: 900; color: #60a5fa; margin-bottom: 8px;">
-                                                {{ membro.projetos_concluidos|default:"20+" }}
-                                            </div>
-                                            <div style="font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; line-height: 1.2;">
-                                                Projetos
-                                            </div>
-                                        </div>
-                                        <div style="background: rgba(255, 255, 255, 0.8); border: 1px solid #e2e8f0; border-radius: 15px; padding: 20px; text-align: center; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-                                            <div style="font-size: 24px; font-weight: 900; color: #34d399; margin-bottom: 8px;">
-                                                {{ membro.taxa_sucesso|default:"100" }}%
-                                            </div>
-                                            <div style="font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; line-height: 1.2;">
-                                                Dedicação
-                                            </div>
-                                        </div>
-                                    </div> -->
-                                </div>
-                                {% endif %}
-
-                                <!-- Botão Ver Mais -->
-                                
                             </div>
-                            {% empty %}
-                            <!-- Fallback quando não há membros -->
-                            <div style="text-align: center; padding: 60px 20px; color: #6b7280;">
-                                <div style="font-size: 4rem; margin-bottom: 20px; opacity: 0.3;">
-                                    <i class="fas fa-users"></i>
-                                </div>
-                                <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 15px; color: #374151;">
-                                    Equipe em Formação
-                                </h3>
-                                <p style="font-size: 1rem; color: #6b7280; margin: 0; max-width: 400px; margin: 0 auto; line-height: 1.6;">
-                                    Nossa equipe está sendo estruturada. Em breve você conhecerá todos os profissionais que fazem parte do PONTI Hub de Inovação.
-                                </p>
-                                <div style="margin-top: 30px;">
-                                    <a href="#contact" style="display: inline-flex; align-items: center; gap: 10px; background: linear-gradient(135deg, #3b82f6, #2563eb); color: white; padding: 14px 28px; border-radius: 25px; font-size: 14px; font-weight: 600; text-decoration: none; transition: all 0.3s ease; box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);">
-                                        <i class="fas fa-rocket"></i>
-                                        Junte-se à Nossa Equipe
-                                    </a>
-                                </div>
-                            </div>
-                            {% endfor %}
                         </div>
+                        {% endfor %}
+
+
+
+
                     </div>
                 </div>
             </div>
@@ -1354,29 +1664,41 @@
                     75% { transform: translateY(-8px) rotate(-1deg); }
                 }
 
-                /* Hover effects para lista de membros */
-                .team-member-item:hover {
-                    background: rgba(59, 130, 246, 0.1) !important;
-                    border-color: rgba(59, 130, 246, 0.3) !important;
+                /* Hover effects para as abas */
+                .team-tab {
+                    transition: all 0.3s ease !important;
+                    cursor: pointer !important;
+                }
+
+                .team-tab:hover {
+                    background: rgba(255, 255, 255, 0.2) !important;
+                    border-color: rgba(255, 255, 255, 0.4) !important;
                     transform: translateX(5px) !important;
                 }
 
-                /* Estado ativo da lista */
-                .team-member-item.active {
-                    background: rgba(59, 130, 246, 0.15) !important;
-                    border-color: rgba(59, 130, 246, 0.4) !important;
+                /* Estado ativo da aba */
+                .team-tab.active {
+                    background: rgba(255, 255, 255, 0.3) !important;
+                    border-color: rgba(255, 255, 255, 0.5) !important;
                     transform: translateX(8px) !important;
-                    box-shadow: 0 5px 15px rgba(59, 130, 246, 0.2) !important;
+                    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3) !important;
                 }
 
-                /* Transições para detalhes dos membros */
-                .member-details {
-                    opacity: 0;
-                    transform: translateX(20px);
-                    transition: all 0.4s ease;
+                .team-tab.active div[style*="border-radius: 50%"] {
+                    background: rgba(255, 255, 255, 0.9) !important;
+                    color: #1e40af !important;
                 }
 
-                .member-details.active {
+                /* Conteúdo das abas */
+                .team-content {
+                    display: none !important;
+                    opacity: 0 !important;
+                    transform: translateX(20px) !important;
+                    transition: all 0.4s ease !important;
+                }
+
+                .team-content.active {
+                    display: block !important;
                     opacity: 1 !important;
                     transform: translateX(0) !important;
                 }
@@ -1391,8 +1713,6 @@
                     #team > div > div:first-child > div:first-child {
                         flex: none !important;
                         width: 100% !important;
-                        position: static !important;
-                        max-height: none !important;
                     }
                     
                     #team > div > div:first-child > div:last-child {
@@ -1402,15 +1722,11 @@
                 }
 
                 @media (max-width: 768px) {
-                    #team {
-                        padding: 80px 0 !important;
-                    }
-                    
-                    .team-member-item {
+                    .team-tab {
                         margin-bottom: 15px !important;
                     }
                     
-                    .team-member-item div {
+                    .team-tab div {
                         flex-direction: column !important;
                         text-align: center !important;
                         gap: 15px !important;
@@ -1423,432 +1739,182 @@
                     #team p {
                         text-align: center !important;
                     }
+                }
                     
-                    #team div[style*="display: flex; gap: 30px"] {
-                        flex-direction: column !important;
-                        text-align: center !important;
-                        gap: 20px !important;
+                    #team h3[style*="font-size: 32px"] {
+                        font-size: 24px !important;
                     }
                     
-                    #team div[style*="grid-template-columns: repeat(3, 1fr)"] {
-                        grid-template-columns: 1fr !important;
-                        gap: 10px !important;
-                    }
+
                 }
             </style>
 
-            <!-- JavaScript para interatividade -->
+            <!-- JavaScript para funcionalidade interativa -->
             <script>
                 document.addEventListener('DOMContentLoaded', function() {
-                    // Funcionalidade de troca de membros
-                    const memberItems = document.querySelectorAll('.team-member-item');
-                    const memberDetails = document.querySelectorAll('.member-details');
-                    
-                    memberItems.forEach((item, index) => {
-                        item.addEventListener('click', function() {
-                            // Remove active de todos e reseta estilos
-                            memberItems.forEach(mi => {
-                                mi.classList.remove('active');
-                                // Remove estilos inline de background e border que podem sobrescrever o CSS
-                                mi.style.background = '';
-                                mi.style.borderColor = '';
-                            });
-                            memberDetails.forEach(md => {
-                                md.style.display = 'none';
-                                md.classList.remove('active');
-                            });
-                            
-                            // Adiciona active ao clicado
-                            this.classList.add('active');
-                            const targetDetail = document.querySelector(`.member-details[data-member="${this.dataset.member}"]`);
-                            
-                            if (targetDetail) {
-                                targetDetail.style.display = 'block';
-                                setTimeout(() => {
-                                    targetDetail.classList.add('active');
-                                }, 50);
-                            }
+                    // Elementos da interface de abas
+                    const teamTabs = document.querySelectorAll('.team-tab');
+                    const memberContents = document.querySelectorAll('.member-content');
+
+                    // Função para mostrar conteúdo do membro
+                    function showMemberContent(memberId) {
+                        // Ocultar todos os conteúdos
+                        memberContents.forEach(content => {
+                            content.style.display = 'none';
+                            content.style.opacity = '0';
+                            content.style.transform = 'translateY(20px)';
+                            content.classList.remove('active');
                         });
-                    });
-                    
-                    // Ativa o primeiro membro por padrão
-                    if (memberItems.length > 0) {
-                        memberItems[0].classList.add('active');
-                        if (memberDetails.length > 0) {
-                            memberDetails[0].style.display = 'block';
+                        
+                        // Mostrar conteúdo do membro selecionado
+                        const targetContent = document.getElementById(memberId + '-content');
+                        if (targetContent) {
                             setTimeout(() => {
-                                memberDetails[0].classList.add('active');
+                                targetContent.style.display = 'block';
+                                setTimeout(() => {
+                                    targetContent.style.opacity = '1';
+                                    targetContent.style.transform = 'translateY(0)';
+                                    targetContent.classList.add('active');
+                                }, 50);
                             }, 100);
                         }
                     }
-                    
+
+                    // Função para definir aba ativa
+                    function setActiveTab(selectedTab) {
+                        // Remover estado ativo de todas as abas
+                        teamTabs.forEach(tab => {
+                            tab.classList.remove('active');
+                            // Reset visual dos elementos
+                            tab.style.borderLeft = '4px solid transparent';
+                            tab.style.background = 'rgba(255, 255, 255, 0.05)';
+                            
+                            // Reset do indicador ativo
+                            const indicator = tab.querySelector('div[style*="position: absolute"]');
+                            if (indicator) {
+                                indicator.style.display = 'none';
+                            }
+                            
+                            // Reset da borda da imagem
+                            const img = tab.querySelector('div[style*="border-radius: 50%"]');
+                            if (img) {
+                                img.style.border = '3px solid rgba(255, 255, 255, 0.3)';
+                                img.style.boxShadow = 'none';
+                            }
+                        });
+                        
+                        // Ativar aba selecionada
+                        selectedTab.classList.add('active');
+                        selectedTab.style.borderLeft = '0px solid transparent';
+                        selectedTab.style.background = 'linear-gradient(135deg, rgba(251, 191, 36, 0.2), rgba(251, 191, 36, 0.1))';
+                        
+                        // Mostrar indicador ativo
+                        const activeIndicator = selectedTab.querySelector('div[style*="position: absolute"]');
+                        if (activeIndicator) {
+                            activeIndicator.style.display = 'block';
+                        }
+                        
+                        // Destacar imagem da aba ativa
+                        const activeImg = selectedTab.querySelector('div[style*="border-radius: 50%"]');
+                        if (activeImg) {
+                            activeImg.style.border = '3px solid #fbbf24';
+                            activeImg.style.boxShadow = '0 5px 15px rgba(251, 191, 36, 0.3)';
+                        }
+                    }
+
+                    // Event listeners para as abas
+                    teamTabs.forEach(tab => {
+                        tab.addEventListener('click', function() {
+                            const memberId = this.getAttribute('data-member');
+                            if (memberId) {
+                                setActiveTab(this);
+                                showMemberContent(memberId);
+                            }
+                        });
+
+                        // Hover effects
+                        tab.addEventListener('mouseenter', function() {
+                            if (!this.classList.contains('active')) {
+                                this.style.background = 'rgba(255, 255, 255, 0.15)';
+                                this.style.transform = 'translateX(5px)';
+                            }
+                        });
+
+                        tab.addEventListener('mouseleave', function() {
+                            if (!this.classList.contains('active')) {
+                                this.style.background = 'rgba(255, 255, 255, 0.05)';
+                                this.style.transform = 'translateX(0)';
+                            }
+                        });
+                    });
+
+                    // Ativar primeira aba por padrão
+                    if (teamTabs.length > 0) {
+                        setTimeout(() => {
+                            teamTabs[0].click();
+                        }, 500);
+                    }
+
                     // Efeito parallax suave nos elementos decorativos
                     const teamSection = document.getElementById('team');
-                    const decorativeElements = teamSection.querySelectorAll('div[style*="position: absolute"]');
-                    let ticking = false;
-                    
-                    function updateParallax() {
-                        const scrolled = window.pageYOffset;
-                        const rect = teamSection.getBoundingClientRect();
+                    if (teamSection) {
+                        const decorativeElements = teamSection.querySelectorAll('div[style*="position: absolute"]');
+                        let ticking = false;
                         
-                        if (rect.top < window.innerHeight && rect.bottom > 0) {
-                            decorativeElements.forEach((element, index) => {
-                                const speed = (index + 1) * 0.1;
-                                const yPos = scrolled * speed * 0.03;
-                                element.style.transform = `translateY(${yPos}px)`;
-                            });
+                        function updateParallax() {
+                            const scrolled = window.pageYOffset;
+                            const rect = teamSection.getBoundingClientRect();
+                            
+                            if (rect.top < window.innerHeight && rect.bottom > 0) {
+                                decorativeElements.forEach((element, index) => {
+                                    const speed = (index + 1) * 0.1;
+                                    const yPos = scrolled * speed * 0.02;
+                                    const currentTransform = element.style.transform;
+                                    
+                                    if (currentTransform.includes('rotate')) {
+                                        element.style.transform = `translateY(${yPos}px) rotate(45deg)`;
+                                    } else {
+                                        element.style.transform = `translateY(${yPos}px)`;
+                                    }
+                                });
+                            }
+                            
+                            ticking = false;
                         }
                         
-                        ticking = false;
-                    }
-                    
-                    function requestTick() {
-                        if (!ticking) {
-                            requestAnimationFrame(updateParallax);
-                            ticking = true;
-                        }
-                    }
-                    
-                    window.addEventListener('scroll', requestTick);
-                });
-            </script>
-
-            <!-- CSS inline para efeitos e animações -->
-            <style>
-                /* Animação float para elementos decorativos */
-                @keyframes float {
-                    0%, 100% { transform: translateY(0px) rotate(0deg); }
-                    25% { transform: translateY(-15px) rotate(1deg); }
-                    50% { transform: translateY(0px) rotate(0deg); }
-                    75% { transform: translateY(-8px) rotate(-1deg); }
-                }
-
-                /* Animações de entrada para cards da equipe */
-                @keyframes fadeInUp {
-                    from {
-                        opacity: 0;
-                        transform: translateY(50px);
-                    }
-                    to {
-                        opacity: 1;
-                        transform: translateY(0);
-                    }
-                }
-
-                /* Efeito brilho no hover */
-                @keyframes shine {
-                    0% { transform: rotate(-45deg) translate(-100%, -100%); }
-                    50% { transform: rotate(-45deg) translate(100%, 100%); }
-                    100% { transform: rotate(-45deg) translate(100%, 100%); }
-                }
-
-                /* Hover effects para cards da equipe */
-                #team div[style*="backdrop-filter: blur(25px)"]:hover > div:first-child {
-                    opacity: 1 !important;
-                    top: -50% !important;
-                    left: -50% !important;
-                }
-
-                #team div[style*="backdrop-filter: blur(25px)"]:hover img {
-                    transform: scale(1.1) !important;
-                }
-
-                #team div[style*="backdrop-filter: blur(25px)"]:hover div[style*="position: absolute; inset: 0"] {
-                    opacity: 1 !important;
-                }
-
-                /* Animações escalonadas para entrada dos cards */
-                #team div[style*="backdrop-filter: blur(25px)"]:nth-child(1) {
-                    animation: fadeInUp 0.8s ease-out 0.1s both;
-                }
-
-                #team div[style*="backdrop-filter: blur(25px)"]:nth-child(2) {
-                    animation: fadeInUp 0.8s ease-out 0.2s both;
-                }
-
-                #team div[style*="backdrop-filter: blur(25px)"]:nth-child(3) {
-                    animation: fadeInUp 0.8s ease-out 0.3s both;
-                }
-
-                #team div[style*="backdrop-filter: blur(25px)"]:nth-child(4) {
-                    animation: fadeInUp 0.8s ease-out 0.4s both;
-                }
-
-                #team div[style*="backdrop-filter: blur(25px)"]:nth-child(5) {
-                    animation: fadeInUp 0.8s ease-out 0.5s both;
-                }
-
-                #team div[style*="backdrop-filter: blur(25px)"]:nth-child(6) {
-                    animation: fadeInUp 0.8s ease-out 0.6s both;
-                }
-
-                /* Responsividade da seção de equipe */
-                @media (max-width: 1200px) {
-                    #team div[style*="grid-template-columns: repeat(auto-fit, minmax(350px, 1fr))"] {
-                        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important;
-                        gap: 30px !important;
-                    }
-                }
-
-                @media (max-width: 768px) {
-                    #team {
-                        padding: 80px 0 !important;
-                    }
-                    
-                    #team h3[style*="font-size: 42px"] {
-                        font-size: 2.5rem !important;
-                    }
-                    
-                    #team div[style*="grid-template-columns: repeat(auto-fit, minmax(350px, 1fr))"] {
-                        grid-template-columns: 1fr !important;
-                        gap: 25px !important;
-                    }
-                    
-                    #team div[style*="padding: 40px"] {
-                        padding: 25px 20px !important;
-                    }
-                    
-                    #team div[style*="width: 140px; height: 140px"] {
-                        width: 120px !important;
-                        height: 120px !important;
-                    }
-                    
-                    #team h3[style*="font-size: 24px"] {
-                        font-size: 20px !important;
-                    }
-                    
-                    #team p[style*="text-align: justify"] {
-                        text-align: center !important;
-                        font-size: 13px !important;
-                    }
-                    
-                    #team div[style*="grid-template-columns: repeat(3, 1fr)"] {
-                        grid-template-columns: repeat(3, 1fr) !important;
-                        gap: 8px !important;
-                    }
-                    
-                    #team div[style*="padding: 15px 8px"] {
-                        padding: 12px 6px !important;
-                    }
-                    
-                    #team div[style*="font-size: 18px"] {
-                        font-size: 16px !important;
-                    }
-                    
-                    #team p[style*="font-size: 9px"] {
-                        font-size: 8px !important;
-                        line-height: 1.1 !important;
-                    }
-                }
-
-                @media (max-width: 480px) {
-                    #team div[style*="padding: 25px 20px"] {
-                        padding: 20px 15px !important;
-                    }
-                    
-                    #team div[style*="max-width: 600px"] {
-                        padding: 30px 20px !important;
-                    }
-                    
-                    #team h3[style*="font-size: 1.8rem"] {
-                        font-size: 1.4rem !important;
-                    }
-                    
-                    #team a[style*="padding: 16px 32px"] {
-                        padding: 14px 24px !important;
-                        font-size: 14px !important;
-                    }
-                }
-
-                /* Efeitos visuais adicionais */
-                #team div[style*="position: absolute; top: 20px; right: 20px"] {
-                    animation: bounce 2s infinite;
-                }
-
-                @keyframes bounce {
-                    0%, 20%, 50%, 80%, 100% {
-                        transform: translateY(0);
-                    }
-                    40% {
-                        transform: translateY(-10px);
-                    }
-                    60% {
-                        transform: translateY(-5px);
-                    }
-                }
-
-                /* Efeito parallax suave para elementos decorativos */
-                #team div[style*="position: absolute"]:not([style*="backdrop-filter"]) {
-                    will-change: transform;
-                }
-            </style>
-
-            <!-- JavaScript para efeitos interativos -->
-            <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    const teamSection = document.getElementById('team');
-                    
-                    // Efeito parallax suave nos elementos decorativos
-                    const decorativeElements = teamSection.querySelectorAll('div[style*="position: absolute"]:not([style*="backdrop-filter"])');
-                    let ticking = false;
-                    
-                    function updateParallax() {
-                        const scrolled = window.pageYOffset;
-                        const rect = teamSection.getBoundingClientRect();
-                        
-                        if (rect.top < window.innerHeight && rect.bottom > 0) {
-                            decorativeElements.forEach((element, index) => {
-                                const speed = (index + 1) * 0.2;
-                                const yPos = scrolled * speed * 0.05;
-                                element.style.transform += ` translateY(${yPos}px)`;
-                            });
+                        function requestTick() {
+                            if (!ticking) {
+                                requestAnimationFrame(updateParallax);
+                                ticking = true;
+                            }
                         }
                         
-                        ticking = false;
+                        window.addEventListener('scroll', requestTick);
                     }
-                    
-                    function requestTick() {
-                        if (!ticking) {
-                            requestAnimationFrame(updateParallax);
-                            ticking = true;
-                        }
-                    }
-                    
-                    window.addEventListener('scroll', requestTick);
-                    
+
                     // Observer para animações quando elementos entram na tela
-                    const teamCards = teamSection.querySelectorAll('div[style*="backdrop-filter: blur(25px)"]');
                     const observer = new IntersectionObserver((entries) => {
-                        entries.forEach((entry, index) => {
+                        entries.forEach(entry => {
                             if (entry.isIntersecting) {
-                                setTimeout(() => {
-                                    entry.target.style.opacity = '1';
-                                    entry.target.style.transform = 'translateY(0)';
-                                }, index * 100);
+                                entry.target.style.opacity = '1';
+                                entry.target.style.transform = 'translateY(0)';
                             }
                         });
                     }, { 
                         threshold: 0.1,
                         rootMargin: '0px 0px -50px 0px'
                     });
-                    
-                    teamCards.forEach((card, index) => {
-                        // Preparar cards para animação
-                        if (index > 5) { // Apenas para cards além dos 6 primeiros (que já têm animação CSS)
-                            card.style.opacity = '0';
-                            card.style.transform = 'translateY(50px)';
-                            card.style.transition = 'all 0.8s ease-out';
-                            observer.observe(card);
-                        }
+
+                    // Observar elementos para animação
+                    const animatedElements = teamSection.querySelectorAll('.team-tab, .member-content');
+                    animatedElements.forEach(el => {
+                        el.style.opacity = '0';
+                        el.style.transform = 'translateY(30px)';
+                        el.style.transition = 'all 0.6s ease-out';
+                        observer.observe(el);
                     });
-                    
-                    // Efeito de hover melhorado para cards
-                    teamCards.forEach(card => {
-                        let isHovered = false;
-                        
-                        card.addEventListener('mouseenter', function() {
-                            isHovered = true;
-                            
-                            // Efeito de brilho
-                            const shineEffect = this.querySelector('div[style*="background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1)"]');
-                            if (shineEffect) {
-                                shineEffect.style.animation = 'shine 0.8s ease-out';
-                            }
-                            
-                            // Efeito na imagem
-                            const img = this.querySelector('img');
-                            if (img) {
-                                img.style.transform = 'scale(1.1)';
-                            }
-                            
-                            // Efeito no overlay da imagem
-                            const overlay = this.querySelector('div[style*="position: absolute; inset: 0"]');
-                            if (overlay) {
-                                overlay.style.opacity = '1';
-                            }
-                        });
-                        
-                        card.addEventListener('mouseleave', function() {
-                            isHovered = false;
-                            
-                            setTimeout(() => {
-                                if (!isHovered) {
-                                    // Reset da imagem
-                                    const img = this.querySelector('img');
-                                    if (img) {
-                                        img.style.transform = 'scale(1)';
-                                    }
-                                    
-                                    // Reset do overlay
-                                    const overlay = this.querySelector('div[style*="position: absolute; inset: 0"]');
-                                    if (overlay) {
-                                        overlay.style.opacity = '0';
-                                    }
-                                }
-                            }, 100);
-                        });
-                    });
-                    
-                    // Contador animado para estatísticas
-                    const statsNumbers = teamSection.querySelectorAll('div[style*="font-size: 18px; font-weight: 900"]');
-                    const statsObserver = new IntersectionObserver((entries) => {
-                        entries.forEach(entry => {
-                            if (entry.isIntersecting) {
-                                const target = entry.target;
-                                const text = target.textContent;
-                                const numbers = text.match(/\d+/);
-                                
-                                if (numbers && numbers[0] && !target.dataset.animated) {
-                                    target.dataset.animated = 'true';
-                                    const finalNumber = parseInt(numbers[0]);
-                                    let current = 0;
-                                    const increment = finalNumber / 20;
-                                    
-                                    const timer = setInterval(() => {
-                                        current += increment;
-                                        if (current >= finalNumber) {
-                                            target.textContent = text;
-                                            clearInterval(timer);
-                                        } else {
-                                            target.textContent = text.replace(/\d+/, Math.floor(current));
-                                        }
-                                    }, 50);
-                                }
-                            }
-                        });
-                    }, { threshold: 0.5 });
-                    
-                    statsNumbers.forEach(stat => statsObserver.observe(stat));
-                    
-                    // Efeito de typing para biografia (opcional - descomente para ativar)
-                    /*
-                    const biographies = teamSection.querySelectorAll('p[style*="text-align: justify"]');
-                    biographies.forEach(bio => {
-                        const originalText = bio.textContent;
-                        bio.textContent = '';
-                        
-                        const observer = new IntersectionObserver((entries) => {
-                            entries.forEach(entry => {
-                                if (entry.isIntersecting && !bio.dataset.typed) {
-                                    bio.dataset.typed = 'true';
-                                    let i = 0;
-                                    const typeTimer = setInterval(() => {
-                                        bio.textContent = originalText.slice(0, i);
-                                        i++;
-                                        if (i > originalText.length) {
-                                            clearInterval(typeTimer);
-                                        }
-                                    }, 20);
-                                }
-                            });
-                        }, { threshold: 0.8 });
-                        
-                        observer.observe(bio);
-                    });
-                    */
                 });
             </script>
-
         </section>
 
         <!-- Projects Section -->
@@ -1898,36 +1964,24 @@
                         </div>
                         <div class="projetos" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-top: 40px;">
                             <div class="projeto-item">
-                                <div class="projetos-banner">
-                                    <img src="/static/assets/images/atendimento.jpg" style="width: 100%; border-radius: 10px; margin: 15px 0px;" alt="Atendimento ao Cidadão">
-                                </div>
+                                <div class="projetos-banner"></div>
                                 <div class="projetos-descricao">
-                                    <!-- <h4>Atendimento ao Cidadão</h4> -->
-                                    <p style="text-align: justify;">
-                                        Projeto em parceria com a Secretaria de Transformação Digital do Estado do Rio de Janeiro no qual o cidadão acessa uma plataforma de serviços através de um ambiente on-line que oferece uma variedade de serviços e ferramentas para usuários, sejam eles indivíduos ou empresas. Nossa plataforma facilita a interação , transações e compartilhamento de informações, promovendo a conexão entre o cidadão, empresas e a PMNF.
-                                    </p>
+                                    <h4>1. Plataforma de Inovação Aberta</h4>
+                                    <p>Desenvolvimento de uma plataforma digital colaborativa para conectar startups, empresas, universidades e governo, facilitando a inovação aberta e o desenvolvimento conjunto de soluções tecnológicas.</p>
                                 </div>
                             </div>
                             <div class="projeto-item">
-                                <div class="projetos-banner">
-                                    <img src="/static/assets/images/startup.png" style="width: 100%; border-radius: 10px; margin: 15px 0px;" alt="Atendimento ao Cidadão">
-                                </div>
+                                <div class="projetos-banner"></div>
                                 <div class="projetos-descricao">
-                                    <!-- <h4>Fomento de Startups</h4> -->
-                                    <p style="text-align: justify;">
-                                        Projetos com tecnologia e inovação selecionados através do edital SECTIDE 001/2025 que receberão mentoria gratuita a ser oferecida por profissionais e empresários altamente capacitados da Secretaria Municipal de Ciência, Tecnologia, Inovação e Desenvolvimento Econômico. Os projetos apresentados deverão estar alinhados para encontrar soluções para 47 desafios e oportunidades estabelecidos pela PMNF.
-                                    </p>
+                                    <h4>2. Hub de Startups Tech</h4>
+                                    <p>Criação de um espaço físico e virtual para incubação e aceleração de startups tecnológicas, oferecendo mentoria, recursos e networking para empreendedores locais.</p>
                                 </div>
                             </div>
                             <div class="projeto-item">
-                                <div class="projetos-banner">
-                                    <img src="/static/assets/images/whats.jpg" style="width: 100%; border-radius: 10px; margin: 15px 0px;" alt="Atendimento ao Cidadão">
-                                </div>
+                                <div class="projetos-banner"></div>
                                 <div class="projetos-descricao">
-                                    <!-- <h4>FAZCTIDE WhatsApp</h4> -->
-                                    <p style="text-align: justify;">
-                                        O projeto FAZCTIDE é em parceria entre a SECTIDE e a Secretaria de Fazenda da PMNF. Esse projeto tem como objetivo melhorar e aperfeiçoar o atendimento ao cidadão contribuinte através de tecnologias para a eficiência operacional. A principal ferramenta do projeto é a automação do atendimento via WhatsApp e a digitalização dos serviços. Exemplos de colaboração para o cidadão: solicitação de IPTU e atendimento on-line para suporte administrativo.
-                                    </p>
+                                    <h4>3. Smart City Initiative</h4>
+                                    <p>Implementação de soluções de cidade inteligente utilizando IoT, dados abertos e tecnologias emergentes para melhorar serviços públicos e qualidade de vida dos cidadãos.</p>
                                 </div>
                             </div>  
                         </div>
@@ -2103,6 +2157,10 @@
                     box-shadow: 0 35px 70px rgba(0, 0, 0, 0.15) !important;
                 }
                 
+                #projects div[style*="backdrop-filter: blur(20px)"]:hover img {
+                    transform: scale(1.1) !important;
+                }
+                
                 #projects div[style*="backdrop-filter: blur(20px)"]:hover div[style*="position: absolute; inset: 0"] {
                     opacity: 1 !important;
                 }
@@ -2253,10 +2311,10 @@
                 </div>
                 
                 <!-- Tabela Interativa de Editais -->
-                <div style="background: linear-gradient(145deg, #ffffff, #f8fafc); border-radius: 30px; padding: 0; border: 2px solid #e2e8f0; box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15); overflow: hidden;">
+                <div style="background: linear-gradient(145deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.08)); backdrop-filter: blur(25px); border-radius: 30px; padding: 0; border: 1px solid rgba(255, 255, 255, 0.25); box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25); overflow: hidden;">
                     
                     <!-- Cabeçalho da Tabela -->
-                    <div style="background: linear-gradient(135deg, #3b82f6, #2563eb); padding: 25px 35px; border-bottom: 2px solid #1e40af;">
+                    <div style="background: linear-gradient(135deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.15)); padding: 25px 35px; border-bottom: 2px solid rgba(255, 255, 255, 0.3);">
                         <div style="display: grid; grid-template-columns: 1fr 120px 140px 120px 100px; gap: 20px; align-items: center; font-weight: 800; font-size: 15px; color: #ffffff; text-transform: uppercase; letter-spacing: 1.2px; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);">
                             <div>Edital</div>
                             <div style="text-align: center;">Status</div>
@@ -2270,7 +2328,7 @@
                     <div id="editals-table" style="width: 100%;">
                         {% for edital in editais %}
                         <!-- Edital {{ forloop.counter }} - {{ edital.get_status_display }} -->
-                        <div class="edital-row" data-edital="{{ edital.id }}" style="display: grid; grid-template-columns: 1fr 120px 140px 120px 100px; gap: 20px; align-items: center; padding: 25px 35px; border-bottom: 1px solid #e2e8f0; cursor: pointer; transition: all 0.3s ease; position: relative; background: #ffffff;{% if edital.status == 'encerrado' %} opacity: 0.75;{% endif %}">
+                        <div class="edital-row" data-edital="{{ edital.id }}" style="display: grid; grid-template-columns: 1fr 120px 140px 120px 100px; gap: 20px; align-items: center; padding: 25px 35px; border-bottom: 1px solid rgba(255, 255, 255, 0.15); cursor: pointer; transition: all 0.3s ease; position: relative;{% if edital.status == 'encerrado' %} opacity: 0.75;{% endif %}">
                             <div style="display: flex; align-items: center; gap: 18px;">
                                 <div style="width: 55px; height: 55px; background: 
                                     {% if edital.status == 'em_breve' %}linear-gradient(135deg, #3b82f6, #2563eb)
@@ -2286,8 +2344,8 @@
                                     <i class="{% if edital.status == 'em_breve' %}fas fa-rocket{% elif edital.status == 'aberto' %}fas fa-lightbulb{% elif edital.status == 'encerrado' %}fas fa-check-circle{% else %}fas fa-cog{% endif %}"></i>
                                 </div>
                                 <div>
-                                    <h4 style="margin: 0; font-size: 17px; font-weight: 800; color: {% if edital.status == 'encerrado' %}#6b7280{% else %}#1f2937{% endif %}; line-height: 1.3;">{{ edital.titulo }}</h4>
-                                    <p style="margin: 6px 0 0 0; font-size: 14px; color: {% if edital.status == 'encerrado' %}#9ca3af{% else %}#64748b{% endif %}; line-height: 1.4;">{{ edital.subtitulo }}</p>
+                                    <h4 style="margin: 0; font-size: 17px; font-weight: 800; color: {% if edital.status == 'encerrado' %}#d1d5db{% else %}#ffffff{% endif %}; line-height: 1.3; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);">{{ edital.titulo }}</h4>
+                                    <p style="margin: 6px 0 0 0; font-size: 14px; color: {% if edital.status == 'encerrado' %}rgba(255, 255, 255, 0.7){% else %}rgba(255, 255, 255, 0.85){% endif %}; line-height: 1.4;">{{ edital.subtitulo }}</p>
                                 </div>
                             </div>
                             <div style="text-align: center;">
@@ -2303,7 +2361,7 @@
                                     {% else %}0 3px 10px rgba(139, 92, 246, 0.5)
                                     {% endif %}; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);">{{ edital.get_status_display|upper }}</span>
                             </div>
-                            <div style="text-align: center; font-size: 14px; color: {% if edital.status == 'aberto' and edital.data_encerramento|timeuntil %}#ef4444{% elif edital.status == 'encerrado' %}#9ca3af{% else %}#374151{% endif %}; font-weight: {% if edital.status == 'aberto' %}800{% else %}700{% endif %};">
+                            <div style="text-align: center; font-size: 14px; color: {% if edital.status == 'aberto' and edital.data_encerramento|timeuntil %}#ef4444{% elif edital.status == 'encerrado' %}rgba(255, 255, 255, 0.7){% else %}#ffffff{% endif %}; font-weight: {% if edital.status == 'aberto' %}800{% else %}700{% endif %}; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);">
                                 {% if edital.status == 'encerrado' %}
                                     Finalizado
                                 {% elif edital.data_encerramento %}
@@ -2318,26 +2376,26 @@
                                     {% if edital.status == 'em_breve' %}rgba(59, 130, 246, 0.8){% elif edital.status == 'aberto' %}rgba(16, 185, 129, 0.8){% elif edital.status == 'encerrado' %}rgba(107, 114, 128, 0.8){% else %}rgba(139, 92, 246, 0.8){% endif %}; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);">{{ edital.categoria.nome|upper }}</span>
                             </div>
                             <div style="text-align: center;">
-                                <button style="background: linear-gradient(135deg, #3b82f6, #2563eb); color: white; border: none; padding: 10px 14px; border-radius: 18px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);">
+                                <button style="background: rgba(255, 255, 255, 0.25); color: white; border: 1px solid rgba(255, 255, 255, 0.3); padding: 10px 14px; border-radius: 18px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; backdrop-filter: blur(15px);">
                                     <i class="fas fa-chevron-down"></i>
                                 </button>
                             </div>
                         </div>
                         
                         <!-- Detalhes do Edital {{ forloop.counter }} -->
-                        <div class="edital-details" data-edital="{{ edital.id }}" style="display: none; background: linear-gradient(145deg, #f8fafc, #f1f5f9); padding: 35px; border-bottom: 1px solid #e2e8f0; animation: slideDown 0.3s ease-out;">
+                        <div class="edital-details" data-edital="{{ edital.id }}" style="display: none; background: rgba(255, 255, 255, 0.08); padding: 35px; border-bottom: 1px solid rgba(255, 255, 255, 0.15); animation: slideDown 0.3s ease-out; backdrop-filter: blur(15px);">
                             <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 45px;">
                                 <div>
-                                    <h5 style="font-size: 19px; font-weight: 800; color: {% if edital.status == 'encerrado' %}#6b7280{% elif edital.status == 'aberto' %}#10b981{% elif edital.status == 'em_breve' %}#3b82f6{% else %}#8b5cf6{% endif %}; margin-bottom: 18px;">Descrição Completa</h5>
-                                    <p style="font-size: 15px; line-height: 1.8; color: #374151; margin-bottom: 28px;">
+                                    <h5 style="font-size: 19px; font-weight: 800; color: {% if edital.status == 'encerrado' %}#9ca3af{% elif edital.status == 'aberto' %}#10b981{% elif edital.status == 'em_breve' %}#ffffff{% else %}#8b5cf6{% endif %}; margin-bottom: 18px; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);">Descrição Completa</h5>
+                                    <p style="font-size: 15px; line-height: 1.8; color: {% if edital.status == 'encerrado' %}rgba(255, 255, 255, 0.7){% else %}rgba(255, 255, 255, 0.95){% endif %}; margin-bottom: 28px; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);">
                                         {{ edital.descricao_completa }}
                                     </p>
                                     
                                     {% if edital.areas_interesse.exists %}
-                                    <h6 style="font-size: 16px; font-weight: 700; color: #374151; margin-bottom: 15px;">Áreas de Interesse:</h6>
+                                    <h6 style="font-size: 16px; font-weight: 700; color: rgba(255, 255, 255, 0.9); margin-bottom: 15px;">Áreas de Interesse:</h6>
                                     <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 25px;">
                                         {% for area in edital.areas_interesse.all %}
-                                        <span style="background: linear-gradient(135deg, #3b82f6, #2563eb); color: white; padding: 6px 12px; border-radius: 15px; font-size: 12px; font-weight: 600; box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);">{{ area.nome }}</span>
+                                        <span style="background: rgba(59, 130, 246, 0.9); color: white; padding: 6px 12px; border-radius: 15px; font-size: 12px; font-weight: 600; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);">{{ area.nome }}</span>
                                         {% endfor %}
                                     </div>
                                     {% endif %}
@@ -2400,7 +2458,7 @@
                                         DOWNLOAD DO EDITAL
                                     </button>
                                     
-                                    <a href="/editais/notificar/{{ edital.slug }}/" style="display: block; width: 100%; background: linear-gradient(135deg, #f59e0b, #d97706); color: white; padding: 12px; border: none; border-radius: 20px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; text-decoration: none; text-align: center; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);">
+                                    <a href="/editais/notificar/{{ edital.slug }}/" style="display: block; width: 100%; background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(15px); color: white; padding: 12px; border: none; border-radius: 20px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; text-decoration: none; text-align: center;">
                                         <i class="fas fa-bell" style="margin-right: 8px;"></i>
                                         NOTIFICAR QUANDO LANÇAR
                                     </a>
@@ -2430,14 +2488,14 @@
                         </div>
                         {% empty %}
                         <!-- Mensagem quando não há editais -->
-                        <div style="text-align: center; padding: 60px 20px; color: #64748b;">
-                            <div style="font-size: 48px; margin-bottom: 20px; opacity: 0.5; color: #94a3b8;">
+                        <div style="text-align: center; padding: 60px 20px; color: rgba(255, 255, 255, 0.8);">
+                            <div style="font-size: 48px; margin-bottom: 20px; opacity: 0.5;">
                                 <i class="fas fa-file-alt"></i>
                             </div>
-                            <h3 style="font-size: 24px; font-weight: 700; margin-bottom: 15px; color: #374151;">
+                            <h3 style="font-size: 24px; font-weight: 700; margin-bottom: 15px; color: rgba(255, 255, 255, 0.9);">
                                 Nenhum Edital Disponível
                             </h3>
-                            <p style="font-size: 16px; line-height: 1.6; max-width: 500px; margin: 0 auto; color: #64748b;">
+                            <p style="font-size: 16px; line-height: 1.6; max-width: 500px; margin: 0 auto;">
                                 No momento não há editais abertos ou em preparação.<br>
                                 Cadastre-se para receber notificações sobre novos editais.
                             </p>

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calendar App</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Arial', sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #f8d9f6, #d8e7ff, #e7d7f9);
+  min-height: 100vh;
+  color: #333;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 50px;
+}
+
+.logo {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.navbar nav a {
+  margin: 0 15px;
+  text-decoration: none;
+  color: #333;
+}
+
+.profile img {
+  border-radius: 50%;
+}
+
+.hero {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.hero h1 {
+  font-size: 40px;
+  color: #3a2c6a;
+}
+
+.hero h1 span {
+  color: #8c6cf7;
+}
+
+.hero p {
+  margin: 20px auto;
+  max-width: 600px;
+  color: #555;
+}
+
+.download-btn {
+  margin: 20px;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 25px;
+  background: #8c6cf7;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.content {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.event-card, .summary {
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+  width: 250px;
+}
+
+.create-btn {
+  margin-top: 15px;
+  padding: 10px;
+  width: 100%;
+  border: none;
+  border-radius: 20px;
+  background: #8c6cf7;
+  color: white;
+  cursor: pointer;
+}
+
+.tags {
+  margin-top: 10px;
+}
+
+.tag {
+  padding: 5px 10px;
+  border-radius: 10px;
+  margin: 5px;
+  font-size: 12px;
+  color: white;
+}
+
+.tag.green { background: #27ae60; }
+.tag.blue { background: #3498db; }
+
+.calendar {
+  display: flex;
+  gap: 15px;
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+}
+
+.day h4 {
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.slot {
+  padding: 10px;
+  border-radius: 10px;
+  color: white;
+  margin-bottom: 10px;
+  font-size: 12px;
+}
+
+.purple { background: #9b59b6; }
+.blue { background: #3498db; }
+.green { background: #2ecc71; }
+.pink { background: #e056fd; }
+.orange { background: #e67e22; }
+.red { background: #e74c3c; }
+
+.summary h3 {
+  margin-bottom: 10px;
+}
+
+.mini-calendar {
+  display: grid;
+  gap: 10px;
+}
+
+.week {
+  display: flex;
+  justify-content: space-around;
+}
+
+.week span {
+  background: #8c6cf7;
+  color: white;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">cal.ly</div>
+    <nav>
+      <a href="#">Features</a>
+      <a href="#">API</a>
+      <a href="#">Pricing</a>
+      <a href="#">Support</a>
+    </nav>
+    <div class="profile">
+      <img src="https://via.placeholder.com/40" alt="Profile">
+    </div>    
+  </header>
+
+  <main class="hero">
+    <h1>Take <span>Advantage</span> of Your <br> Calendar <span class="icon">📅</span> App</h1>
+    <p>Seamlessly sync events, set reminders, and plan your days with an intuitive interface and powerful customization options.</p>
+    <button class="download-btn">Download the App</button>
+
+    <div class="content">
+      <!-- Left card -->
+      <div class="event-card">
+        <h3>Meet with Johnathan Doe</h3>
+        <div class="form-item">
+          <label>📅 Wednesday, 18th December</label>
+        </div>
+        <div class="form-item">
+          ⏰ 11:00 - 11:30
+        </div>
+        <div class="form-item">
+          📍 Park Lane Office
+        </div>
+        <div class="tags">
+          <span class="tag green">Design</span>
+          <span class="tag blue">Project X</span>
+        </div>
+        <button class="create-btn">Create Event</button>
+      </div>
+
+      <!-- Calendar -->
+      <div class="calendar">
+        <div class="day">
+          <h4>Monday 11</h4>
+          <div class="slot purple">Meet with Anna<br><small>8:00 - 9:50 AM</small></div>
+          <div class="slot blue">Project X Sync<br><small>8:00 - 9:50 AM</small></div>
+        </div>
+        <div class="day">
+          <h4>Tuesday 12</h4>
+          <div class="slot green">Design Challenge<br><small>8:00 - 9:50 AM</small></div>
+          <div class="slot pink">Colab Session<br><small>8:00 - 9:50 AM</small></div>
+        </div>
+        <div class="day">
+          <h4>Wednesday 13</h4>
+          <div class="slot orange">Handoff<br><small>8:00 - 9:50 AM</small></div>
+        </div>
+        <div class="day">
+          <h4>Thursday 14</h4>
+          <div class="slot red">Meet with Anthony<br><small>8:00 - 9:50 AM</small></div>
+        </div>
+        <div class="day">
+          <h4>Friday 15</h4>
+          <div class="slot green">Design Team Standup<br><small>8:00 - 9:50 AM</small></div>
+          <div class="slot purple">Frontend Standup<br><small>8:00 - 9:50 AM</small></div>
+        </div>
+      </div>
+
+      <!-- Right card -->
+      <div class="summary">
+        <h3>January 2025</h3>
+        <p><strong>✔ 37</strong> tasks completed</p>
+        <div class="mini-calendar">
+          <div class="week"><span>1</span><span>2</span><span>3</span><span>4</span></div>
+          <div class="week"><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span></div>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
