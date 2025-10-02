@@ -91,18 +91,19 @@ if envvars.get('sqlite_mode', True):
     }
 else:
     DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': envvars.get('db_name', 'ponti_hub_inovacao'),
-            'USER': envvars.get('db_user', 'ponti'),
-            'PASSWORD': envvars.get('db_pw', ''),
-            'HOST': envvars.get('db_host', 'localhost'),
-            'PORT': envvars.get('db_port', 3306),
-            'OPTIONS': {
-                'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-            },
-        }
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': envvars.get('db_name', 'ponti_hub_inovacao'),
+        'USER': envvars.get('db_user', 'ponti'),
+        'PASSWORD': envvars.get('db_pw', ''),
+        'HOST': envvars.get('db_host', 'localhost'),
+        'PORT': envvars.get('db_port', 3306),
+        'OPTIONS': {
+            'charset': 'utf8mb4',
+            'init_command': "SET NAMES 'utf8mb4' COLLATE 'utf8mb4_unicode_ci', sql_mode='STRICT_TRANS_TABLES'",
+        },
     }
+}
 
 
 # Password validation
