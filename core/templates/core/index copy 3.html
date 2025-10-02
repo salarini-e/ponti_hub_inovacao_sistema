@@ -257,7 +257,7 @@
         <div class="header-top">
             <div class="container">
                 <div class="header-brand" style="">
-                    <img src="{{ configuracoes.get_logo_header_url }}" alt="PONTI - Hub de Inovação" class="ponti-logo">
+                    <img src="/static/assets/images/logo_pmnf.png" alt="PONTI - Hub de Inovação" class="ponti-logo">
                     <div class="brand-text" style="margin: auto;">
                         <!-- <h1 class="brand-title">PONTI - Hub de Inovação</h1> -->
                         <p class="brand-subtitle">Hub de Inovação da SECTIDE</p>
@@ -265,21 +265,15 @@
                 </div>
                 <div class="header-contact">                    
                     <div class="header-social">
-                        {% if configuracoes.instagram %}
-                        <a href="{{ configuracoes.instagram }}" target="_blank" class="social-icon">
+                        <a href="https://www.linkedin.com/in/walter-j-f-oliveira-47a1b327/" target="_blank" class="social-icon">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://www.instagram.com/cienciaetecnologianf/" target="_blank" class="social-icon">
                             <i class="fab fa-instagram"></i>
                         </a>
-                        {% endif %}
-                        {% if configuracoes.facebook %}
-                        <a href="{{ configuracoes.facebook }}" target="_blank" class="social-icon">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        {% endif %}
-                        {% if configuracoes.whatsapp %}
-                        <a href="{{ configuracoes.get_whatsapp_url }}" target="_blank" class="social-icon">
+                        <a href="https://api.whatsapp.com/send?phone=5522997050354" target="_blank" class="social-icon">
                             <i class="fab fa-whatsapp"></i>
                         </a>
-                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -290,7 +284,7 @@
                 <div class="navbar-content">
                     <!-- Logo e brand para mobile -->
                     <div class="header-brand mobile-brand">
-                        <img src="{{ configuracoes.get_logo_header_url }}" alt="PONTI - Hub de Inovação" class="ponti-logo">
+                        <img src="/static/assets/images/logo_pmnf.png" alt="PONTI - Hub de Inovação" class="ponti-logo">
                         <div class="brand-text">
                             <p class="brand-subtitle">Hub de Inovação da SECTIDE</p>
                         </div>
@@ -357,7 +351,6 @@
 
 
         <!-- About Section -->
-        {% if quem_somos.ativo %}
         <section id="about" style="background: #ffffff; position: relative; padding: 0; margin: 0; overflow: hidden;">
             <!-- Header Section -->
             <div style="background: #ffffff; padding: 120px 0; text-align: left; position: relative; min-height: 500px; display: flex; align-items: center; overflow: hidden;">
@@ -369,28 +362,24 @@
                     <div style="position: relative; z-index: 2; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: flex-start; animation: fadeInUp 0.8s ease-out;">
                         <div style="text-align: left;">
                             <div style="display: inline-block; background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(30, 64, 175, 0.1)); backdrop-filter: blur(10px); color: #1e40af; padding: 12px 30px; border-radius: 50px; font-size: 14px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px; border: 1px solid rgba(59, 130, 246, 0.2); box-shadow: 0 8px 32px rgba(59, 130, 246, 0.15);">
-                                🏢 {{ quem_somos.nome_sessao|default:"Quem Somos" }}
+                                🏢 Quem Somos
                             </div>
                             <h2 style="font-size: clamp(2rem, 4vw, 2rem); font-weight: 700; line-height: 1.15; color: #111827; margin-bottom: 24px; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-                                {{ quem_somos.titulo_principal|default:"Somos um Hub de Inovação da" }} <br>
-                                <span style="color: #1e40af; position: relative;">{{ quem_somos.titulo_azul|default:"SECTIDE Nova Friburgo" }}</span>
+                                Somos um Hub de Inovação da <br>
+                                <span style="color: #1e40af; position: relative;">SECTIDE Nova Friburgo</span>
                             </h2>
                             <p style="font-size: 18px; line-height: 1.7; color: #6b7280; margin: 0 0 20px 0; text-align: justify;">
-                                {{ quem_somos.paragrafo_1|default:"Atuamos no desenvolvimento científico, tecnológico, econômico e na transformação digital de Nova Friburgo. Acreditamos que iniciativas em inovação, startups e empresas de base tecnológica constroem alicerces sólidos rumo à CIDADE INTELIGENTE. Projetos que unem ciência, tecnologia e empreendedorismo são a base para um futuro conectado, sustentável e inclusivo." }}
+                                Atuamos no desenvolvimento científico, tecnológico, econômico e na transformação digital de Nova Friburgo. Acreditamos que iniciativas em inovação, startups e empresas de base tecnológica constroem alicerces sólidos rumo à CIDADE INTELIGENTE. Projetos que unem ciência, tecnologia e empreendedorismo são a base para um futuro conectado, sustentável e inclusivo.
                             </p>
                             <p style="font-size: 18px; line-height: 1.7; color: #374151; margin: 0; text-align: justify;">
-                                {{ quem_somos.paragrafo_2|safe|default:"<strong style='color: #1e40af;'>PONTI - Hub de Inovação</strong> é a <strong style='color: #1e40af;'>BASE DE LANÇAMENTO DE FOGUETES</strong> da Secretária Municipal de Ciência, Tecnologia, Inovação e Desenvolvimento Econômico de Nova Friburgo." }}
+                                <strong style="color: #1e40af;">PONTI - Hub de Inovação</strong> é a <strong style="color: #1e40af;">BASE DE LANÇAMENTO DE FOGUETES</strong> da Secretária Municipal de Ciência, Tecnologia, Inovação e Desenvolvimento Econômico de Nova Friburgo.
                             </p>
                         </div>
                         <div style="display: flex; flex-direction: column; align-items: flex-start;">
                             <!-- Espaçamento para alinhar com o título -->
                             <div style="height: 90px;"></div>
                             <div style="border-radius: 20px; overflow: hidden; box-shadow: 0 15px 30px rgba(30, 64, 175, 0.1); border: 2px solid rgba(59, 130, 246, 0.15); width: 100%; height: 400px;">
-                                {% if quem_somos.imagem %}
-                                    <img src="{{ quem_somos.get_imagem_url }}" alt="{{ quem_somos.nome_sessao }} - {{ quem_somos.titulo_principal }}" style="width: 100%; height: 100%; object-fit: cover;">
-                                {% else %}
-                                    <img src="/static/assets/images/demo3.jpeg" alt="Hub de Inovação PONTI - Tecnologia" style="width: 100%; height: 100%; object-fit: cover;">
-                                {% endif %}
+                                <img src="/static/assets/images/demo3.jpeg" alt="Hub de Inovação PONTI - Tecnologia" style="width: 100%; height: 100%; object-fit: cover;">
                             </div>
                         </div>
                     </div>
@@ -404,17 +393,6 @@
                     <!-- Grid de cartões ocupando linha inteira -->
                     <div style="display: flex; flex-direction: column; gap: 40px; margin-bottom: 0;">
                         
-                        {% for card in cards_quem_somos %}
-                        <!-- Card {{ card.ordem }}: {{ card.titulo }} -->
-                        <div style="position: relative; padding: 50px 40px; border-radius: 30px; {% if forloop.first %}border: 1px solid rgba(59, 130, 246, 0.2);{% else %}background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); border: 1px solid rgba(59, 130, 246, 0.2);{% endif %} box-shadow: 0 20px 50px rgba(30, 64, 175, 0.15); overflow: hidden; width: 100%;">
-                            <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: url('/static/assets/images/bg-valores.jpg'); {% if forloop.first %}background-position: center top;{% elif forloop.counter == 2 %}background-size: cover; background-position: center center;{% else %}background-size: cover; background-position: center bottom;{% endif %} background-repeat: no-repeat; opacity: 0.3; z-index: -1; border-radius: 30px;"></div>
-                            <h3 style="font-size: 32px; font-weight: 800; margin-bottom: 25px; color: {% if forloop.counter == 2 %}#2563eb{% else %}#1e40af{% endif %}; line-height: 1.2;">{{ card.titulo }}</h3>
-                            <p style="font-size: 17px; line-height: 1.8; color: #4b5563; margin: 0; text-align: justify; font-weight: 400;">
-                                {{ card.corpo|safe }}
-                            </p>
-                        </div>
-                        {% empty %}
-                        <!-- Cards padrão caso não existam registros -->
                         <!-- Cartão Missão -->
                         <div style="position: relative; padding: 50px 40px; border-radius: 30px; border: 1px solid rgba(59, 130, 246, 0.2); box-shadow: 0 20px 50px rgba(30, 64, 175, 0.15); overflow: hidden; width: 100%;">
                             <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: url('/static/assets/images/bg-valores.jpg'); background-position: center top; background-repeat: no-repeat; opacity: 0.3; z-index: -1; border-radius: 30px;"></div>
@@ -449,7 +427,6 @@
                                 investimentos e disponibilizamos estrutura de apoio.
                             </p>
                         </div>
-                        {% endfor %}
                     </div>
                 
                     <!-- CSS inline modernizado -->
@@ -546,7 +523,6 @@
                 </div>
             </div>
         </section>
-        {% endif %}
         <section class="leadership" style="padding: 120px 0; background-image: linear-gradient(135deg, rgba(30, 58, 138, 0.85) 0%, rgba(30, 64, 175, 0.85) 50%, rgba(59, 130, 246, 0.85) 100%), url('https://watrip.com.br/wp-content/uploads/2024/11/IMG_4456.jpg'); background-size: cover; background-position: center; background-attachment: fixed; position: relative; overflow: hidden; color: white;">
             
             <!-- Background decorativo animado -->
@@ -577,7 +553,10 @@
                         <!-- Background pattern sutil -->
                         <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: url('/static/assets/images/bg-valores.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; opacity: 0.05; z-index: 1; border-radius: 30px;"></div>
                         
-                        
+                        <!-- Badge premium no canto -->
+                        <div style="position: absolute; top: 25px; right: 25px; background: linear-gradient(135deg, #3b82f6, #2563eb); padding: 8px 16px; border-radius: 20px; font-size: 11px; font-weight: 700; color: white; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4); z-index: 3;">
+                            {{ lider.get_titulo|truncatechars:10 }}
+                        </div>
                         
                         <!-- Container da foto com moldura elegante -->
                         <div style="position: relative; z-index: 2; margin-bottom: 35px;">
@@ -827,7 +806,6 @@
         </section>
 
         <!-- Services Section - Onde Atuamos -->
-        {% if onde_atuamos.ativo %}
         <section id="services" style="padding: 120px 0; background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f1f5f9 100%); position: relative; overflow: hidden;">
             <!-- Background decorativo -->
             <div style="position: absolute; top: -150px; right: -150px; width: 400px; height: 400px; background: radial-gradient(circle, rgba(59, 130, 246, 0.08) 0%, transparent 70%); border-radius: 50%; z-index: 1; animation: float 20s ease-in-out infinite;"></div>
@@ -839,11 +817,11 @@
                 <!-- Header da Seção -->
                 <div style="text-align: center; margin-bottom: 80px;">
                     <div style="display: inline-block; background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(30, 64, 175, 0.1)); backdrop-filter: blur(10px); color: #1e40af; padding: 12px 30px; border-radius: 50px; font-size: 14px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 30px; border: 1px solid rgba(59, 130, 246, 0.2); box-shadow: 0 8px 32px rgba(59, 130, 246, 0.15);">
-                        {{ onde_atuamos.emoji_badge|default:"🎯" }} {{ onde_atuamos.titulo_badge|default:"Onde Atuamos" }}
+                        🎯 Onde Atuamos
                     </div>
                     
                     <p style="font-size: 18px; line-height: 1.6; color: #64748b; max-width: 600px; margin: 0 auto;">
-                        {{ onde_atuamos.subtitulo|default:"Foco na transformação digital com desenvolvimento científico, tecnológico, inovador e econômico" }}
+                        Foco na transformação digital com desenvolvimento científico, tecnológico, inovador e econômico
                     </p>
                 </div>
 
@@ -853,47 +831,15 @@
                         <!-- Elemento decorativo interno -->
                         <div style="position: absolute; top: -50%; right: -20%; width: 200px; height: 200px; background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), transparent); border-radius: 50%; z-index: 1;"></div>
                         <h3 style="font-size: 36px; font-weight: 900; margin-bottom: 20px; background: linear-gradient(135deg, #1e40af, #2563eb); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-align: left;">
-                            {{ onde_atuamos.titulo_principal|default:"Formação, Inovação e Oportunidades" }}
+                            Formação, Inovação e Oportunidades
                         </h3>
                         <p style="font-size: 18px; line-height: 1.8; color: #374151; text-align: justify; margin: 0; position: relative; z-index: 2; font-weight: 500; margin-bottom: 40px;">
-                            {{ onde_atuamos.descricao_principal|default:"Nova Friburgo possui grande potencial para o desenvolvimento de negócios que tenham como base a inovação e a tecnologia, destacando-se que o ensino e o aprendizado estão estruturados numa larga capacidade de formação e desenvolvimento profissional existentes nas diversas instituições de ensino público e privado de nível superior instaladas na região e também na oferta de uma robusta rede de educação técnica e profissionalizante que visa preparar profissionais altamente qualificados para as diversas atividades setoriais como: indústria metal mecânica, indústria têxtil, indústria alimentícia, comércio, serviços, educação, saúde, transportes, distribuição, tecnologia, agronegócio e turismo." }}
+                            Nova Friburgo possui grande potencial para o desenvolvimento de negócios que tenham como base a inovação e a tecnologia, destacando-se que o ensino e o aprendizado estão estruturados numa larga capacidade de formação e desenvolvimento profissional existentes nas diversas instituições de ensino público e privado de nível superior instaladas na região e também na oferta de uma robusta rede de educação técnica e profissionalizante que visa preparar profissionais altamente qualificados para as diversas atividades setoriais como: indústria metal mecânica, indústria têxtil, indústria alimentícia, comércio, serviços, educação, saúde, transportes, distribuição, tecnologia, agronegócio e turismo.
                         </p>
-                        <img src="{{ onde_atuamos.get_imagem_url }}" class="img-fluid" style="width: 100%; height: auto; border-radius: 25px;" alt="{{ onde_atuamos.titulo_principal }}">                    
+                        <!-- <img src="https://friburgoascigtur.org/wp-content/uploads/2024/06/image-26.png" class="img-fluid" style="width: 100%; height: auto; border-radius: 25px;" alt="">                     -->
+                         <img src="/static/assets/images/friburgo.jpg" class="img-fluid" style="width: 100%; height: auto; border-radius: 25px;" alt="">                    
                     </div>
                 </div>
-
-                <!-- Áreas de Atuação -->
-                {% if areas_atuacao %}
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 40px; margin-bottom: 60px;">
-                    {% for area in areas_atuacao %}
-                    <div style="background: linear-gradient(145deg, #ffffff, #f8fafc); border-radius: 25px; padding: 40px; border: 2px solid #e2e8f0; position: relative; overflow: hidden; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1); transition: all 0.4s ease; text-align: center; transform: translateY(0);">
-                        <div style="position: absolute; top: -100%; left: -100%; width: 300%; height: 300%; background: linear-gradient(45deg, transparent, rgba(59, 130, 246, 0.05), transparent); transform: rotate(-45deg); transition: all 0.8s ease; opacity: 0;"></div>
-                        
-                        {%if area.icone %}
-                        <div style="width: 120px; height: 120px; margin: 0 auto 30px; border-radius: 20px; overflow: hidden; box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2); transition: all 0.4s ease; position: relative; background: linear-gradient(135deg, #3b82f6, #2563eb); display: flex; align-items: center; justify-content: center;">
-                            <i class="{{area.icone|default:'fas fa-industry'}}" style="font-size: 48px; color: white;"></i>
-                            <div style="position: absolute; inset: 0; background: linear-gradient(45deg, rgba(59, 130, 246, 0.2), transparent); opacity: 0; transition: all 0.4s ease;"></div>
-                        </div>
-                        {% endif %}
-                        
-                        <h3 style="font-size: 24px; font-weight: 800; margin-bottom: 20px; color: #1f2937; background: linear-gradient(135deg, #1f2937, #233553); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
-                            {{ area.titulo }}
-                        </h3>
-                        <p style="font-size: 16px; line-height: 1.7; color: #6b7280; margin: 0; text-align: justify;">
-                            {{ area.corpo|safe }}   
-                        </p>
-                        
-                        {% if area.get_badges_list %}
-                        <div style="margin-top: 25px; display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
-                            {% for badge in area.get_badges_list %}
-                            <span style="background: rgba(59, 130, 246, 0.1); color: #1d4ed8; padding: 6px 12px; border-radius: 12px; font-size: 12px; font-weight: 600;">{{ badge }}</span>
-                            {% endfor %}
-                        </div>
-                        {% endif %}
-                    </div>
-                    {% endfor %}
-                </div>
-                {% endif %}
 
                 <!-- <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 40px; margin-bottom: 60px;">
                     
@@ -1179,7 +1125,6 @@
                 });
             </script>
         </section>
-        {% endif %}
 
         <!-- Nossa Equipe Section -->
         <section id="team" style="padding: 120px 0; background-image: linear-gradient(135deg, rgba(30, 58, 138, 0.85) 0%, rgba(30, 64, 175, 0.85) 50%, rgba(59, 130, 246, 0.85) 100%), url('https://watrip.com.br/wp-content/uploads/2024/11/IMG_4456.jpg'); background-size: cover; background-position: center; background-attachment: fixed; position: relative; overflow: hidden; color: white;">
@@ -2961,7 +2906,9 @@
                                 <div>
                                     <h4 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 0 0 8px 0;">Endereço</h4>
                                     <p style="color: #64748b; font-size: 1rem; line-height: 1.6; margin: 0;">
-                                        {{ configuracoes.endereco|safe }}
+                                        Avenida Alberto Braune, 223 (2° andar)<br>
+                                        Centro - 28613-001<br>
+                                        Nova Friburgo - RJ
                                     </p>
                                 </div>
                             </div>
@@ -2971,7 +2918,7 @@
                                 <i class="fas fa-phone" style="color: #3b82f6; font-size: 1.1rem; margin-top: 2px; flex-shrink: 0;"></i>
                                 <div>
                                     <h4 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 0 0 8px 0;">Telefone</h4>
-                                    <p style="color: #64748b; font-size: 1rem; line-height: 1.6; margin: 0;">{{ configuracoes.telefone|safe }}</p>
+                                    <p style="color: #64748b; font-size: 1rem; line-height: 1.6; margin: 0;">(22) 2525-9145</p>
                                 </div>
                             </div>
 
@@ -2981,7 +2928,8 @@
                                 <div>
                                     <h4 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 0 0 8px 0;">Horário de Funcionamento</h4>
                                     <p style="color: #64748b; font-size: 1rem; line-height: 1.6; margin: 0;">
-                                        {{ configuracoes.horario_funcionamento|safe }}
+                                        Segunda a Sexta<br>
+                                        08:00 às 18:00
                                     </p>
                                 </div>
                             </div>
@@ -3003,28 +2951,22 @@
                 <!-- Brand Section -->
                 <div style="display: flex; flex-direction: column; gap: 24px;">
                     <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 20px;">
-                        <img src="{{ configuracoes.get_logo_geral_url }}" alt="PONTI - Hub de Inovação" style="height: 80px; width: auto; filter: brightness(1.1);">
+                        <img src="/static/assets/images/logo_com_pmnf.png" alt="PONTI - Hub de Inovação" style="height: 80px; width: auto; filter: brightness(1.1);">
                     </div>
                     <h3 style="font-size: 1.8rem; font-weight: 700; margin: 0; color: #ffffff;">PONTI - Hub de Inovação</h3>
-                    <p style="color: rgba(255, 255, 255, 0.8); font-size: 1.1rem; line-height: 1.7; margin: 0; max-width: 400px;">{{ configuracoes.texto_rodape }}</p>
+                    <p style="color: rgba(255, 255, 255, 0.8); font-size: 1.1rem; line-height: 1.7; margin: 0; max-width: 400px;">Fomentando o ecossistema de inovação e empreendedorismo em Nova Friburgo, conectando ideias transformadoras com oportunidades reais.</p>
                     
                     <!-- Social Links -->
                     <div style="display: flex; gap: 16px; margin-top: 12px;">
-                        {% if configuracoes.instagram %}
-                        <a href="{{ configuracoes.instagram }}" target="_blank" style="display: flex; align-items: center; justify-content: center; width: 50px; height: 50px; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border-radius: 50%; color: white; text-decoration: none; transition: all 0.3s ease; border: 1px solid rgba(255, 255, 255, 0.2);" onMouseOver="this.style.background='linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d)'; this.style.transform='translateY(-3px)'; this.style.boxShadow='0 10px 25px rgba(225, 48, 108, 0.4)';" onMouseOut="this.style.background='rgba(255, 255, 255, 0.1)'; this.style.transform='translateY(0)'; this.style.boxShadow='none';">
+                        <a href="https://www.linkedin.com/in/walter-j-f-oliveira-47a1b327/" target="_blank" style="display: flex; align-items: center; justify-content: center; width: 50px; height: 50px; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border-radius: 50%; color: white; text-decoration: none; transition: all 0.3s ease; border: 1px solid rgba(255, 255, 255, 0.2);" onMouseOver="this.style.background='#0077b5'; this.style.transform='translateY(-3px)'; this.style.boxShadow='0 10px 25px rgba(0, 119, 181, 0.4)';" onMouseOut="this.style.background='rgba(255, 255, 255, 0.1)'; this.style.transform='translateY(0)'; this.style.boxShadow='none';">
+                            <i class="fab fa-linkedin-in" style="font-size: 1.2rem;"></i>
+                        </a>
+                        <a href="https://www.instagram.com/cienciaetecnologianf/" target="_blank" style="display: flex; align-items: center; justify-content: center; width: 50px; height: 50px; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border-radius: 50%; color: white; text-decoration: none; transition: all 0.3s ease; border: 1px solid rgba(255, 255, 255, 0.2);" onMouseOver="this.style.background='linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d)'; this.style.transform='translateY(-3px)'; this.style.boxShadow='0 10px 25px rgba(225, 48, 108, 0.4)';" onMouseOut="this.style.background='rgba(255, 255, 255, 0.1)'; this.style.transform='translateY(0)'; this.style.boxShadow='none';">
                             <i class="fab fa-instagram" style="font-size: 1.2rem;"></i>
                         </a>
-                        {% endif %}
-                        {% if configuracoes.facebook %}
-                        <a href="{{ configuracoes.facebook }}" target="_blank" style="display: flex; align-items: center; justify-content: center; width: 50px; height: 50px; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border-radius: 50%; color: white; text-decoration: none; transition: all 0.3s ease; border: 1px solid rgba(255, 255, 255, 0.2);" onMouseOver="this.style.background='#1877f2'; this.style.transform='translateY(-3px)'; this.style.boxShadow='0 10px 25px rgba(24, 119, 242, 0.4)';" onMouseOut="this.style.background='rgba(255, 255, 255, 0.1)'; this.style.transform='translateY(0)'; this.style.boxShadow='none';">
-                            <i class="fab fa-facebook-f" style="font-size: 1.2rem;"></i>
-                        </a>
-                        {% endif %}
-                        {% if configuracoes.whatsapp %}
-                        <a href="{{ configuracoes.get_whatsapp_url }}" target="_blank" style="display: flex; align-items: center; justify-content: center; width: 50px; height: 50px; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border-radius: 50%; color: white; text-decoration: none; transition: all 0.3s ease; border: 1px solid rgba(255, 255, 255, 0.2);" onMouseOver="this.style.background='#25d366'; this.style.transform='translateY(-3px)'; this.style.boxShadow='0 10px 25px rgba(37, 211, 102, 0.4)';" onMouseOut="this.style.background='rgba(255, 255, 255, 0.1)'; this.style.transform='translateY(0)'; this.style.boxShadow='none';">
+                        <a href="https://api.whatsapp.com/send?phone=5522997050354" target="_blank" style="display: flex; align-items: center; justify-content: center; width: 50px; height: 50px; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border-radius: 50%; color: white; text-decoration: none; transition: all 0.3s ease; border: 1px solid rgba(255, 255, 255, 0.2);" onMouseOver="this.style.background='#25d366'; this.style.transform='translateY(-3px)'; this.style.boxShadow='0 10px 25px rgba(37, 211, 102, 0.4)';" onMouseOut="this.style.background='rgba(255, 255, 255, 0.1)'; this.style.transform='translateY(0)'; this.style.boxShadow='none';">
                             <i class="fab fa-whatsapp" style="font-size: 1.2rem;"></i>
                         </a>
-                        {% endif %}
                     </div>
                 </div>
 

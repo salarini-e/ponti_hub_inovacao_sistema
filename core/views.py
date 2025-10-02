@@ -1,11 +1,23 @@
 from django.shortcuts import render
 from equipe.models import MembroEquipe, LiderancaDestaque
 from editais.models import Edital
+from .models import SessaoQuemSomos, CardQuemSomos, SessaoOndeAtuamos, AreaAtuacao, Configuracoes
 
 # Create your views here.
 
 def index(request):
     """View principal do site - página inicial"""
+    # Carregar configurações do site
+    configuracoes = Configuracoes.get_instancia()
+    
+    # Carregar conteúdo da seção Quem Somos
+    quem_somos = SessaoQuemSomos.get_instancia()
+    cards_quem_somos = CardQuemSomos.get_cards_ativos()
+    
+    # Carregar conteúdo da seção Onde Atuamos
+    onde_atuamos = SessaoOndeAtuamos.get_instancia()
+    areas_atuacao = AreaAtuacao.get_areas_ativas()
+    
     # Carregar dados da liderança
     lideranca = LiderancaDestaque.objects.filter(
         exibir_na_lideranca=True
@@ -34,6 +46,11 @@ def index(request):
     )[:10]  # Limitar a 10 editais mais recentes
     
     context = {
+        'configuracoes': configuracoes,
+        'quem_somos': quem_somos,
+        'cards_quem_somos': cards_quem_somos,
+        'onde_atuamos': onde_atuamos,
+        'areas_atuacao': areas_atuacao,
         'lideranca': lideranca,
         'equipe_tecnica': equipe_tecnica,
         'todos_membros': todos_membros.order_by('ordem_exibicao', 'nome_exibicao'),
