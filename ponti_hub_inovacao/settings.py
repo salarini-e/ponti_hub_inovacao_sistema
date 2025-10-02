@@ -11,19 +11,23 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+from .envvars import load_envars
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Load environment variables from YAML
+envvars = load_envars(BASE_DIR)
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-exeqkt9r@#!7nkrtwh6s@@z8whgces18fs)-cc$z^3wqo9(+9m'
+SECRET_KEY = envvars.get('django_secret_key', 'django-insecure-exeqkt9r@#!7nkrtwh6s@@z8whgces18fs)-cc$z^3wqo9(+9m')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = envvars.get('debug_mode', True)
 
 ALLOWED_HOSTS = ['191.252.178.203', 'ponti.esalarini.com.br', 'localhost']
 
@@ -76,12 +80,28 @@ WSGI_APPLICATION = 'ponti_hub_inovacao.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+# Configuração condicional de banco de dados baseada em sqlite_mode
+if envvars.get('sqlite_mode', True):
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': envvars.get('db_name', 'ponti_hub_inovacao'),
+            'USER': envvars.get('db_user', 'ponti'),
+            'PASSWORD': envvars.get('db_pw', ''),
+            'HOST': envvars.get('db_host', 'localhost'),
+            'PORT': envvars.get('db_port', 3306),
+            'OPTIONS': {
+                'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+            },
+        }
+    }
 
 
 # Password validation
@@ -133,17 +153,20 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Email Configuration
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # Para desenvolvimento
-DEFAULT_FROM_EMAIL = 'noreply@pontistartups.tec.br'
-CONTACT_EMAIL = 'contato@pontistartups.tec.br'
+# Configuração dinâmica baseada nas variáveis de ambiente
+if envvars.get('email_sistema') and envvars.get('email_pw'):
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = 'smtp.gmail.com'
+    EMAIL_PORT = 587
+    EMAIL_USE_TLS = True
+    EMAIL_HOST_USER = envvars.get('email_sistema')
+    EMAIL_HOST_PASSWORD = envvars.get('email_pw')
+    DEFAULT_FROM_EMAIL = envvars.get('email_sistema')
+else:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # Para desenvolvimento
+    DEFAULT_FROM_EMAIL = 'noreply@pontistartups.tec.br'
 
-# Para produção, configure com um provedor real:
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_PORT = 587
-# EMAIL_USE_TLS = True
-# EMAIL_HOST_USER = 'seu-email@gmail.com'
-# EMAIL_HOST_PASSWORD = 'sua-senha'
+CONTACT_EMAIL = 'contato@pontistartups.tec.br'
 
 # Logging
 LOGGING = {
