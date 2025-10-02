@@ -24,6 +24,7 @@ urlpatterns = [
     path('', include('core.urls')),
     path('contato/', include('contato.urls')),
     path('editais/', include('editais.urls')),
+    path('painel/', include('core_admin.urls')),
 ]
 
 # Servir arquivos de mídia durante o desenvolvimento

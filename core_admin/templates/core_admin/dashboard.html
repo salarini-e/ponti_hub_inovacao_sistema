@@ -1,0 +1,208 @@
+{% extends 'core_admin/base.html' %}
+{% load static %}
+
+{% block title %}Dashboard - PONTI Admin{% endblock %}
+
+{% block page_title %}Dashboard{% endblock %}
+
+{% block breadcrumb %}
+<span class="breadcrumb-item">Dashboard</span>
+{% endblock %}
+
+{% block content %}
+<div class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-icon">
+            <i class="fas fa-users"></i>
+        </div>
+        <div class="stat-value">{{ stats.total_cards_quem_somos }}</div>
+        <div class="stat-label">Cards Quem Somos</div>
+    </div>
+    
+    <div class="stat-card">
+        <div class="stat-icon">
+            <i class="fas fa-map-marker-alt"></i>
+        </div>
+        <div class="stat-value">{{ stats.total_areas_atuacao }}</div>
+        <div class="stat-label">Áreas de Atuação</div>
+    </div>
+    
+    <div class="stat-card">
+        <div class="stat-icon">
+            <i class="fas fa-{% if stats.quem_somos_ativo %}check-circle text-success{% else %}times-circle text-error{% endif %}"></i>
+        </div>
+        <div class="stat-value">{% if stats.quem_somos_ativo %}Ativo{% else %}Inativo{% endif %}</div>
+        <div class="stat-label">Seção Quem Somos</div>
+    </div>
+    
+    <div class="stat-card">
+        <div class="stat-icon">
+            <i class="fas fa-{% if stats.onde_atuamos_ativo %}check-circle text-success{% else %}times-circle text-error{% endif %}"></i>
+        </div>
+        <div class="stat-value">{% if stats.onde_atuamos_ativo %}Ativo{% else %}Inativo{% endif %}</div>
+        <div class="stat-label">Seção Onde Atuamos</div>
+    </div>
+</div>
+
+<div class="grid grid-cols-2">
+    <!-- Cards Recentes -->
+    <div class="admin-card">
+        <div class="card-header">
+            <h3 class="card-title">
+                <i class="fas fa-users"></i>
+                Cards Quem Somos Recentes
+            </h3>
+        </div>
+        <div class="card-content">
+            {% if recent_cards %}
+                <div class="space-y-3">
+                    {% for card in recent_cards %}
+                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full flex items-center justify-center text-white text-sm" 
+                                 style="background: {{ card.cor_primaria }};">
+                                <i class="{{ card.icone }}"></i>
+                            </div>
+                            <div>
+                                <h5 class="font-medium text-gray-900">{{ card.titulo|truncatechars:30 }}</h5>
+                                <p class="text-sm text-gray-500">{{ card.descricao|truncatechars:50 }}</p>
+                            </div>
+                        </div>
+                        <span class="px-2 py-1 text-xs rounded-full {% if card.ativo %}bg-green-100 text-green-800{% else %}bg-red-100 text-red-800{% endif %}">
+                            {% if card.ativo %}Ativo{% else %}Inativo{% endif %}
+                        </span>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="text-center text-gray-500 py-8">
+                    <i class="fas fa-inbox text-3xl mb-3"></i>
+                    <p>Nenhum card cadastrado ainda</p>
+                </div>
+            {% endif %}
+        </div>
+        <div class="card-footer">
+            <a href="{% url 'core_admin:quem_somos' %}" class="btn btn-primary btn-sm">
+                <i class="fas fa-edit"></i>
+                Gerenciar Cards
+            </a>
+        </div>
+    </div>
+    
+    <!-- Áreas Recentes -->
+    <div class="admin-card">
+        <div class="card-header">
+            <h3 class="card-title">
+                <i class="fas fa-map-marker-alt"></i>
+                Áreas de Atuação Recentes
+            </h3>
+        </div>
+        <div class="card-content">
+            {% if recent_areas %}
+                <div class="space-y-3">
+                    {% for area in recent_areas %}
+                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-primary-blue flex items-center justify-center text-white text-sm">
+                                <i class="{{ area.icone }}"></i>
+                            </div>
+                            <div>
+                                <h5 class="font-medium text-gray-900">{{ area.titulo|truncatechars:30 }}</h5>
+                                <p class="text-sm text-gray-500">{{ area.descricao|truncatechars:50 }}</p>
+                            </div>
+                        </div>
+                        <span class="px-2 py-1 text-xs rounded-full {% if area.ativo %}bg-green-100 text-green-800{% else %}bg-red-100 text-red-800{% endif %}">
+                            {% if area.ativo %}Ativo{% else %}Inativo{% endif %}
+                        </span>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="text-center text-gray-500 py-8">
+                    <i class="fas fa-inbox text-3xl mb-3"></i>
+                    <p>Nenhuma área cadastrada ainda</p>
+                </div>
+            {% endif %}
+        </div>
+        <div class="card-footer">
+            <a href="{% url 'core_admin:onde_atuamos' %}" class="btn btn-primary btn-sm">
+                <i class="fas fa-edit"></i>
+                Gerenciar Áreas
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Ações Rápidas -->
+<div class="quick-actions">
+    <a href="{% url 'core_admin:quem_somos' %}" class="quick-action">
+        <div class="quick-action-icon">
+            <i class="fas fa-users"></i>
+        </div>
+        <div class="quick-action-content">
+            <h4>Gerenciar Quem Somos</h4>
+            <p>Editar seção e cards da página inicial</p>
+        </div>
+    </a>
+    
+    <a href="{% url 'core_admin:onde_atuamos' %}" class="quick-action">
+        <div class="quick-action-icon">
+            <i class="fas fa-map-marker-alt"></i>
+        </div>
+        <div class="quick-action-content">
+            <h4>Gerenciar Onde Atuamos</h4>
+            <p>Editar áreas de atuação do hub</p>
+        </div>
+    </a>
+    
+    <a href="{% url 'core_admin:configuracoes' %}" class="quick-action">
+        <div class="quick-action-icon">
+            <i class="fas fa-cog"></i>
+        </div>
+        <div class="quick-action-content">
+            <h4>Configurações</h4>
+            <p>Logos, contatos e redes sociais</p>
+        </div>
+    </a>
+    
+    <a href="{% url 'core:index' %}" class="quick-action" target="_blank">
+        <div class="quick-action-icon">
+            <i class="fas fa-eye"></i>
+        </div>
+        <div class="quick-action-content">
+            <h4>Visualizar Site</h4>
+            <p>Ver como está o site publicado</p>
+        </div>
+    </a>
+</div>
+
+<style>
+.space-y-3 > * + * {
+    margin-top: 12px;
+}
+
+.text-success {
+    color: var(--success) !important;
+}
+
+.text-error {
+    color: var(--error) !important;
+}
+
+.bg-green-100 {
+    background-color: #dcfce7;
+}
+
+.text-green-800 {
+    color: #166534;
+}
+
+.bg-red-100 {
+    background-color: #fee2e2;
+}
+
+.text-red-800 {
+    color: #991b1b;
+}
+</style>
+{% endblock %}

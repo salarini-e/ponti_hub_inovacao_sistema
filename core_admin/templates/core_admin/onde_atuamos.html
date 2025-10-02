@@ -1,0 +1,360 @@
+{% extends 'core_admin/base.html' %}
+{% load static %}
+
+{% block title %}Onde Atuamos - PONTI Admin{% endblock %}
+
+{% block page_title %}Gerenciar Onde Atuamos{% endblock %}
+
+{% block breadcrumb %}
+<span class="breadcrumb-item">Dashboard</span>
+<span class="breadcrumb-item">Onde Atuamos</span>
+{% endblock %}
+
+{% block content %}
+<div class="grid grid-cols-1 gap-6">
+    <!-- Configurações da Seção -->
+    <div class="admin-card">
+        <div class="card-header">
+            <h3 class="card-title">
+                <i class="fas fa-cog"></i>
+                Configurações da Seção
+            </h3>
+        </div>
+        <div class="card-content">
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="update_sessao">
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="form-group">
+                        <label class="form-label" for="nome_sessao">Nome da Seção</label>
+                        <input type="text" id="nome_sessao" name="nome_sessao" 
+                               value="{{ sessao.nome_sessao }}" class="form-control">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="titulo_principal">Título Principal</label>
+                        <input type="text" id="titulo_principal" name="titulo_principal" 
+                               value="{{ sessao.titulo_principal }}" class="form-control">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="descricao">Descrição da Seção</label>
+                    <textarea id="descricao" name="descricao" class="form-control" rows="4">{{ sessao.descricao }}</textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Status</label>
+                    <div class="flex items-center gap-2 mt-2">
+                        <input type="checkbox" id="ativo" name="ativo" {% if sessao.ativo %}checked{% endif %}>
+                        <label for="ativo" class="text-sm">Seção ativa no site</label>
+                    </div>
+                </div>
+                
+                <div class="flex justify-end">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i>
+                        Salvar Configurações
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Áreas de Atuação -->
+    <div class="admin-card">
+        <div class="card-header">
+            <h3 class="card-title">
+                <i class="fas fa-map-marker-alt"></i>
+                Áreas de Atuação
+            </h3>
+            <button type="button" class="btn btn-primary btn-sm" onclick="showAddAreaForm()">
+                <i class="fas fa-plus"></i>
+                Adicionar Área
+            </button>
+        </div>
+        <div class="card-content">
+            {% if areas %}
+                <div class="grid grid-cols-1 gap-4">
+                    {% for area in areas %}
+                    <div class="p-4 border border-gray-200 rounded-lg {% if not area.ativo %}opacity-60{% endif %}">
+                        <div class="flex items-start justify-between">
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 rounded-full bg-primary-blue flex items-center justify-center text-white">
+                                    <i class="{{ area.icone }}"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-semibold text-gray-900">{{ area.titulo }}</h4>
+                                    <p class="text-sm text-gray-600 mt-1">{{ area.descricao|truncatechars:100 }}</p>
+                                    {% if area.badges %}
+                                        <div class="flex flex-wrap gap-2 mt-2">
+                                            {% for badge in area.get_badges_list %}
+                                                <span class="px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded-full">{{ badge }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                    <div class="flex items-center gap-4 mt-2 text-xs text-gray-500">
+                                        <span>Ordem: {{ area.ordem }}</span>
+                                        <span>Ícone: {{ area.icone }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <button type="button" 
+                                        class="btn btn-sm {% if area.ativo %}btn-warning{% else %}btn-success{% endif %}"
+                                        onclick="toggleAreaStatus({{ area.id }})">
+                                    <i class="fas fa-{% if area.ativo %}pause{% else %}play{% endif %}"></i>
+                                    {% if area.ativo %}Desativar{% else %}Ativar{% endif %}
+                                </button>
+                                <button type="button" class="btn btn-sm btn-danger"
+                                        onclick="deleteArea({{ area.id }}, '{{ area.titulo }}')">
+                                    <i class="fas fa-trash"></i>
+                                    Excluir
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="text-center text-gray-500 py-8">
+                    <i class="fas fa-inbox text-4xl mb-4"></i>
+                    <h4 class="text-lg font-medium mb-2">Nenhuma área cadastrada</h4>
+                    <p class="mb-4">Adicione a primeira área para começar</p>
+                    <button type="button" class="btn btn-primary" onclick="showAddAreaForm()">
+                        <i class="fas fa-plus"></i>
+                        Adicionar Primeira Área
+                    </button>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Modal para Adicionar Área -->
+<div id="addAreaModal" class="modal-overlay" style="display: none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title">Adicionar Nova Área de Atuação</h3>
+            <button type="button" class="modal-close" onclick="hideAddAreaForm()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form method="post" id="addAreaForm">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="add_area">
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="form-group">
+                        <label class="form-label" for="new_titulo">Título da Área</label>
+                        <input type="text" id="new_titulo" name="titulo" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="new_ordem">Ordem</label>
+                        <input type="number" id="new_ordem" name="ordem" class="form-control" 
+                               value="{{ areas|length|add:1 }}" min="1">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="new_descricao">Descrição</label>
+                    <textarea id="new_descricao" name="descricao" class="form-control" rows="3" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="new_badges">Badges/Tags</label>
+                    <input type="text" id="new_badges" name="badges" class="form-control" 
+                           placeholder="Tecnologia, Inovação, Startups (separado por vírgula)">
+                    <div class="form-help">Separe as tags por vírgula</div>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="form-group">
+                        <label class="form-label" for="new_icone">Ícone (FontAwesome)</label>
+                        <input type="text" id="new_icone" name="icone" class="form-control" 
+                               value="fas fa-star" placeholder="fas fa-star">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Status</label>
+                        <div class="flex items-center gap-2 mt-2">
+                            <input type="checkbox" id="new_ativo" name="ativo" checked>
+                            <label for="new_ativo" class="text-sm">Área ativa</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex justify-end gap-3 mt-6">
+                    <button type="button" class="btn btn-secondary" onclick="hideAddAreaForm()">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-plus"></i>
+                        Adicionar Área
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.modal-content {
+    background: white;
+    border-radius: var(--radius-lg);
+    max-width: 600px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: var(--shadow-2xl);
+}
+
+.modal-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--gray-200);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.modal-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--gray-900);
+    margin: 0;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    color: var(--gray-500);
+    font-size: 1.25rem;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: var(--radius-sm);
+}
+
+.modal-close:hover {
+    background: var(--gray-100);
+    color: var(--gray-800);
+}
+
+.modal-body {
+    padding: 24px;
+}
+
+.bg-blue-100 {
+    background-color: #dbeafe;
+}
+
+.text-blue-800 {
+    color: #1e40af;
+}
+
+.bg-primary-blue {
+    background: var(--primary-blue);
+}
+</style>
+
+<script>
+function showAddAreaForm() {
+    document.getElementById('addAreaModal').style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+}
+
+function hideAddAreaForm() {
+    document.getElementById('addAreaModal').style.display = 'none';
+    document.body.style.overflow = '';
+    document.getElementById('addAreaForm').reset();
+}
+
+async function toggleAreaStatus(areaId) {
+    try {
+        const response = await fetch(`/painel/ajax/area/${areaId}/toggle/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': getCsrfToken(),
+                'Content-Type': 'application/json',
+            }
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            PontiAdmin.showMessage('success', data.message);
+            setTimeout(() => {
+                location.reload();
+            }, 1000);
+        } else {
+            PontiAdmin.showMessage('error', data.message);
+        }
+    } catch (error) {
+        PontiAdmin.showMessage('error', 'Erro ao alterar status da área');
+    }
+}
+
+async function deleteArea(areaId, areaTitle) {
+    if (!confirm(`Tem certeza que deseja excluir a área "${areaTitle}"?`)) {
+        return;
+    }
+    
+    try {
+        const response = await fetch(`/painel/ajax/area/${areaId}/delete/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': getCsrfToken(),
+                'Content-Type': 'application/json',
+            }
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            PontiAdmin.showMessage('success', data.message);
+            setTimeout(() => {
+                location.reload();
+            }, 1000);
+        } else {
+            PontiAdmin.showMessage('error', data.message);
+        }
+    } catch (error) {
+        PontiAdmin.showMessage('error', 'Erro ao excluir área');
+    }
+}
+
+function getCsrfToken() {
+    return document.querySelector('[name=csrfmiddlewaretoken]').value;
+}
+
+// Fechar modal ao clicar fora
+document.getElementById('addAreaModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        hideAddAreaForm();
+    }
+});
+
+// Fechar modal com ESC
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        hideAddAreaForm();
+    }
+});
+</script>
+{% endblock %}
