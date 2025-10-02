@@ -1210,7 +1210,7 @@
                                         <div style="width: 140px; height: 140px; border-radius: 50%; padding: 6px; background: linear-gradient(135deg, #3b82f6, #2563eb); box-shadow: 0 20px 40px rgba(59, 130, 246, 0.3);">
                                             <div style="width: 100%; height: 100%; border-radius: 50%; overflow: hidden; border: 3px solid #ffffff;">
                                                 {% if membro.foto %}
-                                                    <img src="{{ membro.get_foto_url }}" alt="{{ membro.nome_exibicao }}" style="width: 100%; height: 100%; object-fit: cover;">
+                                                    <img src="{{ membro.foto.url }}" alt="{{ membro.nome_exibicao }}" style="width: 100%; height: 100%; object-fit: cover;">
                                                 {% else %}
                                                     <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #6b7280, #4b5563); display: flex; align-items: center; justify-content: center; color: white; font-weight: 900; font-size: 48px;">
                                                         {{ membro.nome_exibicao|first|upper }}
@@ -1236,7 +1236,7 @@
                                         
                                         {% if membro.biografia %}
                                         <p style="font-size: 16px; line-height: 1.7; color: #4b5563; margin: 0; text-align: justify;">
-                                            {{ membro.biografia|truncatewords:30 }}
+                                            {{ membro.biografia }}
                                         </p>
                                         {% endif %}
                                     </div>
