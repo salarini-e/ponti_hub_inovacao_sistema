@@ -1,0 +1,362 @@
+{% extends 'core_admin/base.html' %}
+{% load static %}
+
+{% block title %}Dashboard Editais - PONTI Admin{% endblock %}
+
+{% block page_title %}Dashboard Editais{% endblock %}
+
+{% block breadcrumb %}
+<a href="{% url 'editais:admin_dashboard' %}" class="breadcrumb-item">Editais</a>
+<span class="breadcrumb-item active">Dashboard</span>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    margin-bottom: 32px;
+}
+
+.dashboard-card {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--gray-200);
+    transition: var(--transition);
+}
+
+.dashboard-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.dashboard-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.dashboard-card-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: white;
+}
+
+.dashboard-card-value {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--gray-900);
+    line-height: 1;
+    margin-bottom: 8px;
+}
+
+.dashboard-card-label {
+    font-size: 0.875rem;
+    color: var(--gray-600);
+    font-weight: 500;
+}
+
+.dashboard-section {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--gray-200);
+    margin-bottom: 24px;
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--gray-100);
+}
+
+.section-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--gray-900);
+}
+
+.edital-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    border-radius: var(--radius);
+    transition: var(--transition-fast);
+    border: 1px solid transparent;
+}
+
+.edital-item:hover {
+    background: var(--gray-50);
+    border-color: var(--gray-200);
+}
+
+.edital-status {
+    padding: 4px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.quick-actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+.quick-action-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 20px;
+    background: var(--white);
+    border: 2px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    color: var(--gray-700);
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.quick-action-btn:hover {
+    border-color: var(--primary-blue);
+    color: var(--primary-blue);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.quick-action-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+}
+
+.notificacao-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    border-radius: var(--radius);
+    border: 1px solid var(--gray-200);
+    margin-bottom: 8px;
+}
+
+.notificacao-avatar {
+    width: 32px;
+    height: 32px;
+    background: var(--primary-blue);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 12px;
+}
+
+.grid-layout {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 24px;
+}
+
+@media (max-width: 1024px) {
+    .grid-layout {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Quick Actions -->
+<div class="quick-actions">
+    <a href="{% url 'editais:admin_criar_edital' %}" class="quick-action-btn">
+        <div class="quick-action-icon" style="background: linear-gradient(135deg, #10b981, #059669);">
+            <i class="fas fa-plus"></i>
+        </div>
+        <span>Novo Edital</span>
+    </a>
+    
+    <a href="{% url 'editais:admin_listar_editais' %}" class="quick-action-btn">
+        <div class="quick-action-icon" style="background: linear-gradient(135deg, #3b82f6, #2563eb);">
+            <i class="fas fa-list"></i>
+        </div>
+        <span>Listar Editais</span>
+    </a>
+    
+    <a href="{% url 'editais:admin_listar_editais' %}?status=aberto" class="quick-action-btn">
+        <div class="quick-action-icon" style="background: linear-gradient(135deg, #f59e0b, #d97706);">
+            <i class="fas fa-door-open"></i>
+        </div>
+        <span>Editais Abertos</span>
+    </a>
+    
+    <a href="{% url 'editais:admin_listar_editais' %}?status=rascunho" class="quick-action-btn">
+        <div class="quick-action-icon" style="background: linear-gradient(135deg, #6b7280, #4b5563);">
+            <i class="fas fa-edit"></i>
+        </div>
+        <span>Rascunhos</span>
+    </a>
+</div>
+
+<!-- Dashboard Stats -->
+<div class="dashboard-grid">
+    <div class="dashboard-card">
+        <div class="dashboard-card-header">
+            <div class="dashboard-card-icon" style="background: linear-gradient(135deg, #3b82f6, #2563eb);">
+                <i class="fas fa-file-alt"></i>
+            </div>
+        </div>
+        <div class="dashboard-card-value">{{ total_editais }}</div>
+        <div class="dashboard-card-label">Total de Editais</div>
+    </div>
+    
+    <div class="dashboard-card">
+        <div class="dashboard-card-header">
+            <div class="dashboard-card-icon" style="background: linear-gradient(135deg, #10b981, #059669);">
+                <i class="fas fa-door-open"></i>
+            </div>
+        </div>
+        <div class="dashboard-card-value">{{ editais_abertos }}</div>
+        <div class="dashboard-card-label">Editais Abertos</div>
+    </div>
+    
+    <div class="dashboard-card">
+        <div class="dashboard-card-header">
+            <div class="dashboard-card-icon" style="background: linear-gradient(135deg, #f59e0b, #d97706);">
+                <i class="fas fa-edit"></i>
+            </div>
+        </div>
+        <div class="dashboard-card-value">{{ editais_rascunho }}</div>
+        <div class="dashboard-card-label">Rascunhos</div>
+    </div>
+    
+    <div class="dashboard-card">
+        <div class="dashboard-card-header">
+            <div class="dashboard-card-icon" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);">
+                <i class="fas fa-bell"></i>
+            </div>
+        </div>
+        <div class="dashboard-card-value">{{ total_notificacoes }}</div>
+        <div class="dashboard-card-label">Notificações</div>
+    </div>
+</div>
+
+<div class="grid-layout">
+    <!-- Editais Recentes -->
+    <div class="dashboard-section">
+        <div class="section-header">
+            <h3 class="section-title">Editais Recentes</h3>
+            <a href="{% url 'editais:admin_listar_editais' %}" class="btn btn-sm btn-secondary">
+                Ver Todos
+            </a>
+        </div>
+        
+        {% if editais_recentes %}
+            {% for edital in editais_recentes %}
+            <div class="edital-item">
+                <div class="edital-status" style="background: {{ edital.cor_status_calculada }}20; color: {{ edital.cor_status_calculada }};">
+                    {{ edital.get_status_display }}
+                </div>
+                <div style="flex: 1;">
+                    <h4 style="margin: 0; font-size: 0.875rem; font-weight: 600; color: var(--gray-900);">
+                        {{ edital.titulo|truncatechars:50 }}
+                    </h4>
+                    <p style="margin: 4px 0 0 0; font-size: 0.75rem; color: var(--gray-500);">
+                        {{ edital.numero_edital }} • {{ edital.data_criacao|date:"d/m/Y" }}
+                    </p>
+                </div>
+                <a href="{% url 'editais:admin_editar_edital' edital.id %}" 
+                   class="btn btn-sm btn-secondary" 
+                   title="Editar">
+                    <i class="fas fa-edit"></i>
+                </a>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div style="text-align: center; padding: 40px; color: var(--gray-500);">
+                <i class="fas fa-file-alt" style="font-size: 48px; margin-bottom: 16px; opacity: 0.3;"></i>
+                <p>Nenhum edital encontrado</p>
+                <a href="{% url 'editais:admin_criar_edital' %}" class="btn btn-primary" style="margin-top: 16px;">
+                    Criar Primeiro Edital
+                </a>
+            </div>
+        {% endif %}
+    </div>
+    
+    <!-- Notificações Recentes -->
+    <div class="dashboard-section">
+        <div class="section-header">
+            <h3 class="section-title">Notificações Recentes</h3>
+        </div>
+        
+        {% if notificacoes_recentes %}
+            {% for notificacao in notificacoes_recentes %}
+            <div class="notificacao-item">
+                <div class="notificacao-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div style="flex: 1;">
+                    <p style="margin: 0; font-size: 0.875rem; font-weight: 600; color: var(--gray-900);">
+                        {{ notificacao.nome_completo|default:notificacao.email|truncatechars:30 }}
+                    </p>
+                    <p style="margin: 2px 0 0 0; font-size: 0.75rem; color: var(--gray-500);">
+                        {{ notificacao.edital.titulo|truncatechars:25 }}
+                    </p>
+                    <p style="margin: 2px 0 0 0; font-size: 0.75rem; color: var(--gray-400);">
+                        {{ notificacao.data_solicitacao|date:"d/m H:i" }}
+                    </p>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div style="text-align: center; padding: 40px; color: var(--gray-500);">
+                <i class="fas fa-bell" style="font-size: 48px; margin-bottom: 16px; opacity: 0.3;"></i>
+                <p>Nenhuma notificação</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Status Distribution Chart -->
+{% if editais_por_status %}
+<div class="dashboard-section">
+    <div class="section-header">
+        <h3 class="section-title">Distribuição por Status</h3>
+    </div>
+    
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 16px;">
+        {% for item in editais_por_status %}
+        <div style="text-align: center; padding: 16px; background: var(--gray-50); border-radius: var(--radius);">
+            <div style="font-size: 1.5rem; font-weight: 700; color: var(--primary-blue); margin-bottom: 4px;">
+                {{ item.total }}
+            </div>
+            <div style="font-size: 0.75rem; color: var(--gray-600); text-transform: uppercase; letter-spacing: 0.05em;">
+                {{ item.status|title }}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+{% endblock %}

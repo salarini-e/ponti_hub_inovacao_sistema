@@ -4,6 +4,24 @@ from . import views
 app_name = 'editais'
 
 urlpatterns = [
+    # ===== URLS ADMINISTRATIVAS =====
+    
+    # Dashboard
+    path('admin/', views.admin_dashboard, name='admin_dashboard'),
+    
+    # CRUD Editais
+    path('admin/editais/', views.admin_listar_editais, name='admin_listar_editais'),
+    path('admin/editais/criar/', views.admin_criar_edital, name='admin_criar_edital'),
+    path('admin/editais/<int:edital_id>/editar/', views.admin_editar_edital, name='admin_editar_edital'),
+    path('admin/editais/<int:edital_id>/visualizar/', views.admin_visualizar_edital, name='admin_visualizar_edital'),
+    path('admin/editais/<int:edital_id>/deletar/', views.admin_deletar_edital, name='admin_deletar_edital'),
+    
+    # AJAX
+    path('admin/editais/<int:edital_id>/alterar-status/', views.admin_alterar_status_edital, name='admin_alterar_status_edital'),
+    path('admin/editais/<int:edital_id>/toggle-destaque/', views.admin_toggle_destaque_edital, name='admin_toggle_destaque_edital'),
+    
+    # ===== URLS ORIGINAIS (Sistema de Notificações) =====
+    
     # URLs para views que serão criadas futuramente
     # path('', views.lista_editais, name='lista'),
     # path('<slug:slug>/', views.detalhe_edital, name='detalhe'),

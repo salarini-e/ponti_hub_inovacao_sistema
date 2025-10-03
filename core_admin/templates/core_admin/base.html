@@ -1,152 +1,174 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}PONTI Admin - Hub de Inovação{% endblock %}</title>
-    <meta name="description" content="Painel Administrativo - PONTI Hub de Inovação">
-    
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
-    
-    <!-- Custom CSS -->
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'core_admin/css/admin_styles.css' %}">
-    
-    {% block extra_css %}{% endblock %}
-</head>
-<body>
-    <!-- Sidebar -->
-    <div class="admin-sidebar" id="adminSidebar">
-        <div class="sidebar-header">
-            <div class="sidebar-logo">
-                <img src="/static/assets/images/logo_pmnf.png" alt="PONTI Logo" class="logo-img">
-                <div class="logo-text">
-                    <h3>PONTI</h3>
-                    <span>Hub de Inovação</span>
-                </div>
-            </div>
-            <button class="sidebar-toggle mobile-only" onclick="toggleSidebar()">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
+    <!DOCTYPE html>
+    <html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}PONTI Admin - Hub de Inovação{% endblock %}</title>
+        <meta name="description" content="Painel Administrativo - PONTI Hub de Inovação">
         
-        <nav class="sidebar-nav">
-            <div class="nav-section">
-                <h4 class="nav-section-title">Dashboard</h4>
-                <a href="{% url 'core_admin:dashboard' %}" class="nav-link {% if 'dashboard' in request.resolver_match.url_name %}active{% endif %}">
-                    <i class="fas fa-chart-line"></i>
-                    <span>Visão Geral</span>
-                </a>
-            </div>
-            
-            <div class="nav-section">
-                <h4 class="nav-section-title">Conteúdo do Site</h4>
-                <a href="{% url 'core_admin:quem_somos' %}" class="nav-link {% if 'quem_somos' in request.resolver_match.url_name %}active{% endif %}">
-                    <i class="fas fa-users"></i>
-                    <span>Quem Somos</span>
-                </a>
-                <a href="{% url 'core_admin:onde_atuamos' %}" class="nav-link {% if 'onde_atuamos' in request.resolver_match.url_name %}active{% endif %}">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <span>Onde Atuamos</span>
-                </a>
-                <a href="{% url 'core_admin:configuracoes' %}" class="nav-link {% if 'configuracoes' in request.resolver_match.url_name %}active{% endif %}">
-                    <i class="fas fa-cog"></i>
-                    <span>Configurações</span>
-                </a>
-            </div>
-            
-            <div class="nav-section">
-                <h4 class="nav-section-title">Sistema</h4>
-                <a href="/admin/" class="nav-link" target="_blank">
-                    <i class="fas fa-database"></i>
-                    <span>Django Admin</span>
-                    <i class="fas fa-external-link-alt nav-external"></i>
-                </a>
-                <a href="{% url 'core:index' %}" class="nav-link" target="_blank">
-                    <i class="fas fa-globe"></i>
-                    <span>Ver Site</span>
-                    <i class="fas fa-external-link-alt nav-external"></i>
-                </a>
-            </div>
-        </nav>
+        <!-- Fonts -->
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
         
-        <div class="sidebar-footer">
-            <div class="user-info">
-                <div class="user-avatar">
-                    <i class="fas fa-user"></i>
+        <!-- Custom CSS -->
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'core_admin/css/admin_styles.css' %}">
+        
+        {% block extra_css %}{% endblock %}
+    </head>
+    <body>
+        <!-- Sidebar -->
+        <div class="admin-sidebar" id="adminSidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <img src="/static/assets/images/logo_com_pmnf.png" alt="PONTI Logo" class="logo-img">                
                 </div>
-                <div class="user-details">
-                    <span class="user-name">{{ user.get_full_name|default:user.username }}</span>
-                    <span class="user-role">Administrador</span>
-                </div>
-            </div>
-            <a href="/admin/logout/" class="logout-btn">
-                <i class="fas fa-sign-out-alt"></i>
-                <span>Sair</span>
-            </a>
-        </div>
-    </div>
-    
-    <!-- Main Content -->
-    <div class="admin-main">
-        <!-- Top Header -->
-        <header class="admin-header">
-            <div class="header-left">
-                <button class="sidebar-toggle desktop-hidden" onclick="toggleSidebar()">
-                    <i class="fas fa-bars"></i>
+                <button class="sidebar-toggle mobile-only" onclick="toggleSidebar()">
+                    <i class="fas fa-times"></i>
                 </button>
-                <div class="header-breadcrumb">
-                    <h1>{% block page_title %}Dashboard{% endblock %}</h1>
-                    <nav class="breadcrumb">
-                        {% block breadcrumb %}
-                        <span class="breadcrumb-item">Dashboard</span>
-                        {% endblock %}
-                    </nav>
-                </div>
             </div>
             
-            <div class="header-right">
-                <div class="header-actions">
-                    <a href="{% url 'core:index' %}" class="header-btn" target="_blank" title="Ver Site">
-                        <i class="fas fa-eye"></i>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <h4 class="nav-section-title">Dashboard</h4>
+                    <a href="{% url 'core_admin:dashboard' %}" class="nav-link {% if request.resolver_match.app_name == 'core_admin' and 'dashboard' in request.resolver_match.url_name %}active{% endif %}">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Visão Geral</span>
                     </a>
-                    <button class="header-btn" onclick="toggleTheme()" title="Alterar Tema">
-                        <i class="fas fa-moon"></i>
-                    </button>
                 </div>
-            </div>
-        </header>
-        
-        <!-- Content Area -->
-        <main class="admin-content">
-            <!-- Messages -->
-            {% if messages %}
-                <div class="messages-container">
-                    {% for message in messages %}
-                        <div class="message message-{{ message.tags }}">
-                            <div class="message-content">
-                                <i class="fas fa-{% if message.tags == 'success' %}check-circle{% elif message.tags == 'warning' %}exclamation-triangle{% elif message.tags == 'error' %}exclamation-circle{% else %}info-circle{% endif %}"></i>
-                                <span>{{ message }}</span>
-                                <button type="button" class="message-close" onclick="this.parentElement.parentElement.remove()">
-                                    <i class="fas fa-times"></i>
-                                </button>
+                
+                <div class="nav-section">
+                    <h4 class="nav-section-title">ADMINISTRAÇÃO</h4>
+                    
+                    <!-- Accordion para Conteúdo do Site -->
+                    <div class="nav-accordion">
+                        <button class="nav-accordion-header {% if 'quem_somos' in request.resolver_match.url_name or 'onde_atuamos' in request.resolver_match.url_name %}active{% endif %}" onclick="toggleAccordion(this)">
+                            <div style="display: flex; align-items: center; gap: 12px;">                                
+                                <i class="fas fa-font-awesome" style="width: 20px; text-align: center;"></i>
+                                <span>Conteúdo do Site</span>
                             </div>
+                            <i class="fas fa-chevron-down nav-accordion-icon"></i>
+                        </button>
+                        <div class="nav-accordion-content {% if 'quem_somos' in request.resolver_match.url_name or 'onde_atuamos' in request.resolver_match.url_name %}active{% endif %}">
+                            <a href="{% url 'core_admin:quem_somos' %}" class="nav-link {% if 'quem_somos' in request.resolver_match.url_name %}active{% endif %}">
+                                <i class="fas fa-users"></i>
+                                <span>Quem Somos</span>
+                            </a>
+                            <a href="{% url 'core_admin:onde_atuamos' %}" class="nav-link {% if 'onde_atuamos' in request.resolver_match.url_name %}active{% endif %}">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Onde Atuamos</span>
+                            </a>
                         </div>
-                    {% endfor %}
+                    </div>
+                    <a href="#" onclick="alert('Estamos desenvolvendo esta funcionalidade.')" class="nav-link {% if 'projetos' in request.resolver_match.url_name %}active{% endif %}">
+                        <i class="fas fa-folder"></i>
+                        <span>Projetos</span>
+                    </a>
+                    <a href="{% url 'editais:admin_dashboard' %}" class="nav-link {% if request.resolver_match.app_name == 'editais' %}active{% endif %}">
+                        <i class="fa-solid fa-file-pen"></i>
+                        <span>Editais</span>
+                    </a>
+                    <a href="{% url 'core_admin:configuracoes' %}" class="nav-link {% if 'configuracoes' in request.resolver_match.url_name %}active{% endif %}">
+                        <i class="fas fa-cog"></i>
+                        <span>Configurações</span>
+                    </a>
                 </div>
-            {% endif %}
+                
+                <div class="nav-section">
+                    <h4 class="nav-section-title">Painel DEV</h4>
+                    <a href="/admin/" class="nav-link" target="_blank">
+                        <i class="fa-solid fa-server"></i>
+                        <span>Servidor</span>
+                        <!-- <i class="fas fa-external-link-alt nav-external"></i> -->
+                    </a>
+                    <a href="/admin/" class="nav-link" target="_blank">
+                        <i class="fas fa-database"></i>
+                        <span>Django</span>
+                        <i class="fas fa-external-link-alt nav-external"></i>
+                    </a>
+                    <!-- <a href="{% url 'core:index' %}" class="nav-link" target="_blank">
+                        <i class="fas fa-globe"></i>
+                        <span>Ver Site</span>
+                        <i class="fas fa-external-link-alt nav-external"></i>
+                    </a> -->
+                </div>
+            </nav>
             
-            {% block content %}{% endblock %}
-        </main>
-    </div>
-    
-    <!-- Overlay for mobile -->
-    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
-    
-    <!-- Scripts -->
-    <script src="{% static 'core_admin/js/admin_scripts.js' %}"></script>
-    {% block extra_js %}{% endblock %}
-</body>
-</html>
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="user-details">
+                        <span class="user-name">{{ user.get_full_name|default:user.username }}</span>
+                        <span class="user-role">Administrador</span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="admin-main">
+            <!-- Top Header -->
+            <header class="admin-header">
+                <div class="header-left">
+                    <button class="sidebar-toggle desktop-hidden" onclick="toggleSidebar()">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div class="header-breadcrumb">
+                        <h1>{% block page_title %}Dashboard{% endblock %}</h1>
+                        <nav class="breadcrumb">
+                            {% block breadcrumb %}
+                            <span class="breadcrumb-item">Dashboard</span>
+                            {% endblock %}
+                        </nav>
+                    </div>
+                </div>
+                
+                <div class="header-right">
+                    <div class="header-actions">
+                        <a href="{% url 'core:index' %}" class="header-btn" target="_blank" title="Ver Site">
+                            <i class="fas fa-eye" style="margin-right: 5px;"></i> Ver site
+                        </a>
+                        <!-- <button class="header-btn" onclick="toggleTheme()" title="Alterar Tema">
+                            <i class="fas fa-moon"></i>
+                        </button> -->
+                        <a href="/admin/logout/" class="header-btn">
+                            <i class="fas fa-sign-out-alt"></i>                        
+                        </a>
+                    </div>
+                </div>
+            </header>
+            
+            <!-- Content Area -->
+            <main class="admin-content">
+                <!-- Messages -->
+                {% if messages %}
+                    <div class="messages-container">
+                        {% for message in messages %}
+                            <div class="message message-{{ message.tags }}">
+                                <div class="message-content">
+                                    <i class="fas fa-{% if message.tags == 'success' %}check-circle{% elif message.tags == 'warning' %}exclamation-triangle{% elif message.tags == 'error' %}exclamation-circle{% else %}info-circle{% endif %}"></i>
+                                    <span>{{ message }}</span>
+                                    <button type="button" class="message-close" onclick="this.parentElement.parentElement.remove()">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                
+                {% block content %}{% endblock %}
+            </main>
+        </div>
+        
+        <!-- Overlay for mobile -->
+        <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+        
+        <!-- Scripts -->
+        <script src="{% static 'core_admin/js/admin_scripts.js' %}"></script>
+        {% block extra_js %}{% endblock %}
+    </body>
+    </html>

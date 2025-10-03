@@ -1,0 +1,795 @@
+{% extends 'core_admin/base.html' %}
+{% load static %}
+
+{% block title %}Gerenciar Editais - PONTI Admin{% endblock %}
+
+{% block page_title %}Gerenciar Editais{% endblock %}
+
+{% block breadcrumb %}
+<a href="{% url 'editais:admin_dashboard' %}" class="breadcrumb-item">Editais</a>
+<span class="breadcrumb-item active">Listar</span>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.filters-section {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--gray-200);
+    margin-bottom: 24px;
+}
+
+.filters-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 16px;
+    align-items: end;
+}
+
+.filters-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.edital-table {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--gray-200);
+}
+
+.table-header {
+    background: linear-gradient(135deg, var(--gray-50), var(--gray-100));
+    padding: 20px 24px;
+    border-bottom: 2px solid var(--gray-200);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.table-content {
+    overflow-x: auto;
+    width: 100%;
+}
+
+.table-content::-webkit-scrollbar {
+    height: 8px;
+}
+
+.table-content::-webkit-scrollbar-track {
+    background: var(--gray-100);
+    border-radius: var(--radius);
+}
+
+.table-content::-webkit-scrollbar-thumb {
+    background: var(--gray-300);
+    border-radius: var(--radius);
+}
+
+.table-content::-webkit-scrollbar-thumb:hover {
+    background: var(--gray-400);
+}
+
+.editais-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+}
+
+.edital-row {
+    display: grid;
+    grid-template-columns: 3fr 1.2fr 1.5fr 1.2fr 1fr 1.2fr;
+    gap: 16px;
+    align-items: center;
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--gray-200);
+    transition: var(--transition-fast);
+    min-width: 800px;
+}
+
+.edital-row:hover {
+    background: var(--gray-50);
+}
+
+.edital-row:last-child {
+    border-bottom: none;
+}
+
+.table-header-row {
+    display: grid;
+    grid-template-columns: 3fr 1.2fr 1.5fr 1.2fr 1fr 1.2fr;
+    gap: 16px;
+    align-items: center;
+    padding: 16px 24px;
+    background: var(--gray-100);
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: var(--gray-700);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    min-width: 800px;
+}
+
+/* Mobile Card Layout */
+.mobile-card {
+    display: none;
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--gray-200);
+    transition: var(--transition-fast);
+}
+
+.mobile-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
+}
+
+.mobile-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+    gap: 12px;
+}
+
+.mobile-card-title {
+    flex: 1;
+}
+
+.mobile-card-title h4 {
+    margin: 0 0 4px 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--gray-900);
+    line-height: 1.3;
+}
+
+.mobile-card-title p {
+    margin: 0;
+    font-size: 0.8rem;
+    color: var(--gray-500);
+}
+
+.mobile-card-status {
+    flex-shrink: 0;
+}
+
+.mobile-card-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.mobile-info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.mobile-info-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--gray-500);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.mobile-info-value {
+    font-size: 0.875rem;
+    color: var(--gray-900);
+}
+
+.mobile-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 16px;
+    border-top: 1px solid var(--gray-200);
+}
+
+.mobile-views {
+    font-size: 0.8rem;
+    color: var(--gray-500);
+}
+
+.mobile-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.edital-info h4 {
+    margin: 0 0 4px 0;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--gray-900);
+}
+
+.edital-info p {
+    margin: 0;
+    font-size: 0.75rem;
+    color: var(--gray-500);
+}
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.categoria-badge {
+    padding: 4px 8px;
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    font-weight: 500;
+    background: var(--gray-100);
+    color: var(--gray-700);
+}
+
+.destaque-badge {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: white;
+    padding: 2px 8px;
+    border-radius: var(--radius-sm);
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.actions-group {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.action-btn {
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    font-size: 0.875rem;
+}
+
+.action-btn:hover {
+    transform: translateY(-1px);
+}
+
+.btn-view {
+    background: var(--gray-100);
+    color: var(--gray-600);
+}
+
+.btn-view:hover {
+    background: var(--gray-200);
+}
+
+.btn-edit {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: white;
+}
+
+.btn-delete {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: white;
+}
+
+.pagination-wrapper {
+    padding: 20px 24px;
+    border-top: 1px solid var(--gray-200);
+    background: var(--gray-50);
+}
+
+.empty-state {
+    text-align: center;
+    padding: 80px 40px;
+    color: var(--gray-500);
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-group label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--gray-700);
+}
+
+.form-control {
+    padding: 10px 14px;
+    border: 2px solid var(--gray-200);
+    border-radius: var(--radius);
+    font-size: 0.875rem;
+    transition: var(--transition-fast);
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--primary-blue);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Tablets */
+@media (max-width: 1200px) {
+    .edital-row,
+    .table-header-row {
+        grid-template-columns: 2.5fr 1fr 1.2fr 1fr 0.8fr 1fr;
+        gap: 12px;
+        min-width: 700px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .filters-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+    }
+    
+    .filters-actions {
+        justify-content: center;
+    }
+    
+    .edital-row,
+    .table-header-row {
+        grid-template-columns: 2fr 0.9fr 1fr 0.9fr 0.7fr 0.9fr;
+        gap: 10px;
+        font-size: 0.8rem;
+        min-width: 600px;
+    }
+    
+    .edital-info h4 {
+        font-size: 0.8rem;
+    }
+    
+    .edital-info p {
+        font-size: 0.7rem;
+    }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .filters-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+    
+    .filters-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .filters-actions .btn {
+        justify-content: center;
+    }
+    
+    /* Esconder tabela desktop no mobile */
+    .table-content {
+        display: none;
+    }
+    
+    /* Mostrar cards mobile */
+    .mobile-card {
+        display: block;
+    }
+    
+    .table-header {
+        padding: 16px 20px;
+    }
+    
+    .table-header h3 {
+        font-size: 1rem;
+    }
+    
+    .pagination-wrapper {
+        padding: 16px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .filters-section {
+        padding: 16px;
+        margin-bottom: 16px;
+    }
+    
+    .mobile-card {
+        padding: 16px;
+        margin-bottom: 12px;
+    }
+    
+    .mobile-card-body {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+    
+    .mobile-card-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    
+    .action-btn {
+        width: 28px;
+        height: 28px;
+        font-size: 0.8rem;
+    }
+    
+    .destaque-badge {
+        font-size: 0.6rem;
+        padding: 2px 6px;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Filtros -->
+<div class="filters-section">
+    <form method="get" class="filters-grid">
+        <div class="form-group">
+            <label for="busca">Buscar Editais</label>
+            <input type="text" 
+                   id="busca" 
+                   name="busca" 
+                   class="form-control" 
+                   placeholder="Título, número ou descrição..."
+                   value="{{ filtros.busca }}">
+        </div>
+        
+        <div class="form-group">
+            <label for="categoria">Categoria</label>
+            <select id="categoria" name="categoria" class="form-control">
+                <option value="">Todas</option>
+                {% for categoria in categorias %}
+                <option value="{{ categoria.id }}" {% if filtros.categoria == categoria.id|stringformat:"s" %}selected{% endif %}>
+                    {{ categoria.nome }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="status">Status</label>
+            <select id="status" name="status" class="form-control">
+                <option value="">Todos</option>
+                {% for valor, nome in status_choices %}
+                <option value="{{ valor }}" {% if filtros.status == valor %}selected{% endif %}>
+                    {{ nome }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="ordenacao">Ordenar por</label>
+            <select id="ordenacao" name="ordenacao" class="form-control">
+                <option value="-data_criacao" {% if filtros.ordenacao == "-data_criacao" %}selected{% endif %}>
+                    Mais recentes
+                </option>
+                <option value="data_criacao" {% if filtros.ordenacao == "data_criacao" %}selected{% endif %}>
+                    Mais antigos
+                </option>
+                <option value="titulo" {% if filtros.ordenacao == "titulo" %}selected{% endif %}>
+                    Título A-Z
+                </option>
+                <option value="-titulo" {% if filtros.ordenacao == "-titulo" %}selected{% endif %}>
+                    Título Z-A
+                </option>
+                <option value="data_encerramento" {% if filtros.ordenacao == "data_encerramento" %}selected{% endif %}>
+                    Encerramento
+                </option>
+            </select>
+        </div>
+    </form>
+    
+    <div class="filters-actions">
+        <button type="submit" form="filters-form" class="btn btn-primary">
+            <i class="fas fa-search"></i> Buscar
+        </button>
+        <a href="{% url 'editais:admin_listar_editais' %}" class="btn btn-secondary">
+            <i class="fas fa-times"></i> Limpar
+        </a>
+        <a href="{% url 'editais:admin_criar_edital' %}" class="btn btn-success" style="margin-left: auto;">
+            <i class="fas fa-plus"></i> Novo Edital
+        </a>
+    </div>
+</div>
+
+<!-- Tabela de Editais -->
+<div class="edital-table">
+    <div class="table-header">
+        <h3 style="margin: 0; font-size: 1.125rem; font-weight: 700; color: var(--gray-900);">
+            Editais Encontrados ({{ editais|length }})
+        </h3>
+    </div>
+    
+    {% if editais %}
+    <div class="table-content">
+        <div class="table-header-row">
+            <div>Edital</div>
+            <div>Categoria</div>
+            <div>Status</div>
+            <div>Encerramento</div>
+            <div>Visualizações</div>
+            <div>Ações</div>
+        </div>
+        
+        <div class="editais-grid">
+            {% for edital in editais %}
+            <div class="edital-row">
+                <!-- Info do Edital -->
+                <div class="edital-info">
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                        <h4>{{ edital.titulo|truncatechars:40 }}</h4>
+                        {% if edital.destaque %}
+                        <span class="destaque-badge">
+                            <i class="fas fa-star"></i> Destaque
+                        </span>
+                        {% endif %}
+                    </div>
+                    <p>{{ edital.numero_edital }}</p>
+                    <p style="color: var(--gray-400);">
+                        Criado em {{ edital.data_criacao|date:"d/m/Y" }}
+                        {% if edital.criado_por %}por {{ edital.criado_por.get_full_name|default:edital.criado_por.username }}{% endif %}
+                    </p>
+                </div>
+                
+                <!-- Categoria -->
+                <div>
+                    <span class="categoria-badge" style="background: {{ edital.categoria.cor }}20; color: {{ edital.categoria.cor }};">
+                        <i class="{{ edital.categoria.icone }}"></i>
+                        {{ edital.categoria.nome }}
+                    </span>
+                </div>
+                
+                <!-- Status -->
+                <div>
+                    <span class="status-badge" style="background: {{ edital.cor_status_calculada }}20; color: {{ edital.cor_status_calculada }};">
+                        <i class="{{ edital.icone_status }}"></i>
+                        {{ edital.get_status_display }}
+                    </span>
+                </div>
+                
+                <!-- Data de Encerramento -->
+                <div style="font-size: 0.875rem; color: var(--gray-600);">
+                    {% if edital.data_encerramento %}
+                        {{ edital.data_encerramento|date:"d/m/Y H:i" }}
+                        {% if edital.dias_restantes is not None %}
+                            <small style="display: block; color: {% if edital.dias_restantes <= 7 %}var(--error){% else %}var(--gray-500){% endif %};">
+                                {% if edital.dias_restantes > 0 %}
+                                    {{ edital.dias_restantes }} dias restantes
+                                {% elif edital.dias_restantes == 0 %}
+                                    Encerra hoje
+                                {% else %}
+                                    Encerrado
+                                {% endif %}
+                            </small>
+                        {% endif %}
+                    {% else %}
+                        <span style="color: var(--gray-400);">Não definida</span>
+                    {% endif %}
+                </div>
+                
+                <!-- Visualizações -->
+                <div style="text-align: center;">
+                    <span style="font-weight: 600; color: var(--gray-700);">{{ edital.visualizacoes }}</span>
+                    <small style="display: block; color: var(--gray-500);">views</small>
+                </div>
+                
+                <!-- Ações -->
+                <div class="actions-group">
+                    <a href="{% url 'editais:admin_visualizar_edital' edital.id %}" 
+                       class="action-btn btn-view" 
+                       title="Visualizar">
+                        <i class="fas fa-eye"></i>
+                    </a>
+                    
+                    <a href="{% url 'editais:admin_editar_edital' edital.id %}" 
+                       class="action-btn btn-edit" 
+                       title="Editar">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    
+                    <button onclick="confirmarDelecao('{{ edital.titulo|escapejs }}', '{% url 'editais:admin_deletar_edital' edital.id %}')"
+                            class="action-btn btn-delete" 
+                            title="Deletar">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <!-- Cards Mobile -->
+    <div class="mobile-cards-container">
+        {% for edital in editais %}
+        <div class="mobile-card">
+            <div class="mobile-card-header">
+                <div class="mobile-card-title">
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                        <h4>{{ edital.titulo|truncatechars:35 }}</h4>
+                        {% if edital.destaque %}
+                        <span class="destaque-badge">
+                            <i class="fas fa-star"></i>
+                        </span>
+                        {% endif %}
+                    </div>
+                    <p>{{ edital.numero_edital }}</p>
+                </div>
+                <div class="mobile-card-status">
+                    <span class="status-badge" style="background: {{ edital.cor_status_calculada }}20; color: {{ edital.cor_status_calculada }};">
+                        <i class="{{ edital.icone_status }}"></i>
+                        {{ edital.get_status_display }}
+                    </span>
+                </div>
+            </div>
+            
+            <div class="mobile-card-body">
+                <div class="mobile-info-item">
+                    <span class="mobile-info-label">Categoria</span>
+                    <div class="mobile-info-value">
+                        <span class="categoria-badge" style="background: {{ edital.categoria.cor }}20; color: {{ edital.categoria.cor }};">
+                            <i class="{{ edital.categoria.icone }}"></i>
+                            {{ edital.categoria.nome }}
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="mobile-info-item">
+                    <span class="mobile-info-label">Encerramento</span>
+                    <div class="mobile-info-value">
+                        {% if edital.data_encerramento %}
+                            <div>{{ edital.data_encerramento|date:"d/m/Y" }}</div>
+                            {% if edital.dias_restantes is not None %}
+                                <small style="color: {% if edital.dias_restantes <= 7 %}var(--error){% else %}var(--gray-500){% endif %};">
+                                    {% if edital.dias_restantes > 0 %}
+                                        {{ edital.dias_restantes }} dias
+                                    {% elif edital.dias_restantes == 0 %}
+                                        Hoje
+                                    {% else %}
+                                        Encerrado
+                                    {% endif %}
+                                </small>
+                            {% endif %}
+                        {% else %}
+                            <span style="color: var(--gray-400);">Não definida</span>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="mobile-info-item">
+                    <span class="mobile-info-label">Criado</span>
+                    <div class="mobile-info-value">
+                        <div>{{ edital.data_criacao|date:"d/m/Y" }}</div>
+                        {% if edital.criado_por %}
+                        <small style="color: var(--gray-500);">{{ edital.criado_por.get_full_name|default:edital.criado_por.username|truncatechars:15 }}</small>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="mobile-info-item">
+                    <span class="mobile-info-label">Visualizações</span>
+                    <div class="mobile-info-value">{{ edital.visualizacoes }}</div>
+                </div>
+            </div>
+            
+            <div class="mobile-card-footer">
+                <div class="mobile-views">
+                    <i class="fas fa-eye"></i> {{ edital.visualizacoes }} views
+                </div>
+                <div class="mobile-actions">
+                    <a href="{% url 'editais:admin_visualizar_edital' edital.id %}" 
+                       class="action-btn btn-view" 
+                       title="Visualizar">
+                        <i class="fas fa-eye"></i>
+                    </a>
+                    
+                    <a href="{% url 'editais:admin_editar_edital' edital.id %}" 
+                       class="action-btn btn-edit" 
+                       title="Editar">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    
+                    <button onclick="confirmarDelecao('{{ edital.titulo|escapejs }}', '{% url 'editais:admin_deletar_edital' edital.id %}')"
+                            class="action-btn btn-delete" 
+                            title="Deletar">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <!-- Paginação -->
+    {% if editais.has_other_pages %}
+    <div class="pagination-wrapper">
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+            <div style="font-size: 0.875rem; color: var(--gray-600);">
+                Página {{ editais.number }} de {{ editais.paginator.num_pages }}
+                ({{ editais.paginator.count }} editais no total)
+            </div>
+            
+            <div style="display: flex; gap: 8px;">
+                {% if editais.has_previous %}
+                <a href="?{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}page={{ editais.previous_page_number }}" 
+                   class="btn btn-sm btn-secondary">
+                    <i class="fas fa-chevron-left"></i> Anterior
+                </a>
+                {% endif %}
+                
+                {% if editais.has_next %}
+                <a href="?{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}page={{ editais.next_page_number }}" 
+                   class="btn btn-sm btn-secondary">
+                    Próxima <i class="fas fa-chevron-right"></i>
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    
+    {% else %}
+    <div class="empty-state">
+        <i class="fas fa-file-alt" style="font-size: 64px; margin-bottom: 24px; opacity: 0.3;"></i>
+        <h3 style="margin-bottom: 12px; color: var(--gray-600);">Nenhum edital encontrado</h3>
+        <p style="margin-bottom: 24px;">
+            {% if filtros.busca or filtros.categoria or filtros.status %}
+                Tente ajustar os filtros ou criar um novo edital.
+            {% else %}
+                Comece criando seu primeiro edital.
+            {% endif %}
+        </p>
+        <a href="{% url 'editais:admin_criar_edital' %}" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Criar Novo Edital
+        </a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Auto-submit do formulário de filtros
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('.filters-section form');
+    const inputs = form.querySelectorAll('input, select');
+    
+    inputs.forEach(input => {
+        input.addEventListener('change', function() {
+            form.submit();
+        });
+    });
+});
+
+// Confirmação de deleção
+function confirmarDelecao(titulo, url) {
+    if (confirm(`Tem certeza que deseja deletar o edital "${titulo}"?\n\nEsta ação não pode ser desfeita.`)) {
+        window.location.href = url;
+    }
+}
+</script>
+{% endblock %}

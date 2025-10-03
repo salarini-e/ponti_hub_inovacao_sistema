@@ -103,6 +103,7 @@ class MembroEquipe(models.Model):
     
     # Informações visuais
     foto = models.ImageField(
+        blank=True,
         upload_to='equipe/fotos/',
         verbose_name="Foto",
         help_text="Imagem do membro (recomendado: 400x400px)"

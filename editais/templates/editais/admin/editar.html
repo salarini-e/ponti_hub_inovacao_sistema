@@ -1,0 +1,758 @@
+{% extends 'core_admin/base.html' %}
+{% load static %}
+
+{% block title %}Editar Edital - PONTI Admin{% endblock %}
+
+{% block page_title %}Editar Edital{% endblock %}
+
+{% block breadcrumb %}
+<a href="{% url 'editais:admin_dashboard' %}" class="breadcrumb-item">Editais</a>
+<span class="breadcrumb-item">
+    <a href="{% url 'editais:admin_listar_editais' %}">Listar</a>
+</span>
+<span class="breadcrumb-item active">Editar</span>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.form-container {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--gray-200);
+    margin-bottom: 24px;
+}
+
+.edital-header {
+    background: linear-gradient(135deg, var(--primary-blue), var(--primary-blue-light));
+    color: white;
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.edital-info h2 {
+    margin: 0 0 8px 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.edital-meta {
+    display: flex;
+    gap: 24px;
+    font-size: 0.875rem;
+    opacity: 0.9;
+}
+
+.status-current {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: var(--radius);
+    font-weight: 600;
+}
+
+.form-section {
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 2px solid var(--gray-100);
+}
+
+.form-section:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.section-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--gray-900);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.section-icon {
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, var(--primary-blue), var(--primary-blue-light));
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 14px;
+}
+
+.form-grid {
+    display: grid;
+    gap: 20px;
+}
+
+.form-grid-2 {
+    grid-template-columns: 1fr 1fr;
+}
+
+.form-grid-3 {
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group.full-width {
+    grid-column: 1 / -1;
+}
+
+.form-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--gray-700);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.form-label.required::after {
+    content: '*';
+    color: var(--error);
+    font-weight: 700;
+}
+
+.form-control {
+    padding: 12px 16px;
+    border: 2px solid var(--gray-200);
+    border-radius: var(--radius);
+    font-size: 0.875rem;
+    transition: var(--transition-fast);
+    font-family: inherit;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--primary-blue);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.form-help {
+    font-size: 0.75rem;
+    color: var(--gray-500);
+    margin-top: 4px;
+}
+
+.textarea-large {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.checkbox-input {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--primary-blue);
+}
+
+.areas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+    margin-top: 12px;
+}
+
+.area-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border: 2px solid var(--gray-200);
+    border-radius: var(--radius);
+    transition: var(--transition-fast);
+    cursor: pointer;
+}
+
+.area-checkbox:hover {
+    border-color: var(--gray-300);
+}
+
+.area-checkbox.selected {
+    border-color: var(--primary-blue);
+    background: rgba(59, 130, 246, 0.05);
+}
+
+.file-upload-area {
+    border: 2px dashed var(--gray-300);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    text-align: center;
+    transition: var(--transition-fast);
+    cursor: pointer;
+}
+
+.file-upload-area:hover {
+    border-color: var(--primary-blue);
+    background: rgba(59, 130, 246, 0.02);
+}
+
+.current-file {
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius);
+    padding: 16px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.color-picker-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.color-input {
+    width: 40px;
+    height: 40px;
+    border: 2px solid var(--gray-200);
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.actions-section {
+    background: var(--gray-50);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    margin-top: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+}
+
+.btn-group {
+    display: flex;
+    gap: 12px;
+}
+
+.stats-sidebar {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--gray-200);
+    margin-bottom: 24px;
+}
+
+.stat-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--gray-100);
+}
+
+.stat-item:last-child {
+    border-bottom: none;
+}
+
+.notificacao-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    border-radius: var(--radius);
+    border: 1px solid var(--gray-200);
+    margin-bottom: 8px;
+}
+
+.main-grid {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 24px;
+}
+
+@media (max-width: 1024px) {
+    .main-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .form-grid-2,
+    .form-grid-3 {
+        grid-template-columns: 1fr;
+    }
+    
+    .actions-section {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .btn-group {
+        justify-content: center;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Header do Edital -->
+<div class="edital-header">
+    <div class="edital-info">
+        <h2>{{ edital.titulo }}</h2>
+        <div class="edital-meta">
+            <span><i class="fas fa-hashtag"></i> {{ edital.numero_edital }}</span>
+            <span><i class="fas fa-calendar"></i> Criado em {{ edital.data_criacao|date:"d/m/Y H:i" }}</span>
+            {% if edital.criado_por %}
+            <span><i class="fas fa-user"></i> {{ edital.criado_por.get_full_name|default:edital.criado_por.username }}</span>
+            {% endif %}
+        </div>
+    </div>
+    <div class="status-current">
+        <i class="{{ edital.icone_status }}"></i>
+        {{ edital.get_status_display }}
+    </div>
+</div>
+
+<div class="main-grid">
+    <!-- Formulário Principal -->
+    <div>
+        <form method="post" enctype="multipart/form-data" class="edital-form">
+            {% csrf_token %}
+            
+            <div class="form-container">
+                <!-- Informações Básicas -->
+                <div class="form-section">
+                    <h3 class="section-title">
+                        <div class="section-icon">
+                            <i class="fas fa-info-circle"></i>
+                        </div>
+                        Informações Básicas
+                    </h3>
+                    
+                    <div class="form-grid form-grid-2">
+                        <div class="form-group">
+                            <label for="titulo" class="form-label required">Título do Edital</label>
+                            <input type="text" 
+                                   id="titulo" 
+                                   name="titulo" 
+                                   class="form-control" 
+                                   value="{{ edital.titulo }}"
+                                   required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="numero_edital" class="form-label required">Número do Edital</label>
+                            <input type="text" 
+                                   id="numero_edital" 
+                                   name="numero_edital" 
+                                   class="form-control" 
+                                   value="{{ edital.numero_edital }}"
+                                   required>
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <label for="subtitulo" class="form-label required">Subtítulo</label>
+                            <input type="text" 
+                                   id="subtitulo" 
+                                   name="subtitulo" 
+                                   class="form-control" 
+                                   value="{{ edital.subtitulo }}"
+                                   required>
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <label for="descricao_completa" class="form-label required">Descrição Completa</label>
+                            <textarea id="descricao_completa" 
+                                      name="descricao_completa" 
+                                      class="form-control textarea-large" 
+                                      required>{{ edital.descricao_completa }}</textarea>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Classificação -->
+                <div class="form-section">
+                    <h3 class="section-title">
+                        <div class="section-icon">
+                            <i class="fas fa-tags"></i>
+                        </div>
+                        Classificação
+                    </h3>
+                    
+                    <div class="form-grid form-grid-3">
+                        <div class="form-group">
+                            <label for="categoria" class="form-label required">Categoria</label>
+                            <select id="categoria" name="categoria" class="form-control" required>
+                                {% for categoria in categorias %}
+                                <option value="{{ categoria.id }}" {% if categoria.id == edital.categoria.id %}selected{% endif %}>
+                                    {{ categoria.nome }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="modalidade" class="form-label required">Modalidade</label>
+                            <select id="modalidade" name="modalidade" class="form-control" required>
+                                {% for valor, nome in modalidade_choices %}
+                                <option value="{{ valor }}" {% if valor == edital.modalidade %}selected{% endif %}>{{ nome }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="status" class="form-label required">Status</label>
+                            <select id="status" name="status" class="form-control" required>
+                                {% for valor, nome in status_choices %}
+                                <option value="{{ valor }}" {% if valor == edital.status %}selected{% endif %}>{{ nome }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- Áreas de Interesse -->
+                    <div class="form-group full-width">
+                        <label class="form-label">Áreas de Interesse</label>
+                        <div class="areas-grid">
+                            {% for area in areas_interesse %}
+                            <label class="area-checkbox {% if area in edital.areas_interesse.all %}selected{% endif %}">
+                                <input type="checkbox" 
+                                       name="areas_interesse" 
+                                       value="{{ area.id }}" 
+                                       class="checkbox-input"
+                                       {% if area in edital.areas_interesse.all %}checked{% endif %}>
+                                <i class="{{ area.icone }}"></i>
+                                <span>{{ area.nome }}</span>
+                            </label>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Datas e Prazos -->
+                <div class="form-section">
+                    <h3 class="section-title">
+                        <div class="section-icon">
+                            <i class="fas fa-calendar"></i>
+                        </div>
+                        Datas e Prazos
+                    </h3>
+                    
+                    <div class="form-grid form-grid-2">
+                        <div class="form-group">
+                            <label for="data_abertura" class="form-label">Data de Abertura</label>
+                            <input type="datetime-local" 
+                                   id="data_abertura" 
+                                   name="data_abertura" 
+                                   class="form-control"
+                                   value="{% if edital.data_abertura %}{{ edital.data_abertura|date:'Y-m-d\TH:i' }}{% endif %}">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="data_encerramento" class="form-label required">Data de Encerramento</label>
+                            <input type="datetime-local" 
+                                   id="data_encerramento" 
+                                   name="data_encerramento" 
+                                   class="form-control" 
+                                   value="{{ edital.data_encerramento|date:'Y-m-d\TH:i' }}"
+                                   required>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Informações Específicas -->
+                <div class="form-section">
+                    <h3 class="section-title">
+                        <div class="section-icon">
+                            <i class="fas fa-cog"></i>
+                        </div>
+                        Informações Específicas
+                    </h3>
+                    
+                    <div class="form-grid form-grid-2">
+                        <div class="form-group">
+                            <label for="numero_desafios" class="form-label">Número de Desafios/Vagas</label>
+                            <input type="number" 
+                                   id="numero_desafios" 
+                                   name="numero_desafios" 
+                                   class="form-control" 
+                                   min="1" 
+                                   value="{{ edital.numero_desafios|default:'' }}">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="valor_premio" class="form-label">Valor do Prêmio (R$)</label>
+                            <input type="number" 
+                                   id="valor_premio" 
+                                   name="valor_premio" 
+                                   class="form-control" 
+                                   step="0.01" 
+                                   min="0" 
+                                   value="{{ edital.valor_premio|default:'' }}">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="link_inscricao" class="form-label">Link de Inscrição</label>
+                            <input type="url" 
+                                   id="link_inscricao" 
+                                   name="link_inscricao" 
+                                   class="form-control" 
+                                   value="{{ edital.link_inscricao|default:'' }}">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="link_mais_informacoes" class="form-label">Link Mais Informações</label>
+                            <input type="url" 
+                                   id="link_mais_informacoes" 
+                                   name="link_mais_informacoes" 
+                                   class="form-control" 
+                                   value="{{ edital.link_mais_informacoes|default:'' }}">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Arquivo e Personalização -->
+                <div class="form-section">
+                    <h3 class="section-title">
+                        <div class="section-icon">
+                            <i class="fas fa-file-upload"></i>
+                        </div>
+                        Arquivo e Personalização
+                    </h3>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="arquivo_edital" class="form-label">Arquivo do Edital</label>
+                            
+                            {% if edital.arquivo_edital %}
+                            <div class="current-file">
+                                <i class="fas fa-file-pdf" style="color: var(--error); font-size: 24px;"></i>
+                                <div style="flex: 1;">
+                                    <p style="margin: 0; font-weight: 600; color: var(--gray-700);">
+                                        {{ edital.arquivo_edital.name|slice:"10:" }}
+                                    </p>
+                                    <small style="color: var(--gray-500);">Arquivo atual</small>
+                                </div>
+                                <a href="{{ edital.arquivo_edital.url }}" target="_blank" class="btn btn-sm btn-secondary">
+                                    <i class="fas fa-download"></i> Download
+                                </a>
+                            </div>
+                            {% endif %}
+                            
+                            <div class="file-upload-area" onclick="document.getElementById('arquivo_edital').click()">
+                                <i class="fas fa-cloud-upload-alt" style="font-size: 32px; color: var(--gray-400); margin-bottom: 8px;"></i>
+                                <p style="margin: 0; color: var(--gray-600);">
+                                    {% if edital.arquivo_edital %}Clique para substituir o arquivo{% else %}Clique para selecionar arquivo{% endif %}
+                                </p>
+                                <small style="color: var(--gray-500);">PDF, DOC ou DOCX até 10MB</small>
+                            </div>
+                            <input type="file" 
+                                   id="arquivo_edital" 
+                                   name="arquivo_edital" 
+                                   accept=".pdf,.doc,.docx" 
+                                   style="display: none;">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="cor_status" class="form-label">Cor Personalizada do Status</label>
+                            <div class="color-picker-group">
+                                <input type="color" 
+                                       id="cor_status" 
+                                       name="cor_status" 
+                                       class="color-input" 
+                                       value="{{ edital.cor_status|default:'#3b82f6' }}">
+                                <span style="color: var(--gray-600); font-size: 0.875rem;">
+                                    Cor atual: {{ edital.cor_status_calculada }}
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="checkbox-group">
+                            <input type="checkbox" 
+                                   id="destaque" 
+                                   name="destaque" 
+                                   class="checkbox-input"
+                                   {% if edital.destaque %}checked{% endif %}>
+                            <label for="destaque" class="form-label">
+                                <i class="fas fa-star" style="color: #f59e0b;"></i>
+                                Destacar este edital
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Ações -->
+            <div class="actions-section">
+                <div>
+                    <p style="margin: 0; color: var(--gray-600); font-size: 0.875rem;">
+                        <i class="fas fa-info-circle"></i>
+                        Última atualização: {{ edital.data_atualizacao|date:"d/m/Y H:i" }}
+                    </p>
+                </div>
+                
+                <div class="btn-group">
+                    <a href="{% url 'editais:admin_visualizar_edital' edital.id %}" class="btn btn-secondary">
+                        <i class="fas fa-eye"></i> Visualizar
+                    </a>
+                    <a href="{% url 'editais:admin_listar_editais' %}" class="btn btn-secondary">
+                        <i class="fas fa-list"></i> Voltar à Lista
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Salvar Alterações
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+    <!-- Sidebar com Estatísticas -->
+    <div>
+        <div class="stats-sidebar">
+            <h3 style="margin: 0 0 20px 0; font-size: 1.125rem; font-weight: 700; color: var(--gray-900);">
+                Estatísticas
+            </h3>
+            
+            <div class="stat-item">
+                <span style="color: var(--gray-600);">Visualizações</span>
+                <strong style="color: var(--gray-900);">{{ edital.visualizacoes }}</strong>
+            </div>
+            
+            <div class="stat-item">
+                <span style="color: var(--gray-600);">Notificações</span>
+                <strong style="color: var(--gray-900);">{{ total_notificacoes }}</strong>
+            </div>
+            
+            <div class="stat-item">
+                <span style="color: var(--gray-600);">Status</span>
+                <span style="color: {{ edital.cor_status_calculada }}; font-weight: 600;">
+                    {{ edital.get_status_display }}
+                </span>
+            </div>
+            
+            {% if edital.dias_restantes is not None %}
+            <div class="stat-item">
+                <span style="color: var(--gray-600);">Dias Restantes</span>
+                <strong style="color: {% if edital.dias_restantes <= 7 %}var(--error){% else %}var(--gray-900){% endif %};">
+                    {% if edital.dias_restantes > 0 %}
+                        {{ edital.dias_restantes }}
+                    {% elif edital.dias_restantes == 0 %}
+                        Encerra hoje
+                    {% else %}
+                        Encerrado
+                    {% endif %}
+                </strong>
+            </div>
+            {% endif %}
+        </div>
+        
+        <!-- Notificações Recentes -->
+        {% if notificacoes %}
+        <div class="stats-sidebar">
+            <h3 style="margin: 0 0 20px 0; font-size: 1.125rem; font-weight: 700; color: var(--gray-900);">
+                Últimas Notificações
+            </h3>
+            
+            {% for notificacao in notificacoes %}
+            <div class="notificacao-item">
+                <div style="width: 32px; height: 32px; background: var(--primary-blue); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px;">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div style="flex: 1;">
+                    <p style="margin: 0; font-size: 0.875rem; font-weight: 600; color: var(--gray-900);">
+                        {{ notificacao.nome_completo|default:notificacao.email|truncatechars:25 }}
+                    </p>
+                    <p style="margin: 2px 0 0 0; font-size: 0.75rem; color: var(--gray-500);">
+                        {{ notificacao.data_solicitacao|date:"d/m H:i" }}
+                    </p>
+                </div>
+            </div>
+            {% endfor %}
+            
+            {% if total_notificacoes > 5 %}
+            <div style="text-align: center; margin-top: 16px;">
+                <a href="{% url 'editais:listar_notificacoes' edital.slug %}" class="btn btn-sm btn-secondary">
+                    Ver Todas ({{ total_notificacoes }})
+                </a>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Auto-resize textareas
+    const textareas = document.querySelectorAll('textarea');
+    textareas.forEach(textarea => {
+        function resize() {
+            textarea.style.height = 'auto';
+            textarea.style.height = textarea.scrollHeight + 'px';
+        }
+        
+        resize(); // Initial resize
+        textarea.addEventListener('input', resize);
+    });
+    
+    // File upload preview
+    const fileInput = document.getElementById('arquivo_edital');
+    const uploadArea = document.querySelector('.file-upload-area');
+    
+    fileInput.addEventListener('change', function() {
+        if (this.files.length > 0) {
+            const fileName = this.files[0].name;
+            uploadArea.innerHTML = `
+                <i class="fas fa-file-pdf" style="font-size: 32px; color: var(--success); margin-bottom: 8px;"></i>
+                <p style="margin: 0; color: var(--gray-700); font-weight: 600;">${fileName}</p>
+                <small style="color: var(--gray-500);">Novo arquivo selecionado</small>
+            `;
+        }
+    });
+    
+    // Checkbox areas styling
+    const areaCheckboxes = document.querySelectorAll('.area-checkbox input');
+    areaCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            const label = this.closest('.area-checkbox');
+            label.classList.toggle('selected', this.checked);
+        });
+    });
+    
+    // Validação de datas
+    const dataAbertura = document.getElementById('data_abertura');
+    const dataEncerramento = document.getElementById('data_encerramento');
+    
+    function validarDatas() {
+        if (dataAbertura.value && dataEncerramento.value) {
+            if (new Date(dataAbertura.value) >= new Date(dataEncerramento.value)) {
+                dataEncerramento.setCustomValidity('A data de encerramento deve ser posterior à data de abertura');
+            } else {
+                dataEncerramento.setCustomValidity('');
+            }
+        }
+    }
+    
+    dataAbertura.addEventListener('change', validarDatas);
+    dataEncerramento.addEventListener('change', validarDatas);
+});
+</script>
+{% endblock %}

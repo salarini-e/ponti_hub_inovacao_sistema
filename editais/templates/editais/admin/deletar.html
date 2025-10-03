@@ -1,0 +1,578 @@
+{% extends 'core_admin/base.html' %}
+{% load static %}
+
+{% block title %}Deletar Edital - PONTI Admin{% endblock %}
+
+{% block page_title %}Deletar Edital{% endblock %}
+
+{% block breadcrumb %}
+<a href="{% url 'editais:admin_dashboard' %}" class="breadcrumb-item">Editais</a>
+<span class="breadcrumb-item">
+    <a href="{% url 'editais:admin_listar_editais' %}">Listar</a>
+</span>
+<span class="breadcrumb-item active">Deletar</span>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.delete-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.warning-card {
+    background: linear-gradient(135deg, #fef3c7, #fde68a);
+    border: 2px solid #f59e0b;
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    margin-bottom: 32px;
+    text-align: center;
+}
+
+.warning-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 32px;
+    margin: 0 auto 24px auto;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.warning-title {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #92400e;
+    margin: 0 0 12px 0;
+}
+
+.warning-subtitle {
+    font-size: 1.125rem;
+    color: #b45309;
+    margin: 0 0 24px 0;
+    line-height: 1.5;
+}
+
+.edital-info-card {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--gray-200);
+    margin-bottom: 32px;
+}
+
+.edital-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    margin-bottom: 24px;
+    padding-bottom: 24px;
+    border-bottom: 2px solid var(--gray-100);
+}
+
+.edital-icon {
+    width: 64px;
+    height: 64px;
+    background: linear-gradient(135deg, var(--primary-blue), var(--primary-blue-light));
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 24px;
+    flex-shrink: 0;
+}
+
+.edital-details h2 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--gray-900);
+    margin: 0 0 8px 0;
+    line-height: 1.3;
+}
+
+.edital-details p {
+    font-size: 0.875rem;
+    color: var(--gray-600);
+    margin: 0 0 12px 0;
+    line-height: 1.5;
+}
+
+.edital-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.meta-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: var(--gray-100);
+    color: var(--gray-700);
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.status-badge {
+    padding: 8px 16px;
+    border-radius: var(--radius);
+    font-weight: 700;
+    font-size: 0.875rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.status-ativo {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.status-inativo {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.status-rascunho {
+    background: #f3f4f6;
+    color: #6b7280;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+    margin-top: 24px;
+}
+
+.stat-item {
+    text-align: center;
+    padding: 20px;
+    background: var(--gray-50);
+    border-radius: var(--radius);
+    border-left: 4px solid var(--primary-blue);
+}
+
+.stat-number {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--primary-blue);
+    display: block;
+    margin-bottom: 8px;
+}
+
+.stat-label {
+    font-size: 0.875rem;
+    color: var(--gray-600);
+    font-weight: 600;
+}
+
+.consequences-card {
+    background: #fef2f2;
+    border: 2px solid #fecaca;
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    margin-bottom: 32px;
+}
+
+.consequences-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #dc2626;
+    margin: 0 0 16px 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.consequences-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.consequences-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid #fecaca;
+    font-size: 0.875rem;
+    color: #7f1d1d;
+    line-height: 1.5;
+}
+
+.consequences-list li:last-child {
+    border-bottom: none;
+}
+
+.consequences-list li i {
+    color: #dc2626;
+    font-size: 16px;
+    margin-top: 2px;
+    flex-shrink: 0;
+}
+
+.confirmation-section {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--gray-200);
+    margin-bottom: 32px;
+}
+
+.confirmation-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--gray-900);
+    margin: 0 0 20px 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.confirmation-checkbox {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 16px;
+    padding: 16px;
+    background: var(--gray-50);
+    border-radius: var(--radius);
+    border: 2px solid var(--gray-200);
+    transition: var(--transition-fast);
+    cursor: pointer;
+}
+
+.confirmation-checkbox:hover {
+    border-color: var(--primary-blue);
+    background: var(--gray-100);
+}
+
+.confirmation-checkbox input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    accent-color: var(--primary-blue);
+    cursor: pointer;
+}
+
+.confirmation-checkbox label {
+    font-size: 0.875rem;
+    color: var(--gray-700);
+    line-height: 1.5;
+    cursor: pointer;
+    flex: 1;
+}
+
+.actions-container {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 28px;
+    border-radius: var(--radius);
+    font-weight: 700;
+    font-size: 0.875rem;
+    text-decoration: none;
+    transition: var(--transition-fast);
+    cursor: pointer;
+    border: 2px solid transparent;
+    min-width: 150px;
+    justify-content: center;
+}
+
+.btn-cancel {
+    background: var(--gray-100);
+    color: var(--gray-700);
+    border-color: var(--gray-300);
+}
+
+.btn-cancel:hover {
+    background: var(--gray-200);
+    border-color: var(--gray-400);
+    color: var(--gray-800);
+    transform: translateY(-1px);
+}
+
+.btn-delete {
+    background: linear-gradient(135deg, #dc2626, #b91c1c);
+    color: white;
+    border-color: #dc2626;
+}
+
+.btn-delete:hover {
+    background: linear-gradient(135deg, #b91c1c, #991b1b);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.btn-delete:disabled {
+    background: var(--gray-300);
+    color: var(--gray-500);
+    border-color: var(--gray-300);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.btn-delete:disabled:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+.final-warning {
+    background: #7f1d1d;
+    color: white;
+    border-radius: var(--radius);
+    padding: 16px;
+    text-align: center;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+    .edital-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .edital-meta {
+        justify-content: center;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .actions-container {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .btn {
+        width: 100%;
+    }
+}
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    const deleteButton = document.getElementById('deleteButton');
+    
+    function updateDeleteButton() {
+        const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
+        deleteButton.disabled = !allChecked;
+    }
+    
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', updateDeleteButton);
+    });
+    
+    // Inicializar estado do botão
+    updateDeleteButton();
+    
+    // Confirmação adicional no clique do botão deletar
+    deleteButton.addEventListener('click', function(e) {
+        const confirmed = confirm('ATENÇÃO: Esta ação é IRREVERSÍVEL!\n\nTem certeza de que deseja deletar este edital permanentemente?');
+        
+        if (!confirmed) {
+            e.preventDefault();
+        }
+    });
+});
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="delete-container">
+    <!-- Aviso Principal -->
+    <div class="warning-card">
+        <div class="warning-icon">
+            <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        <h1 class="warning-title">ATENÇÃO!</h1>
+        <p class="warning-subtitle">
+            Você está prestes a deletar permanentemente este edital.<br>
+            Esta ação <strong>NÃO PODE SER DESFEITA</strong>.
+        </p>
+    </div>
+    
+    <!-- Informações do Edital -->
+    <div class="edital-info-card">
+        <div class="edital-header">
+            <div class="edital-icon">
+                <i class="fas fa-file-contract"></i>
+            </div>
+            <div class="edital-details" style="flex: 1;">
+                <h2>{{ edital.titulo }}</h2>
+                <p>{{ edital.subtitulo }}</p>
+                
+                <div class="edital-meta">
+                    <span class="meta-badge">
+                        <i class="fas fa-hashtag"></i>
+                        {{ edital.numero_edital }}
+                    </span>
+                    <span class="meta-badge">
+                        <i class="fas fa-calendar"></i>
+                        {{ edital.data_criacao|date:"d/m/Y" }}
+                    </span>
+                    {% if edital.criado_por %}
+                    <span class="meta-badge">
+                        <i class="fas fa-user"></i>
+                        {{ edital.criado_por.get_full_name|default:edital.criado_por.username }}
+                    </span>
+                    {% else %}
+                    <span class="meta-badge">
+                        <i class="fas fa-user"></i>
+                        Sistema
+                    </span>
+                    {% endif %}
+                    <span class="status-badge status-{{ edital.status }}">
+                        <i class="{{ edital.icone_status }}"></i>
+                        {{ edital.get_status_display }}
+                    </span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Estatísticas -->
+        <div class="stats-grid">
+            <div class="stat-item">
+                <span class="stat-number">{{ edital.visualizacoes }}</span>
+                <span class="stat-label">Visualizações</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">{{ total_notificacoes }}</span>
+                <span class="stat-label">Notificações</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">{{ notificacoes_pendentes }}</span>
+                <span class="stat-label">Pendentes</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">{{ edital.areas_interesse.count }}</span>
+                <span class="stat-label">Áreas</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Consequências -->
+    <div class="consequences-card">
+        <h3 class="consequences-title">
+            <i class="fas fa-exclamation-circle"></i>
+            O que será perdido permanentemente:
+        </h3>
+        
+        <ul class="consequences-list">
+            <li>
+                <i class="fas fa-file-contract"></i>
+                <span><strong>Todas as informações do edital</strong> incluindo título, descrição, datas e configurações</span>
+            </li>
+            <li>
+                <i class="fas fa-bell"></i>
+                <span><strong>{{ total_notificacoes }} notificações</strong> de interessados que se cadastraram para receber atualizações</span>
+            </li>
+            <li>
+                <i class="fas fa-file-pdf"></i>
+                <span><strong>Arquivo do edital</strong> {% if edital.arquivo_edital %}({{ edital.arquivo_edital.name|slice:"10:" }}){% else %}(se houver){% endif %}</span>
+            </li>
+            <li>
+                <i class="fas fa-chart-line"></i>
+                <span><strong>Todas as estatísticas</strong> de visualizações e engajamento do edital</span>
+            </li>
+            <li>
+                <i class="fas fa-link"></i>
+                <span><strong>Links e referências</strong> externas para este edital ficarão quebradas</span>
+            </li>
+            <li>
+                <i class="fas fa-history"></i>
+                <span><strong>Histórico completo</strong> de alterações e atividades relacionadas ao edital</span>
+            </li>
+        </ul>
+    </div>
+    
+    <!-- Confirmações -->
+    <div class="confirmation-section">
+        <h3 class="confirmation-title">
+            <i class="fas fa-check-circle"></i>
+            Confirmações Obrigatórias
+        </h3>
+        
+        <form method="post" id="deleteForm">
+            {% csrf_token %}
+            
+            <div class="confirmation-checkbox">
+                <input type="checkbox" id="confirm1" name="confirm1" required>
+                <label for="confirm1">
+                    <strong>Entendo que esta ação é permanente</strong> e que o edital não poderá ser recuperado após a exclusão.
+                </label>
+            </div>
+            
+            <div class="confirmation-checkbox">
+                <input type="checkbox" id="confirm2" name="confirm2" required>
+                <label for="confirm2">
+                    <strong>Confirmo que revisei todas as informações</strong> e tenho certeza de que este é o edital correto para deletar.
+                </label>
+            </div>
+            
+            <div class="confirmation-checkbox">
+                <input type="checkbox" id="confirm3" name="confirm3" required>
+                <label for="confirm3">
+                    <strong>Assumo total responsabilidade</strong> por esta ação e suas consequências.
+                </label>
+            </div>
+            
+            {% if total_notificacoes > 0 %}
+            <div class="confirmation-checkbox">
+                <input type="checkbox" id="confirm4" name="confirm4" required>
+                <label for="confirm4">
+                    <strong>Entendo que {{ total_notificacoes }} pessoas</strong> que se cadastraram para receber notificações deste edital perderão acesso às informações.
+                </label>
+            </div>
+            {% endif %}
+            
+            <div class="final-warning">
+                <i class="fas fa-skull-crossbones"></i>
+                ÚLTIMA CHANCE: Uma vez deletado, este edital e todos os seus dados serão perdidos para sempre!
+            </div>
+            
+            <div class="actions-container">
+                <a href="{% url 'editais:admin_visualizar_edital' edital.id %}" class="btn btn-cancel">
+                    <i class="fas fa-arrow-left"></i>
+                    Cancelar e Voltar
+                </a>
+                
+                <button type="submit" id="deleteButton" class="btn btn-delete" disabled>
+                    <i class="fas fa-trash-alt"></i>
+                    DELETAR PERMANENTEMENTE
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -8,6 +8,9 @@ function initializeAdmin() {
     // Initialize sidebar state
     handleSidebarState();
     
+    // Initialize accordions
+    initializeAccordions();
+    
     // Initialize theme
     initializeTheme();
     
@@ -62,6 +65,46 @@ function handleSidebarState() {
             sidebar.classList.remove('open');
             overlay.classList.remove('active');
             document.body.style.overflow = '';
+        }
+    });
+}
+
+// ===== ACCORDION FUNCTIONS =====
+
+function toggleAccordion(headerElement) {
+    const content = headerElement.nextElementSibling;
+    const icon = headerElement.querySelector('.nav-accordion-icon');
+    
+    // Toggle active class on header
+    headerElement.classList.toggle('active');
+    
+    // Toggle content visibility
+    if (content.classList.contains('active')) {
+        content.classList.remove('active');
+        content.style.maxHeight = '0';
+    } else {
+        content.classList.add('active');
+        content.style.maxHeight = content.scrollHeight + 'px';
+    }
+    
+    // Store accordion state in localStorage
+    const accordionId = headerElement.textContent.trim();
+    const isOpen = headerElement.classList.contains('active');
+    localStorage.setItem(`accordion-${accordionId}`, isOpen);
+}
+
+function initializeAccordions() {
+    // Restore accordion states from localStorage
+    const accordionHeaders = document.querySelectorAll('.nav-accordion-header');
+    accordionHeaders.forEach(header => {
+        const accordionId = header.textContent.trim();
+        const savedState = localStorage.getItem(`accordion-${accordionId}`);
+        
+        if (savedState === 'true') {
+            const content = header.nextElementSibling;
+            header.classList.add('active');
+            content.classList.add('active');
+            content.style.maxHeight = content.scrollHeight + 'px';
         }
     });
 }
@@ -449,6 +492,7 @@ trackPageLoad();
 
 window.PontiAdmin = {
     toggleSidebar,
+    toggleAccordion,
     toggleTheme,
     showMessage,
     dismissMessage,

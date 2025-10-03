@@ -99,6 +99,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    background-color: #1e40af;
 }
 
 .sidebar-logo {
@@ -108,8 +109,9 @@ body {
 }
 
 .logo-img {
-    width: 40px;
-    height: 40px;
+    width: 100%;
+    /* width: 40px; */
+    /* height: 40px; */
     object-fit: contain;
     border-radius: var(--radius);
 }
@@ -202,6 +204,78 @@ body {
     opacity: 0.6;
 }
 
+/* Accordion Navigation */
+.nav-accordion {
+    margin-bottom: 8px;
+}
+
+.nav-accordion-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 20px;
+    color: var(--gray-700);
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    background: transparent;
+    border: none;
+    width: 100%;
+    text-align: left;
+    border-left: 3px solid transparent;
+    position: relative;
+}
+
+.nav-accordion-header:hover {
+    color: var(--primary-blue);
+    background: var(--gray-50);
+}
+
+.nav-accordion-header.active {
+    color: var(--primary-blue);
+    background: linear-gradient(135deg, rgba(30, 64, 175, 0.1), rgba(59, 130, 246, 0.05));
+    border-left-color: var(--primary-blue);
+    font-weight: 600;
+}
+
+.nav-accordion-icon {
+    transition: transform 0.3s ease;
+    font-size: 0.75rem;
+    width: 16px;
+    text-align: center;
+}
+
+.nav-accordion-header.active .nav-accordion-icon {
+    transform: rotate(180deg);
+}
+
+.nav-accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.nav-accordion-content.active {
+    max-height: 500px;
+}
+
+.nav-accordion-content .nav-link {
+    padding-left: 44px;
+    font-size: 0.875rem;
+    border-left: 3px solid transparent;
+}
+
+.nav-accordion-content .nav-link i {
+    width: 16px;
+    font-size: 0.875rem;
+}
+
+/* Set initial max-height for server-side active accordions */
+.nav-accordion-content.active {
+    max-height: none;
+}
+
 /* Sidebar Footer */
 .sidebar-footer {
     position: absolute;
@@ -247,27 +321,6 @@ body {
     display: block;
     font-size: 0.75rem;
     color: var(--gray-500);
-}
-
-.logout-btn {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    width: 100%;
-    padding: 10px 12px;
-    background: none;
-    border: 1px solid var(--gray-300);
-    border-radius: var(--radius);
-    color: var(--gray-700);
-    text-decoration: none;
-    font-size: 0.875rem;
-    transition: var(--transition-fast);
-}
-
-.logout-btn:hover {
-    background: var(--error);
-    border-color: var(--error);
-    color: var(--white);
 }
 
 /* ===== HEADER STYLES ===== */
@@ -332,7 +385,8 @@ body {
 }
 
 .header-btn {
-    width: 40px;
+    /* width: 40px; */
+    padding: 0 15px;
     height: 40px;
     background: none;
     border: 1px solid var(--gray-300);
@@ -343,7 +397,7 @@ body {
     justify-content: center;
     cursor: pointer;
     transition: var(--transition-fast);
-    text-decoration: none;
+    text-decoration: none;    
 }
 
 .header-btn:hover {
