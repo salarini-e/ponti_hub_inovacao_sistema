@@ -549,9 +549,11 @@
                                     </p>
                                     <small style="color: var(--gray-500);">Arquivo atual</small>
                                 </div>
+                                {% if edital.status != 'em_breve' %}
                                 <a href="{{ edital.arquivo_edital.url }}" target="_blank" class="btn btn-sm btn-secondary">
                                     <i class="fas fa-download"></i> Download
                                 </a>
+                                {% endif %}
                             </div>
                             {% endif %}
                             

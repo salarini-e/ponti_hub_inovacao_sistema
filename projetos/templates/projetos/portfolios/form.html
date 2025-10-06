@@ -1,0 +1,302 @@
+{% extends 'core_admin/base.html' %}
+{% load static %}
+
+{% block title %}{{ title }} | PONTI Admin{% endblock %}
+
+{% block page_title %}{{ title }}{% endblock %}
+
+{% block breadcrumb %}
+<span class="breadcrumb-item">Projetos</span>
+<span class="breadcrumb-item"><a href="{% url 'projetos:listar_portfolios' %}">Portfólios</a></span>
+{% if portfolio %}
+    <span class="breadcrumb-item"><a href="{% url 'projetos:detalhar_portfolio' portfolio.uuid %}">{{ portfolio.codigo }}</a></span>
+    <span class="breadcrumb-item">Editar</span>
+{% else %}
+    <span class="breadcrumb-item">Criar</span>
+{% endif %}
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .form-section {
+        background: var(--white);
+        border-radius: var(--radius-lg);
+        padding: 24px;
+        margin-bottom: 24px;
+        border: 1px solid var(--gray-200);
+    }
+    
+    .form-section h3 {
+        color: var(--gray-900);
+        font-size: 1.125rem;
+        font-weight: 600;
+        margin-bottom: 16px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid var(--gray-200);
+    }
+    
+    .form-grid {
+        display: grid;
+        gap: 20px;
+    }
+    
+    .form-grid-2 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .form-grid-3 {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .required-field::after {
+        content: ' *';
+        color: var(--error);
+    }
+    
+    .help-text {
+        font-size: 0.875rem;
+        color: var(--gray-500);
+        margin-top: 4px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Header com ações -->
+<div class="flex justify-between items-center mb-6">
+    <div>
+        {% if portfolio %}
+            <p class="text-gray-600 mt-2">Edite as informações do portfólio</p>
+        {% else %}
+            <p class="text-gray-600 mt-2">Preencha as informações do novo portfólio</p>
+        {% endif %}
+    </div>
+    <div class="flex gap-2">
+        {% if cancel_args %}
+            <a href="{% url cancel_url cancel_args.0 %}" class="btn btn-secondary">
+                <i class="fas fa-times"></i> Cancelar
+            </a>
+        {% else %}
+            <a href="{% url cancel_url %}" class="btn btn-secondary">
+                <i class="fas fa-times"></i> Cancelar
+            </a>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Formulário -->
+<form method="post" novalidate>
+    {% csrf_token %}
+    
+    <!-- Informações Básicas -->
+    <div class="form-section">
+        <h3><i class="fas fa-info-circle text-primary mr-2"></i>Informações Básicas</h3>
+        
+        <div class="form-grid form-grid-2">
+            <div class="form-group">
+                {{ form.nome.label_tag }}
+                {{ form.nome }}
+                {% if form.nome.errors %}
+                    <div class="text-red-600 text-sm mt-1">{{ form.nome.errors.0 }}</div>
+                {% endif %}
+                <div class="help-text">Nome identificador do portfólio</div>
+            </div>
+            
+            <div class="form-group">
+                {{ form.codigo.label_tag }}
+                {{ form.codigo }}
+                {% if form.codigo.errors %}
+                    <div class="text-red-600 text-sm mt-1">{{ form.codigo.errors.0 }}</div>
+                {% endif %}
+                <div class="help-text">Código único para identificação</div>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            {{ form.descricao.label_tag }}
+            {{ form.descricao }}
+            {% if form.descricao.errors %}
+                <div class="text-red-600 text-sm mt-1">{{ form.descricao.errors.0 }}</div>
+            {% endif %}
+            <div class="help-text">Descrição detalhada do portfólio e seus objetivos</div>
+        </div>
+        
+        <div class="form-group">
+            {{ form.objetivo_estrategico.label_tag }}
+            {{ form.objetivo_estrategico }}
+            {% if form.objetivo_estrategico.errors %}
+                <div class="text-red-600 text-sm mt-1">{{ form.objetivo_estrategico.errors.0 }}</div>
+            {% endif %}
+            <div class="help-text">Objetivos estratégicos que o portfólio deve alcançar</div>
+        </div>
+    </div>
+    
+    <!-- Configurações -->
+    <div class="form-section">
+        <h3><i class="fas fa-cog text-primary mr-2"></i>Configurações</h3>
+        
+        <div class="form-grid form-grid-3">
+            <div class="form-group">
+                {{ form.categoria_estrategica.label_tag }}
+                {{ form.categoria_estrategica }}
+                {% if form.categoria_estrategica.errors %}
+                    <div class="text-red-600 text-sm mt-1">{{ form.categoria_estrategica.errors.0 }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                {{ form.status.label_tag }}
+                {{ form.status }}
+                {% if form.status.errors %}
+                    <div class="text-red-600 text-sm mt-1">{{ form.status.errors.0 }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                {{ form.prioridade.label_tag }}
+                {{ form.prioridade }}
+                {% if form.prioridade.errors %}
+                    <div class="text-red-600 text-sm mt-1">{{ form.prioridade.errors.0 }}</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <!-- Responsáveis -->
+    <div class="form-section">
+        <h3><i class="fas fa-users text-primary mr-2"></i>Responsáveis</h3>
+        
+        <div class="form-grid form-grid-2">
+            <div class="form-group">
+                {{ form.gestor_portfolio.label_tag }}
+                {{ form.gestor_portfolio }}
+                {% if form.gestor_portfolio.errors %}
+                    <div class="text-red-600 text-sm mt-1">{{ form.gestor_portfolio.errors.0 }}</div>
+                {% endif %}
+                <div class="help-text">Responsável pela gestão do portfólio</div>
+            </div>
+            
+            <div class="form-group">
+                {{ form.patrocinador.label_tag }}
+                {{ form.patrocinador }}
+                {% if form.patrocinador.errors %}
+                    <div class="text-red-600 text-sm mt-1">{{ form.patrocinador.errors.0 }}</div>
+                {% endif %}
+                <div class="help-text">Patrocinador ou sponsor do portfólio</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Prazos e Orçamento -->
+    <div class="form-section">
+        <h3><i class="fas fa-calendar-alt text-primary mr-2"></i>Prazos e Orçamento</h3>
+        
+        <div class="form-grid form-grid-3">
+            <div class="form-group">
+                {{ form.data_inicio.label_tag }}
+                {{ form.data_inicio }}
+                {% if form.data_inicio.errors %}
+                    <div class="text-red-600 text-sm mt-1">{{ form.data_inicio.errors.0 }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                {{ form.data_fim_prevista.label_tag }}
+                {{ form.data_fim_prevista }}
+                {% if form.data_fim_prevista.errors %}
+                    <div class="text-red-600 text-sm mt-1">{{ form.data_fim_prevista.errors.0 }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                {{ form.orcamento_total.label_tag }}
+                {{ form.orcamento_total }}
+                {% if form.orcamento_total.errors %}
+                    <div class="text-red-600 text-sm mt-1">{{ form.orcamento_total.errors.0 }}</div>
+                {% endif %}
+                <div class="help-text">Valor em reais (R$)</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Observações -->
+    <div class="form-section">
+        <h3><i class="fas fa-sticky-note text-primary mr-2"></i>Observações</h3>
+        
+        <div class="form-group">
+            {{ form.observacoes.label_tag }}
+            {{ form.observacoes }}
+            {% if form.observacoes.errors %}
+                <div class="text-red-600 text-sm mt-1">{{ form.observacoes.errors.0 }}</div>
+            {% endif %}
+            <div class="help-text">Informações adicionais sobre o portfólio</div>
+        </div>
+    </div>
+    
+    <!-- Erros gerais do formulário -->
+    {% if form.non_field_errors %}
+        <div class="admin-card bg-red-50 border-red-200 mb-6">
+            <div class="card-content">
+                <div class="text-red-600">
+                    <i class="fas fa-exclamation-triangle mr-2"></i>
+                    {% for error in form.non_field_errors %}
+                        <div>{{ error }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    
+    <!-- Botões de ação -->
+    <div class="flex justify-end gap-3">
+        {% if cancel_args %}
+            <a href="{% url cancel_url cancel_args.0 %}" class="btn btn-secondary">
+                <i class="fas fa-times"></i> Cancelar
+            </a>
+        {% else %}
+            <a href="{% url cancel_url %}" class="btn btn-secondary">
+                <i class="fas fa-times"></i> Cancelar
+            </a>
+        {% endif %}
+        
+        <button type="submit" class="btn btn-primary">
+            <i class="fas fa-save"></i> {{ submit_text }}
+        </button>
+    </div>
+</form>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Validação de datas
+    const dataInicio = document.getElementById('id_data_inicio');
+    const dataFim = document.getElementById('id_data_fim_prevista');
+    
+    function validarDatas() {
+        if (dataInicio.value && dataFim.value) {
+            if (new Date(dataInicio.value) >= new Date(dataFim.value)) {
+                dataFim.setCustomValidity('A data de fim deve ser posterior à data de início.');
+            } else {
+                dataFim.setCustomValidity('');
+            }
+        }
+    }
+    
+    if (dataInicio && dataFim) {
+        dataInicio.addEventListener('change', validarDatas);
+        dataFim.addEventListener('change', validarDatas);
+    }
+    
+    // Formatação de moeda para orçamento
+    const orcamento = document.getElementById('id_orcamento_total');
+    if (orcamento) {
+        orcamento.addEventListener('input', function(e) {
+            // Remove caracteres não numéricos exceto ponto e vírgula
+            let value = e.target.value.replace(/[^\d.,]/g, '');
+            e.target.value = value;
+        });
+    }
+});
+</script>
+{% endblock %}

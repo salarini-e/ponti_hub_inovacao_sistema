@@ -20,6 +20,13 @@ urlpatterns = [
     path('admin/editais/<int:edital_id>/alterar-status/', views.admin_alterar_status_edital, name='admin_alterar_status_edital'),
     path('admin/editais/<int:edital_id>/toggle-destaque/', views.admin_toggle_destaque_edital, name='admin_toggle_destaque_edital'),
     
+    # Anexos
+    path('admin/editais/<int:edital_id>/anexos/', views.admin_anexos_edital, name='admin_anexos_edital'),
+    path('admin/editais/<int:edital_id>/anexos/criar/', views.admin_criar_anexo, name='admin_criar_anexo'),
+    path('admin/anexos/<int:anexo_id>/editar/', views.admin_editar_anexo, name='admin_editar_anexo'),
+    path('admin/anexos/<int:anexo_id>/deletar/', views.admin_deletar_anexo, name='admin_deletar_anexo'),
+    path('admin/anexos/<int:anexo_id>/toggle-ativo/', views.admin_toggle_anexo_ativo, name='admin_toggle_anexo_ativo'),
+    
     # ===== URLS ORIGINAIS (Sistema de Notificações) =====
     
     # URLs para views que serão criadas futuramente

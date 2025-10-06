@@ -8,7 +8,7 @@ from django.utils import timezone
 from django.core.paginator import Paginator
 from django.db.models import Q, Count
 from django.utils.text import slugify
-from .models import Edital, NotificacaoEdital, CategoriaEdital, AreaInteresse
+from .models import Edital, NotificacaoEdital, CategoriaEdital, AreaInteresse, AnexoEdital
 from .forms import NotificacaoEditalForm
 import json
 
@@ -528,3 +528,190 @@ def listar_notificacoes_edital(request, edital_slug):
     }
     
     return render(request, 'editais/listar_notificacoes.html', context)
+
+
+# ===== VIEWS ANEXOS =====
+
+@login_required
+@user_passes_test(staff_required)
+def admin_anexos_edital(request, edital_id):
+    """Listar e gerenciar anexos de um edital"""
+    edital = get_object_or_404(Edital, id=edital_id)
+    anexos = AnexoEdital.objects.filter(edital=edital).order_by('ordem', 'titulo')
+    
+    context = {
+        'edital': edital,
+        'anexos': anexos,
+        'total_anexos': anexos.count(),
+        'anexos_obrigatorios': anexos.filter(obrigatorio=True).count(),
+        'anexos_opcionais': anexos.filter(obrigatorio=False).count(),
+    }
+    
+    return render(request, 'editais/admin/anexos_listar.html', context)
+
+
+@login_required
+@user_passes_test(staff_required)
+def admin_criar_anexo(request, edital_id):
+    """Criar novo anexo para um edital"""
+    edital = get_object_or_404(Edital, id=edital_id)
+    
+    if request.method == 'POST':
+        try:
+            # Obter dados do formulário
+            titulo = request.POST.get('titulo')
+            descricao = request.POST.get('descricao', '')
+            tipo = request.POST.get('tipo')
+            obrigatorio = 'obrigatorio' in request.POST
+            ordem = request.POST.get('ordem', 0)
+            
+            # Preparar dados do anexo
+            anexo_data = {
+                'edital': edital,
+                'titulo': titulo,
+                'descricao': descricao,
+                'tipo': tipo,
+                'obrigatorio': obrigatorio,
+                'ordem': int(ordem) if ordem else 0,
+                'criado_por': request.user,
+            }
+            
+            # Adicionar arquivo ou link conforme o tipo ANTES de criar o objeto
+            if tipo == 'arquivo' and 'arquivo' in request.FILES:
+                anexo_data['arquivo'] = request.FILES['arquivo']
+            elif tipo == 'link':
+                link_url = request.POST.get('link_url', '').strip()
+                if not link_url:
+                    messages.error(request, 'URL é obrigatória quando o tipo é "Link Externo".')
+                    context = {
+                        'edital': edital,
+                        'tipo_choices': AnexoEdital.TIPO_CHOICES,
+                    }
+                    return render(request, 'editais/admin/anexos_criar.html', context)
+                anexo_data['link_url'] = link_url
+            
+            # Criar anexo com todos os dados
+            anexo = AnexoEdital.objects.create(**anexo_data)
+            
+            messages.success(request, f'Anexo "{titulo}" criado com sucesso!')
+            return redirect('editais:admin_anexos_edital', edital_id=edital.id)
+            
+        except Exception as e:
+            messages.error(request, f'Erro ao criar anexo: {str(e)}')
+    
+    context = {
+        'edital': edital,
+        'tipo_choices': AnexoEdital.TIPO_CHOICES,
+    }
+    
+    return render(request, 'editais/admin/anexos_criar.html', context)
+
+
+@login_required
+@user_passes_test(staff_required)
+def admin_editar_anexo(request, anexo_id):
+    """Editar anexo existente"""
+    anexo = get_object_or_404(AnexoEdital, id=anexo_id)
+    edital = anexo.edital
+    
+    if request.method == 'POST':
+        try:
+            # Atualizar dados básicos
+            anexo.titulo = request.POST.get('titulo')
+            anexo.descricao = request.POST.get('descricao', '')
+            novo_tipo = request.POST.get('tipo')
+            anexo.obrigatorio = 'obrigatorio' in request.POST
+            anexo.ordem = int(request.POST.get('ordem', 0))
+            
+            # Validar e atualizar arquivo ou link conforme o tipo
+            if novo_tipo == 'arquivo':
+                if 'arquivo' in request.FILES:
+                    # Deletar arquivo anterior se existir
+                    if anexo.arquivo:
+                        anexo.arquivo.delete(save=False)
+                    anexo.arquivo = request.FILES['arquivo']
+                elif anexo.tipo != 'arquivo' or not anexo.arquivo:
+                    # Se mudou para arquivo mas não tem arquivo atual nem novo
+                    messages.error(request, 'Arquivo é obrigatório quando o tipo é "Arquivo".')
+                    context = {
+                        'anexo': anexo,
+                        'edital': edital,
+                        'tipo_choices': AnexoEdital.TIPO_CHOICES,
+                    }
+                    return render(request, 'editais/admin/anexos_editar.html', context)
+                # Limpar link_url se mudou para arquivo
+                anexo.link_url = ''
+            elif novo_tipo == 'link':
+                link_url = request.POST.get('link_url', '').strip()
+                if not link_url:
+                    messages.error(request, 'URL é obrigatória quando o tipo é "Link Externo".')
+                    context = {
+                        'anexo': anexo,
+                        'edital': edital,
+                        'tipo_choices': AnexoEdital.TIPO_CHOICES,
+                    }
+                    return render(request, 'editais/admin/anexos_editar.html', context)
+                anexo.link_url = link_url
+                # Deletar arquivo se mudou para link
+                if anexo.arquivo:
+                    anexo.arquivo.delete(save=False)
+                    anexo.arquivo = None
+            
+            # Atualizar tipo por último
+            anexo.tipo = novo_tipo
+            anexo.save()
+            
+            messages.success(request, f'Anexo "{anexo.titulo}" atualizado com sucesso!')
+            return redirect('editais:admin_anexos_edital', edital_id=edital.id)
+            
+        except Exception as e:
+            messages.error(request, f'Erro ao atualizar anexo: {str(e)}')
+    
+    context = {
+        'anexo': anexo,
+        'edital': edital,
+        'tipo_choices': AnexoEdital.TIPO_CHOICES,
+    }
+    
+    return render(request, 'editais/admin/anexos_editar.html', context)
+
+
+@login_required
+@user_passes_test(staff_required)
+def admin_deletar_anexo(request, anexo_id):
+    """Deletar anexo"""
+    anexo = get_object_or_404(AnexoEdital, id=anexo_id)
+    edital = anexo.edital
+    
+    if request.method == 'POST':
+        titulo = anexo.titulo
+        anexo.delete()  # O método delete customizado irá remover o arquivo
+        messages.success(request, f'Anexo "{titulo}" deletado com sucesso!')
+        return redirect('editais:admin_anexos_edital', edital_id=edital.id)
+    
+    context = {
+        'anexo': anexo,
+        'edital': edital,
+    }
+    
+    return render(request, 'editais/admin/anexos_deletar.html', context)
+
+
+@login_required
+@user_passes_test(staff_required)
+@require_http_methods(["POST"])
+def admin_toggle_anexo_ativo(request, anexo_id):
+    """Toggle status ativo do anexo via AJAX"""
+    try:
+        anexo = get_object_or_404(AnexoEdital, id=anexo_id)
+        anexo.ativo = not anexo.ativo
+        anexo.save()
+        
+        return JsonResponse({
+            'success': True,
+            'message': f'Anexo {"ativado" if anexo.ativo else "desativado"}',
+            'ativo': anexo.ativo
+        })
+        
+    except Exception as e:
+        return JsonResponse({'success': False, 'message': str(e)})

@@ -1,0 +1,521 @@
+{% extends 'core_admin/base.html' %}
+{% load static %}
+
+{% block title %}Relatórios{% endblock %}
+
+{% block breadcrumb %}
+<nav class="breadcrumb">
+    <a href="{% url 'projetos:dashboard' %}" class="breadcrumb-item">Dashboard</a>
+    <span class="breadcrumb-item active">Relatórios</span>
+</nav>
+{% endblock %}
+
+{% block content %}
+<div class="content-header">
+    <div class="content-title">
+        <h1>Relatórios do Sistema de Projetos</h1>
+        <p>Gere relatórios detalhados sobre portfólios, programas e projetos</p>
+    </div>
+</div>
+
+<div class="reports-grid">
+    <!-- Relatórios de Portfólio -->
+    <div class="report-category">
+        <h2>Relatórios de Portfólio</h2>
+        <div class="report-cards">
+            <div class="report-card">
+                <div class="report-icon">
+                    <i class="icon-briefcase"></i>
+                </div>
+                <div class="report-info">
+                    <h3>Relatório Geral de Portfólios</h3>
+                    <p>Visão geral de todos os portfólios com status, orçamentos e prazos.</p>
+                </div>
+                <div class="report-actions">
+                    <a href="#" class="btn btn-primary">
+                        <i class="icon-download"></i> Gerar PDF
+                    </a>
+                    <a href="#" class="btn btn-outline">
+                        <i class="icon-file"></i> Exportar Excel
+                    </a>
+                </div>
+            </div>
+
+            <div class="report-card">
+                <div class="report-icon">
+                    <i class="icon-chart-bar"></i>
+                </div>
+                <div class="report-info">
+                    <h3>Dashboard de Portfólios</h3>
+                    <p>Indicadores e métricas de desempenho dos portfólios por categoria estratégica.</p>
+                </div>
+                <div class="report-actions">
+                    <a href="#" class="btn btn-primary">
+                        <i class="icon-eye"></i> Visualizar
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Relatórios de Programa -->
+    <div class="report-category">
+        <h2>Relatórios de Programa</h2>
+        <div class="report-cards">
+            <div class="report-card">
+                <div class="report-icon">
+                    <i class="icon-layers"></i>
+                </div>
+                <div class="report-info">
+                    <h3>Status dos Programas</h3>
+                    <p>Acompanhamento do progresso e status de todos os programas em andamento.</p>
+                </div>
+                <div class="report-actions">
+                    <a href="#" class="btn btn-primary">
+                        <i class="icon-download"></i> Gerar PDF
+                    </a>
+                    <a href="#" class="btn btn-outline">
+                        <i class="icon-file"></i> Exportar Excel
+                    </a>
+                </div>
+            </div>
+
+            <div class="report-card">
+                <div class="report-icon">
+                    <i class="icon-clock"></i>
+                </div>
+                <div class="report-info">
+                    <h3>Cronograma de Programas</h3>
+                    <p>Timeline e marcos importantes dos programas com datas previstas e realizadas.</p>
+                </div>
+                <div class="report-actions">
+                    <a href="#" class="btn btn-primary">
+                        <i class="icon-calendar"></i> Ver Timeline
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Relatórios de Projeto -->
+    <div class="report-category">
+        <h2>Relatórios de Projeto</h2>
+        <div class="report-cards">
+            <div class="report-card">
+                <div class="report-icon">
+                    <i class="icon-project"></i>
+                </div>
+                <div class="report-info">
+                    <h3>Relatório Consolidado de Projetos</h3>
+                    <p>Status, progresso, orçamento e equipe de todos os projetos ativos.</p>
+                </div>
+                <div class="report-actions">
+                    <a href="#" class="btn btn-primary">
+                        <i class="icon-download"></i> Gerar PDF
+                    </a>
+                    <a href="#" class="btn btn-outline">
+                        <i class="icon-file"></i> Exportar Excel
+                    </a>
+                </div>
+            </div>
+
+            <div class="report-card">
+                <div class="report-icon">
+                    <i class="icon-users"></i>
+                </div>
+                <div class="report-info">
+                    <h3>Alocação de Recursos</h3>
+                    <p>Distribuição da equipe e recursos entre projetos e suas capacidades.</p>
+                </div>
+                <div class="report-actions">
+                    <a href="#" class="btn btn-primary">
+                        <i class="icon-chart-pie"></i> Ver Dashboard
+                    </a>
+                </div>
+            </div>
+
+            <div class="report-card">
+                <div class="report-icon">
+                    <i class="icon-alert-triangle"></i>
+                </div>
+                <div class="report-info">
+                    <h3>Relatório de Riscos</h3>
+                    <p>Análise de riscos identificados, probabilidades e planos de mitigação.</p>
+                </div>
+                <div class="report-actions">
+                    <a href="#" class="btn btn-primary">
+                        <i class="icon-download"></i> Gerar PDF
+                    </a>
+                    <a href="#" class="btn btn-outline">
+                        <i class="icon-shield"></i> Ver Riscos
+                    </a>
+                </div>
+            </div>
+
+            <div class="report-card">
+                <div class="report-icon">
+                    <i class="icon-check-circle"></i>
+                </div>
+                <div class="report-info">
+                    <h3>Relatório de Entregas</h3>
+                    <p>Status das entregas previstas, realizadas e em atraso por projeto.</p>
+                </div>
+                <div class="report-actions">
+                    <a href="#" class="btn btn-primary">
+                        <i class="icon-download"></i> Gerar PDF
+                    </a>
+                    <a href="#" class="btn btn-outline">
+                        <i class="icon-list"></i> Ver Lista
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Relatórios Financeiros -->
+    <div class="report-category">
+        <h2>Relatórios Financeiros</h2>
+        <div class="report-cards">
+            <div class="report-card">
+                <div class="report-icon">
+                    <i class="icon-dollar-sign"></i>
+                </div>
+                <div class="report-info">
+                    <h3>Análise Orçamentária</h3>
+                    <p>Comparativo entre orçamento previsto vs. consumido por projeto e programa.</p>
+                </div>
+                <div class="report-actions">
+                    <a href="#" class="btn btn-primary">
+                        <i class="icon-download"></i> Gerar PDF
+                    </a>
+                    <a href="#" class="btn btn-outline">
+                        <i class="icon-chart-line"></i> Ver Gráficos
+                    </a>
+                </div>
+            </div>
+
+            <div class="report-card">
+                <div class="report-icon">
+                    <i class="icon-trending-up"></i>
+                </div>
+                <div class="report-info">
+                    <h3>ROI dos Projetos</h3>
+                    <p>Retorno sobre investimento e benefícios esperados vs. realizados.</p>
+                </div>
+                <div class="report-actions">
+                    <a href="#" class="btn btn-primary">
+                        <i class="icon-calculator"></i> Calcular ROI
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Relatórios Executivos -->
+    <div class="report-category">
+        <h2>Relatórios Executivos</h2>
+        <div class="report-cards">
+            <div class="report-card executive">
+                <div class="report-icon">
+                    <i class="icon-star"></i>
+                </div>
+                <div class="report-info">
+                    <h3>Dashboard Executivo</h3>
+                    <p>Visão de alto nível com KPIs principais e indicadores estratégicos.</p>
+                </div>
+                <div class="report-actions">
+                    <a href="#" class="btn btn-primary">
+                        <i class="icon-monitor"></i> Ver Dashboard
+                    </a>
+                    <a href="#" class="btn btn-outline">
+                        <i class="icon-download"></i> Gerar PDF
+                    </a>
+                </div>
+            </div>
+
+            <div class="report-card executive">
+                <div class="report-icon">
+                    <i class="icon-target"></i>
+                </div>
+                <div class="report-info">
+                    <h3>Relatório de Governança</h3>
+                    <p>Conformidade com processos, marcos de governança e tomadas de decisão.</p>
+                </div>
+                <div class="report-actions">
+                    <a href="#" class="btn btn-primary">
+                        <i class="icon-download"></i> Gerar PDF
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Filtros de Relatório -->
+<div class="report-filters">
+    <h2>Filtros Personalizados</h2>
+    <div class="filters-form">
+        <div class="filter-group">
+            <label>Período:</label>
+            <select class="form-control">
+                <option>Último mês</option>
+                <option>Últimos 3 meses</option>
+                <option>Últimos 6 meses</option>
+                <option>Último ano</option>
+                <option>Período personalizado</option>
+            </select>
+        </div>
+        <div class="filter-group">
+            <label>Status:</label>
+            <select class="form-control">
+                <option>Todos</option>
+                <option>Ativos</option>
+                <option>Planejamento</option>
+                <option>Suspensos</option>
+                <option>Finalizados</option>
+            </select>
+        </div>
+        <div class="filter-group">
+            <label>Prioridade:</label>
+            <select class="form-control">
+                <option>Todas</option>
+                <option>Crítica</option>
+                <option>Alta</option>
+                <option>Média</option>
+                <option>Baixa</option>
+            </select>
+        </div>
+        <div class="filter-actions">
+            <button class="btn btn-primary">
+                <i class="icon-filter"></i> Aplicar Filtros
+            </button>
+            <button class="btn btn-outline">
+                <i class="icon-refresh"></i> Limpar
+            </button>
+        </div>
+    </div>
+</div>
+
+<style>
+.content-header p {
+    color: var(--text-secondary);
+    margin: 0.5rem 0 0 0;
+    font-size: 1.1rem;
+}
+
+.reports-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    margin-top: 2rem;
+}
+
+.report-category {
+    background: var(--card-bg);
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    border: 1px solid var(--border-color);
+}
+
+.report-category h2 {
+    color: var(--text-primary);
+    margin: 0 0 1.5rem 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--primary-color);
+}
+
+.report-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 1.5rem;
+}
+
+.report-card {
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    display: flex;
+    gap: 1rem;
+    transition: all 0.2s ease;
+}
+
+.report-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+}
+
+.report-card.executive {
+    border-left: 4px solid var(--primary-color);
+    background: linear-gradient(135deg, var(--surface-color) 0%, var(--primary-bg) 100%);
+}
+
+.report-icon {
+    flex-shrink: 0;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--primary-bg);
+    color: var(--primary-color);
+    border-radius: var(--border-radius);
+    font-size: 1.5rem;
+}
+
+.report-info {
+    flex: 1;
+}
+
+.report-info h3 {
+    color: var(--text-primary);
+    margin: 0 0 0.5rem 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.report-info p {
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: 1.5;
+    font-size: 0.9rem;
+}
+
+.report-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: flex-end;
+}
+
+.report-actions .btn {
+    min-width: 120px;
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+}
+
+.report-filters {
+    background: var(--card-bg);
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    border: 1px solid var(--border-color);
+    margin-top: 2rem;
+}
+
+.report-filters h2 {
+    color: var(--text-primary);
+    margin: 0 0 1.5rem 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.filters-form {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    align-items: end;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.filter-group label {
+    font-weight: 500;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.filter-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.filter-actions .btn {
+    white-space: nowrap;
+}
+
+/* Ícones customizados */
+.icon-briefcase::before { content: "💼"; }
+.icon-chart-bar::before { content: "📊"; }
+.icon-layers::before { content: "📚"; }
+.icon-clock::before { content: "⏰"; }
+.icon-project::before { content: "🚀"; }
+.icon-users::before { content: "👥"; }
+.icon-alert-triangle::before { content: "⚠️"; }
+.icon-check-circle::before { content: "✅"; }
+.icon-dollar-sign::before { content: "💰"; }
+.icon-trending-up::before { content: "📈"; }
+.icon-star::before { content: "⭐"; }
+.icon-target::before { content: "🎯"; }
+.icon-download::before { content: "⬇️"; }
+.icon-file::before { content: "📄"; }
+.icon-eye::before { content: "👁️"; }
+.icon-calendar::before { content: "📅"; }
+.icon-chart-pie::before { content: "🥧"; }
+.icon-shield::before { content: "🛡️"; }
+.icon-list::before { content: "📋"; }
+.icon-chart-line::before { content: "📈"; }
+.icon-calculator::before { content: "🧮"; }
+.icon-monitor::before { content: "🖥️"; }
+.icon-filter::before { content: "🔍"; }
+.icon-refresh::before { content: "🔄"; }
+
+@media (max-width: 768px) {
+    .report-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .report-card {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .report-actions {
+        align-items: center;
+        flex-direction: row;
+        justify-content: center;
+    }
+    
+    .filters-form {
+        grid-template-columns: 1fr;
+    }
+    
+    .filter-actions {
+        flex-direction: column;
+    }
+    
+    .filter-actions .btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .report-category {
+        padding: 1rem;
+    }
+    
+    .report-card {
+        padding: 1rem;
+    }
+    
+    .report-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.25rem;
+    }
+    
+    .report-info h3 {
+        font-size: 1rem;
+    }
+    
+    .report-info p {
+        font-size: 0.875rem;
+    }
+}
+</style>
+{% endblock %}

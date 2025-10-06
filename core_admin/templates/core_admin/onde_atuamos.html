@@ -25,7 +25,7 @@
                 {% csrf_token %}
                 <input type="hidden" name="action" value="update_sessao">
                 
-                <div class="grid grid-cols-2 gap-4">
+                <div class="grid grid-cols-3 gap-4">
                     <div class="form-group">
                         <label class="form-label" for="nome_sessao">Nome da Seção</label>
                         <input type="text" id="nome_sessao" name="nome_sessao" 
@@ -33,15 +33,54 @@
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label" for="titulo_principal">Título Principal</label>
-                        <input type="text" id="titulo_principal" name="titulo_principal" 
-                               value="{{ sessao.titulo_principal }}" class="form-control">
+                        <label class="form-label" for="emoji_badge">Emoji do Badge</label>
+                        <input type="text" id="emoji_badge" name="emoji_badge" 
+                               value="{{ sessao.emoji_badge }}" class="form-control" placeholder="🎯">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="titulo_badge">Título do Badge</label>
+                        <input type="text" id="titulo_badge" name="titulo_badge" 
+                               value="{{ sessao.titulo_badge }}" class="form-control">
                     </div>
                 </div>
                 
                 <div class="form-group">
-                    <label class="form-label" for="descricao">Descrição da Seção</label>
-                    <textarea id="descricao" name="descricao" class="form-control" rows="4">{{ sessao.descricao }}</textarea>
+                    <label class="form-label" for="subtitulo">Subtítulo</label>
+                    <input type="text" id="subtitulo" name="subtitulo" 
+                           value="{{ sessao.subtitulo }}" class="form-control">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="titulo_principal">Título Principal</label>
+                    <input type="text" id="titulo_principal" name="titulo_principal" 
+                           value="{{ sessao.titulo_principal }}" class="form-control">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="descricao_principal">Descrição Principal</label>
+                    <textarea id="descricao_principal" name="descricao_principal" class="form-control" rows="6">{{ sessao.descricao_principal }}</textarea>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="form-group">
+                        <label class="form-label" for="imagem_principal">Imagem Principal (Upload)</label>
+                        <input type="file" id="imagem_principal" name="imagem_principal" 
+                               class="form-control" accept="image/*">
+                        {% if sessao.imagem_principal %}
+                            <div class="mt-2">
+                                <small class="text-green-600">✓ Imagem atual: {{ sessao.imagem_principal.name }}</small>
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="url_imagem_principal">URL da Imagem (Alternativa)</label>
+                        <input type="url" id="url_imagem_principal" name="url_imagem_principal" 
+                               value="{{ sessao.url_imagem_principal|default:'' }}" class="form-control" 
+                               placeholder="https://exemplo.com/imagem.jpg">
+                        <div class="form-help">Use apenas se não fizer upload de imagem</div>
+                    </div>
                 </div>
                 
                 <div class="form-group">
@@ -86,7 +125,7 @@
                                 </div>
                                 <div class="flex-1">
                                     <h4 class="font-semibold text-gray-900">{{ area.titulo }}</h4>
-                                    <p class="text-sm text-gray-600 mt-1">{{ area.descricao|truncatechars:100 }}</p>
+                                    <p class="text-sm text-gray-600 mt-1">{{ area.corpo|truncatechars:100 }}</p>
                                     {% if area.badges %}
                                         <div class="flex flex-wrap gap-2 mt-2">
                                             {% for badge in area.get_badges_list %}
@@ -160,8 +199,8 @@
                 </div>
                 
                 <div class="form-group">
-                    <label class="form-label" for="new_descricao">Descrição</label>
-                    <textarea id="new_descricao" name="descricao" class="form-control" rows="3" required></textarea>
+                    <label class="form-label" for="new_corpo">Descrição</label>
+                    <textarea id="new_corpo" name="corpo" class="form-control" rows="3" required></textarea>
                 </div>
                 
                 <div class="form-group">

@@ -1,0 +1,408 @@
+{% extends 'core_admin/base.html' %}
+{% load static %}
+
+{% block title %}Criar Anexo - {{ edital.titulo }}{% endblock %}
+
+{% block extra_css %}
+<style>
+    .form-section {
+        background: linear-gradient(145deg, #ffffff, #f8fafc);
+        border: 1px solid #e2e8f0;
+        border-radius: 15px;
+        padding: 25px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+    
+    .section-title {
+        font-size: 18px;
+        font-weight: 700;
+        color: #1f2937;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .section-title i {
+        color: #3b82f6;
+    }
+    
+    .form-group label {
+        font-weight: 600;
+        color: #374151;
+        margin-bottom: 8px;
+    }
+    
+    .form-control, .form-select {
+        border: 2px solid #e5e7eb;
+        border-radius: 10px;
+        padding: 12px 15px;
+        transition: all 0.3s ease;
+    }
+    
+    .form-control:focus, .form-select:focus {
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+    
+    .tipo-toggle {
+        display: flex;
+        background: #f3f4f6;
+        border-radius: 10px;
+        padding: 4px;
+        gap: 4px;
+    }
+    
+    .tipo-option {
+        flex: 1;
+        padding: 12px;
+        border-radius: 6px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: 600;
+        border: none;
+        background: transparent;
+    }
+    
+    .tipo-option.active {
+        background: linear-gradient(135deg, #3b82f6, #2563eb);
+        color: white;
+        box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+    }
+    
+    .tipo-option:not(.active) {
+        color: #6b7280;
+    }
+    
+    .conditional-field {
+        display: none;
+        animation: fadeIn 0.3s ease;
+    }
+    
+    .conditional-field.show {
+        display: block;
+    }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .form-check {
+        margin: 15px 0;
+    }
+    
+    .form-check-input {
+        margin-right: 10px;
+        transform: scale(1.2);
+    }
+    
+    .form-check-label {
+        font-weight: 500;
+        color: #374151;
+    }
+    
+    .file-upload-area {
+        border: 2px dashed #d1d5db;
+        border-radius: 10px;
+        padding: 30px;
+        text-align: center;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+    
+    .file-upload-area:hover {
+        border-color: #3b82f6;
+        background: rgba(59, 130, 246, 0.05);
+    }
+    
+    .file-upload-area.dragover {
+        border-color: #3b82f6;
+        background: rgba(59, 130, 246, 0.1);
+    }
+    
+    .upload-icon {
+        font-size: 48px;
+        color: #cbd5e1;
+        margin-bottom: 15px;
+    }
+    
+    .file-info {
+        display: none;
+        background: #f0f9ff;
+        border: 1px solid #bae6fd;
+        border-radius: 8px;
+        padding: 15px;
+        margin-top: 10px;
+    }
+    
+    .actions-bar {
+        background: linear-gradient(145deg, #f8fafc, #ffffff);
+        border: 1px solid #e2e8f0;
+        border-radius: 15px;
+        padding: 20px;
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="content-header">
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <h1>Criar Novo Anexo</h1>
+            <p class="text-muted mb-0">{{ edital.titulo }}</p>
+        </div>
+        <a href="{% url 'editais:admin_anexos_edital' edital.id %}" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left"></i> Voltar aos Anexos
+        </a>
+    </div>
+</div>
+
+<div class="content-body">
+    <form method="post" enctype="multipart/form-data" id="anexoForm">
+        {% csrf_token %}
+        
+        <!-- Informações Básicas -->
+        <div class="form-section">
+            <div class="section-title">
+                <i class="fas fa-info-circle"></i>
+                Informações Básicas
+            </div>
+            
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <label for="titulo">Título do Anexo *</label>
+                        <input type="text" class="form-control" id="titulo" name="titulo" required 
+                               placeholder="Ex: Formulário de Inscrição, Regulamento Completo">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="ordem">Ordem de Exibição</label>
+                        <input type="number" class="form-control" id="ordem" name="ordem" 
+                               value="0" min="0" placeholder="0">
+                        <small class="text-muted">0 = primeiro da lista</small>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="descricao">Descrição (Opcional)</label>
+                <textarea class="form-control" id="descricao" name="descricao" rows="3"
+                          placeholder="Breve descrição sobre este anexo..."></textarea>
+            </div>
+            
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="obrigatorio" name="obrigatorio">
+                <label class="form-check-label" for="obrigatorio">
+                    <strong>Anexo Obrigatório</strong> - Marque se este anexo é obrigatório para a inscrição
+                </label>
+            </div>
+        </div>
+        
+        <!-- Tipo de Anexo -->
+        <div class="form-section">
+            <div class="section-title">
+                <i class="fas fa-toggle-on"></i>
+                Tipo de Anexo
+            </div>
+            
+            <div class="tipo-toggle">
+                <button type="button" class="tipo-option active" data-tipo="arquivo">
+                    <i class="fas fa-file-upload"></i> Arquivo
+                </button>
+                <button type="button" class="tipo-option" data-tipo="link">
+                    <i class="fas fa-external-link-alt"></i> Link Externo
+                </button>
+            </div>
+            
+            <input type="hidden" id="tipo" name="tipo" value="arquivo">
+        </div>
+        
+        <!-- Campo para Arquivo -->
+        <div class="form-section conditional-field show" id="arquivo-section">
+            <div class="section-title">
+                <i class="fas fa-cloud-upload-alt"></i>
+                Upload de Arquivo
+            </div>
+            
+            <div class="file-upload-area" onclick="document.getElementById('arquivo').click()">
+                <div class="upload-icon">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                </div>
+                <h5>Clique aqui para selecionar um arquivo</h5>
+                <p class="text-muted">Ou arraste e solte o arquivo aqui</p>
+                <small class="text-muted">Formatos aceitos: PDF, DOC, DOCX, XLS, XLSX, ZIP, RAR (máx. 10MB)</small>
+                
+                <input type="file" id="arquivo" name="arquivo" style="display: none;" 
+                       accept=".pdf,.doc,.docx,.xls,.xlsx,.zip,.rar">
+            </div>
+            
+            <div class="file-info" id="file-info">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <strong id="file-name"></strong>
+                        <br><small id="file-size" class="text-muted"></small>
+                    </div>
+                    <button type="button" class="btn btn-sm btn-outline-danger" onclick="clearFile()">
+                        <i class="fas fa-times"></i> Remover
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Campo para Link -->
+        <div class="form-section conditional-field" id="link-section">
+            <div class="section-title">
+                <i class="fas fa-link"></i>
+                Link Externo
+            </div>
+            
+            <div class="form-group">
+                <label for="link_url">URL do Link *</label>
+                <input type="url" class="form-control" id="link_url" name="link_url" 
+                       placeholder="https://exemplo.com/documento.pdf">
+                <small class="text-muted">Insira a URL completa do documento ou página</small>
+            </div>
+        </div>
+        
+        <!-- Actions -->
+        <div class="actions-bar">
+            <div>
+                <small class="text-muted">
+                    <i class="fas fa-info-circle me-1"></i>
+                    Campos marcados com * são obrigatórios
+                </small>
+            </div>
+            <div class="d-flex gap-2">
+                <a href="{% url 'editais:admin_anexos_edital' edital.id %}" class="btn btn-outline-secondary">
+                    <i class="fas fa-times"></i> Cancelar
+                </a>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i> Criar Anexo
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Toggle entre arquivo e link
+    document.querySelectorAll('.tipo-option').forEach(button => {
+        button.addEventListener('click', function() {
+            const tipo = this.dataset.tipo;
+            
+            // Atualizar botões
+            document.querySelectorAll('.tipo-option').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Atualizar campo hidden
+            document.getElementById('tipo').value = tipo;
+            
+            // Mostrar/esconder seções
+            document.getElementById('arquivo-section').classList.toggle('show', tipo === 'arquivo');
+            document.getElementById('link-section').classList.toggle('show', tipo === 'link');
+            
+            // Limpar campos não utilizados
+            if (tipo === 'arquivo') {
+                document.getElementById('link_url').value = '';
+                document.getElementById('link_url').removeAttribute('required');
+                document.getElementById('arquivo').setAttribute('required', '');
+            } else {
+                document.getElementById('arquivo').value = '';
+                document.getElementById('arquivo').removeAttribute('required');
+                document.getElementById('link_url').setAttribute('required', '');
+                clearFile();
+            }
+        });
+    });
+    
+    // Upload de arquivo
+    const fileInput = document.getElementById('arquivo');
+    const fileInfo = document.getElementById('file-info');
+    const uploadArea = document.querySelector('.file-upload-area');
+    
+    fileInput.addEventListener('change', handleFileSelect);
+    
+    // Drag and drop
+    uploadArea.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        this.classList.add('dragover');
+    });
+    
+    uploadArea.addEventListener('dragleave', function(e) {
+        e.preventDefault();
+        this.classList.remove('dragover');
+    });
+    
+    uploadArea.addEventListener('drop', function(e) {
+        e.preventDefault();
+        this.classList.remove('dragover');
+        
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+            fileInput.files = files;
+            handleFileSelect();
+        }
+    });
+    
+    function handleFileSelect() {
+        const file = fileInput.files[0];
+        if (file) {
+            document.getElementById('file-name').textContent = file.name;
+            document.getElementById('file-size').textContent = formatFileSize(file.size);
+            fileInfo.style.display = 'block';
+        }
+    }
+    
+    function clearFile() {
+        fileInput.value = '';
+        fileInfo.style.display = 'none';
+    }
+    
+    function formatFileSize(bytes) {
+        if (bytes === 0) return '0 Bytes';
+        const k = 1024;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    }
+    
+    // Validação do formulário
+    document.getElementById('anexoForm').addEventListener('submit', function(e) {
+        const tipo = document.getElementById('tipo').value;
+        
+        if (tipo === 'arquivo') {
+            const arquivo = document.getElementById('arquivo').files[0];
+            if (!arquivo) {
+                e.preventDefault();
+                alert('Por favor, selecione um arquivo.');
+                return;
+            }
+            
+            // Verificar tamanho (10MB)
+            if (arquivo.size > 10 * 1024 * 1024) {
+                e.preventDefault();
+                alert('O arquivo deve ter no máximo 10MB.');
+                return;
+            }
+        } else {
+            const link = document.getElementById('link_url').value.trim();
+            if (!link) {
+                e.preventDefault();
+                alert('Por favor, insira uma URL válida.');
+                return;
+            }
+        }
+    });
+</script>
+{% endblock %}

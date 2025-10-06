@@ -3,7 +3,7 @@ from django.utils.html import format_html
 from django.utils import timezone
 from django.urls import reverse
 from django.http import HttpResponseRedirect
-from .models import Edital, CategoriaEdital, AreaInteresse, NotificacaoEdital
+from .models import Edital, CategoriaEdital, AreaInteresse, NotificacaoEdital, AnexoEdital
 
 
 @admin.register(CategoriaEdital)
@@ -52,6 +52,19 @@ class NotificacaoEditalInline(admin.TabularInline):
     extra = 0
     readonly_fields = ['data_solicitacao', 'data_notificacao', 'ip_endereco', 'user_agent']
     fields = ['cpf', 'nome_completo', 'email', 'telefone_whatsapp', 'data_solicitacao', 'notificado', 'data_notificacao']
+
+
+class AnexoEditalInline(admin.TabularInline):
+    model = AnexoEdital
+    extra = 1
+    fields = ['tipo', 'titulo', 'arquivo', 'link_url', 'obrigatorio', 'ordem', 'ativo']
+    readonly_fields = []
+    
+    class Media:
+        css = {
+            'all': ('admin/css/anexos_inline.css',)
+        }
+        js = ('admin/js/anexos_inline.js',)
 
 
 @admin.register(Edital)
@@ -109,7 +122,7 @@ class EditalAdmin(admin.ModelAdmin):
         }),
     )
     
-    inlines = [NotificacaoEditalInline]
+    inlines = [AnexoEditalInline, NotificacaoEditalInline]
     
     actions = [
         'marcar_como_rascunho', 'marcar_como_em_breve', 
@@ -275,6 +288,78 @@ class NotificacaoEditalAdmin(admin.ModelAdmin):
         else:
             self.message_user(request, 'Nenhuma notificação pendente encontrada.')
     enviar_notificacoes.short_description = 'Enviar Notificações Pendentes'
+
+
+@admin.register(AnexoEdital)
+class AnexoEditalAdmin(admin.ModelAdmin):
+    list_display = [
+        'titulo', 'edital', 'tipo', 'obrigatorio_display', 
+        'ordem', 'ativo_display', 'data_criacao'
+    ]
+    list_filter = ['tipo', 'obrigatorio', 'ativo', 'edital__categoria']
+    search_fields = ['titulo', 'descricao', 'edital__titulo']
+    date_hierarchy = 'data_criacao'
+    readonly_fields = ['data_criacao', 'data_atualizacao']
+    
+    fieldsets = (
+        ('Informações Básicas', {
+            'fields': ('edital', 'tipo', 'titulo', 'descricao')
+        }),
+        ('Arquivo/Link', {
+            'fields': ('arquivo', 'link_url'),
+            'description': 'Para tipo "Arquivo" use o campo Arquivo. Para tipo "Link" use o campo URL.'
+        }),
+        ('Configurações', {
+            'fields': ('obrigatorio', 'ordem', 'ativo')
+        }),
+        ('Metadados', {
+            'fields': ('data_criacao', 'data_atualizacao', 'criado_por'),
+            'classes': ('collapse',)
+        }),
+    )
+    
+    actions = ['ativar_anexos', 'desativar_anexos', 'marcar_obrigatorio', 'marcar_opcional']
+    
+    def get_queryset(self, request):
+        return super().get_queryset(request).select_related('edital', 'criado_por')
+    
+    def save_model(self, request, obj, form, change):
+        if not change:  # Novo objeto
+            obj.criado_por = request.user
+        super().save_model(request, obj, form, change)
+    
+    def obrigatorio_display(self, obj):
+        if obj.obrigatorio:
+            return format_html('<span style="color: #ef4444; font-weight: bold;">⚠️ OBRIGATÓRIO</span>')
+        return format_html('<span style="color: #6b7280;">📄 Opcional</span>')
+    obrigatorio_display.short_description = 'Obrigatório'
+    
+    def ativo_display(self, obj):
+        if obj.ativo:
+            return format_html('<span style="color: #10b981;">✅ Ativo</span>')
+        return format_html('<span style="color: #ef4444;">❌ Inativo</span>')
+    ativo_display.short_description = 'Status'
+    
+    # Actions
+    def ativar_anexos(self, request, queryset):
+        count = queryset.update(ativo=True)
+        self.message_user(request, f'{count} anexo(s) ativado(s).')
+    ativar_anexos.short_description = 'Ativar anexos selecionados'
+    
+    def desativar_anexos(self, request, queryset):
+        count = queryset.update(ativo=False)
+        self.message_user(request, f'{count} anexo(s) desativado(s).')
+    desativar_anexos.short_description = 'Desativar anexos selecionados'
+    
+    def marcar_obrigatorio(self, request, queryset):
+        count = queryset.update(obrigatorio=True)
+        self.message_user(request, f'{count} anexo(s) marcado(s) como obrigatório(s).')
+    marcar_obrigatorio.short_description = 'Marcar como obrigatório'
+    
+    def marcar_opcional(self, request, queryset):
+        count = queryset.update(obrigatorio=False)
+        self.message_user(request, f'{count} anexo(s) marcado(s) como opcional(is).')
+    marcar_opcional.short_description = 'Marcar como opcional'
 
 
 # Configurações do Admin Site

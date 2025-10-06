@@ -60,7 +60,7 @@
                             </a>
                         </div>
                     </div>
-                    <a href="{% url 'projetos:dashboard' %}" class="nav-link {% if request.resolver_match.app_name == 'projetos' %}active{% endif %}">
+                    <a href="#" onclick="alert('Estamos desenvolvendo esta funcionalidade.')" class="nav-link {% if 'projetos' in request.resolver_match.url_name %}active{% endif %}">
                         <i class="fas fa-folder"></i>
                         <span>Projetos</span>
                     </a>

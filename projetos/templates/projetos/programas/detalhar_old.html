@@ -1,0 +1,352 @@
+{% extends 'core_admin/base.html' %}
+{% load static %}
+
+{% block title %}{{ programa.nome }} - Programa{% endblock %}
+
+{% block breadcrumb %}
+<nav class="breadcrumb">
+    <a href="{% url 'projetos:dashboard' %}" class="breadcrumb-item">Dashboard</a>
+    <a href="{% url 'projetos:listar_programas' %}" class="breadcrumb-item">Programas</a>
+    <span class="breadcrumb-item active">{{ programa.nome }}</span>
+</nav>
+{% endblock %}
+
+{% block content %}
+<div class="content-header">
+    <div class="content-title">
+        <h1>{{ programa.nome }}</h1>
+        <div class="status-badge status-{{ programa.status|lower }}">{{ programa.get_status_display }}</div>
+    </div>
+    <div class="content-actions">
+        <a href="{% url 'projetos:listar_programas' %}" class="btn btn-secondary">
+            <i class="icon-arrow-left"></i> Voltar
+        </a>
+        <a href="#" class="btn btn-primary">
+            <i class="icon-edit"></i> Editar
+        </a>
+    </div>
+</div>
+
+<div class="detail-grid">
+    <!-- Informações Gerais -->
+    <div class="detail-card">
+        <h2>Informações Gerais</h2>
+        <div class="detail-info">
+            <div class="info-item">
+                <label>Código:</label>
+                <span>{{ programa.codigo }}</span>
+            </div>
+            <div class="info-item">
+                <label>Portfólio:</label>
+                <span>{{ programa.portfolio.nome }}</span>
+            </div>
+            <div class="info-item">
+                <label>Unidade Organizacional:</label>
+                <span>{{ programa.unidade_organizacional.nome }}</span>
+            </div>
+            <div class="info-item">
+                <label>Gerente do Programa:</label>
+                <span>{{ programa.gerente_programa.get_full_name|default:programa.gerente_programa.username }}</span>
+            </div>
+            <div class="info-item">
+                <label>Prioridade:</label>
+                <div class="priority-badge priority-{{ programa.prioridade|lower }}">
+                    {{ programa.get_prioridade_display }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Descrição e Objetivos -->
+    <div class="detail-card">
+        <h2>Descrição e Objetivos</h2>
+        <div class="detail-description">
+            <p>{{ programa.descricao|linebreaksbr }}</p>
+            {% if programa.objetivo_estrategico %}
+                <div class="objective-section">
+                    <h3>Objetivo Estratégico</h3>
+                    <p>{{ programa.objetivo_estrategico|linebreaksbr }}</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Cronograma e Orçamento -->
+    <div class="detail-card">
+        <h2>Cronograma e Orçamento</h2>
+        <div class="detail-info">
+            <div class="info-item">
+                <label>Data de Início:</label>
+                <span>{{ programa.data_inicio|date:"d/m/Y" }}</span>
+            </div>
+            <div class="info-item">
+                <label>Data de Fim Prevista:</label>
+                <span>{{ programa.data_fim_prevista|date:"d/m/Y" }}</span>
+            </div>
+            {% if programa.data_fim_real %}
+            <div class="info-item">
+                <label>Data de Fim Real:</label>
+                <span>{{ programa.data_fim_real|date:"d/m/Y" }}</span>
+            </div>
+            {% endif %}
+            <div class="info-item">
+                <label>Orçamento Total:</label>
+                <span class="currency">R$ {{ programa.orcamento_total|floatformat:2 }}</span>
+            </div>
+            <div class="info-item">
+                <label>Orçamento Consumido:</label>
+                <span class="currency">R$ {{ orcamento_consumido|floatformat:2 }}</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Projetos do Programa -->
+    <div class="detail-card full-width">
+        <div class="card-header">
+            <h2>Projetos do Programa ({{ projetos.count }})</h2>
+            <a href="#" class="btn btn-sm btn-primary">
+                <i class="icon-plus"></i> Novo Projeto
+            </a>
+        </div>
+        
+        {% if projetos %}
+            <div class="projects-grid">
+                {% for projeto in projetos %}
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>{{ projeto.nome }}</h3>
+                        <div class="status-badge status-{{ projeto.status|lower }}">
+                            {{ projeto.get_status_display }}
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <p>{{ projeto.descricao|truncatewords:20 }}</p>
+                        <div class="project-meta">
+                            <span><strong>Gerente:</strong> {{ projeto.gerente_projeto.get_full_name|default:projeto.gerente_projeto.username }}</span>
+                            <span><strong>Prazo:</strong> {{ projeto.data_fim_prevista|date:"d/m/Y" }}</span>
+                            <span><strong>Orçamento:</strong> R$ {{ projeto.orcamento_total|floatformat:2 }}</span>
+                        </div>
+                    </div>
+                    <div class="project-actions">
+                        <a href="{% url 'projetos:detalhar_projeto' projeto.uuid %}" class="btn btn-sm btn-outline">
+                            Ver Detalhes
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="empty-state">
+                <p>Nenhum projeto encontrado neste programa.</p>
+                <a href="#" class="btn btn-primary">
+                    <i class="icon-plus"></i> Criar Primeiro Projeto
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<style>
+.detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.detail-card {
+    background: var(--card-bg);
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    border: 1px solid var(--border-color);
+}
+
+.detail-card.full-width {
+    grid-column: 1 / -1;
+}
+
+.detail-card h2 {
+    color: var(--text-primary);
+    margin: 0 0 1.5rem 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.detail-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.info-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.info-item:last-child {
+    border-bottom: none;
+}
+
+.info-item label {
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+.info-item span {
+    color: var(--text-primary);
+    text-align: right;
+}
+
+.currency {
+    font-weight: 600;
+    color: var(--success-color);
+}
+
+.detail-description {
+    color: var(--text-primary);
+    line-height: 1.6;
+}
+
+.objective-section {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.objective-section h3 {
+    color: var(--text-primary);
+    margin: 0 0 1rem 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.card-header h2 {
+    margin: 0;
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 1.5rem;
+}
+
+.project-card {
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    transition: all 0.2s ease;
+}
+
+.project-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+}
+
+.project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+.project-header h3 {
+    color: var(--text-primary);
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.project-info p {
+    color: var(--text-secondary);
+    margin: 0 0 1rem 0;
+    line-height: 1.5;
+}
+
+.project-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+.project-actions {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.empty-state {
+    text-align: center;
+    padding: 3rem;
+    color: var(--text-secondary);
+}
+
+.empty-state p {
+    margin: 0 0 1.5rem 0;
+    font-size: 1.1rem;
+}
+
+.status-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.status-planejamento { background: var(--warning-bg); color: var(--warning-color); }
+.status-ativo { background: var(--success-bg); color: var(--success-color); }
+.status-suspenso { background: var(--danger-bg); color: var(--danger-color); }
+.status-finalizado { background: var(--info-bg); color: var(--info-color); }
+.status-cancelado { background: var(--secondary-bg); color: var(--secondary-color); }
+
+.priority-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.priority-baixa { background: var(--success-bg); color: var(--success-color); }
+.priority-media { background: var(--warning-bg); color: var(--warning-color); }
+.priority-alta { background: var(--danger-bg); color: var(--danger-color); }
+.priority-critica { background: var(--danger-color); color: white; }
+
+@media (max-width: 768px) {
+    .detail-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .content-header {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .content-actions {
+        justify-content: stretch;
+    }
+    
+    .content-actions .btn {
+        flex: 1;
+    }
+}
+</style>
+{% endblock %}

@@ -1,0 +1,123 @@
+{% extends 'core_admin/base.html' %}
+{% load static %}
+
+{% block title %}Portfólios | PONTI Admin{% endblock %}
+
+{% block page_title %}Gerenciar Portfólios{% endblock %}
+
+{% block breadcrumb %}
+<span class="breadcrumb-item">Projetos</span>
+<span class="breadcrumb-item">Portfólios</span>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .priority-badge {
+        padding: 4px 12px;
+        border-radius: var(--radius);
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+    
+    .priority-alta {
+        background: #fee2e2;
+        color: #991b1b;
+    }
+    
+    .priority-media {
+        background: #fef3c7;
+        color: #92400e;
+    }
+    
+    .priority-baixa {
+        background: #d1fae5;
+        color: #065f46;
+    }
+    
+    .portfolio-stats {
+        display: flex;
+        gap: 16px;
+        margin-top: 12px;
+    }
+    
+    .stat-item {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.875rem;
+        color: var(--gray-600);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Header com ações -->
+<div class="flex justify-between items-center mb-6">
+    <div>
+        <p class="text-gray-600 mt-2">Gerencie os portfólios de projetos da organização</p>
+    </div>
+    <div class="flex gap-2">
+        <a href="{% url 'projetos:dashboard' %}" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Dashboard
+        </a>
+        <a href="{% url 'projetos:criar_portfolio' %}" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Novo Portfólio
+        </a>
+    </div>
+</div>
+
+{% if portfolios %}
+    <div class="grid grid-cols-3">
+        {% for portfolio in portfolios %}
+        <div class="admin-card">
+            <div class="card-content">
+                <div class="flex justify-between items-start mb-4">
+                    <h3 class="font-semibold text-gray-900">{{ portfolio.nome }}</h3>
+                    <span class="priority-badge priority-{{ portfolio.prioridade }}">
+                        {{ portfolio.get_prioridade_display }}
+                    </span>
+                </div>
+                
+                <p class="text-gray-600 text-sm mb-4">{{ portfolio.descricao|truncatewords:20 }}</p>
+                
+                <div class="portfolio-stats mb-4">
+                    <div class="stat-item">
+                        <i class="fas fa-layer-group"></i>
+                        <span>{{ portfolio.programas.count }} Programas</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-project-diagram"></i>
+                        <span>{{ portfolio.projetos.count }} Projetos</span>
+                    </div>
+                </div>
+                
+                <div class="text-center mb-4">
+                    <div class="text-lg font-bold text-gray-900">R$ {{ portfolio.orcamento_total|floatformat:0 }}</div>
+                    <div class="text-sm text-gray-500">Orçamento Total</div>
+                </div>
+                
+                <div class="flex gap-2">
+                    <a href="{% url 'projetos:detalhar_portfolio' portfolio.uuid %}" class="btn btn-primary flex-1">
+                        <i class="fas fa-eye"></i> Visualizar
+                    </a>
+                    <a href="{% url 'projetos:editar_portfolio' portfolio.uuid %}" class="btn btn-secondary">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="admin-card text-center py-12">
+        <i class="fas fa-briefcase text-gray-400" style="font-size: 4rem;"></i>
+        <h3 class="text-xl font-semibold text-gray-900 mt-4 mb-2">Nenhum portfólio encontrado</h3>
+        <p class="text-gray-600 mb-6">Comece criando seu primeiro portfólio de projetos.</p>
+        <a href="{% url 'projetos:criar_portfolio' %}" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Criar Primeiro Portfólio
+        </a>
+    </div>
+{% endif %}
+{% endblock %}

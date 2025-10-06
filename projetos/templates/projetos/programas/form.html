@@ -1,0 +1,745 @@
+{% extends 'core_admin/base.html' %}
+{% load static %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block breadcrumb %}
+<nav class="breadcrumb">
+    <a href="{% url 'projetos:dashboard' %}" class="breadcrumb-item">
+        <i class="icon-dashboard"></i>Dashboard
+    </a>
+    <a href="{% url 'projetos:listar_programas' %}" class="breadcrumb-item">
+        <i class="icon-folder"></i>Programas
+    </a>
+    {% if action == 'editar' %}
+        <a href="{% url 'projetos:detalhar_programa' programa.uuid %}" class="breadcrumb-item">{{ programa.nome }}</a>
+        <span class="breadcrumb-item active">Editar</span>
+    {% else %}
+        <span class="breadcrumb-item active">Criar Programa</span>
+    {% endif %}
+</nav>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="form-hero">
+    <div class="hero-content">
+        <div class="hero-icon">
+            <i class="icon-folder-plus"></i>
+        </div>
+        <div class="hero-text">
+            <h1>{{ title }}</h1>
+            <p class="hero-subtitle">
+                {% if action == 'editar' %}
+                    Atualize as informações do programa {{ programa.nome }}
+                {% else %}
+                    Preencha as informações para criar um novo programa
+                {% endif %}
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- Formulário -->
+<div class="form-container">
+    <form method="post" class="programa-form" novalidate>
+        {% csrf_token %}
+        
+        <!-- Informações Básicas -->
+        <div class="form-section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="icon-info"></i>
+                </div>
+                <h2>Informações Básicas</h2>
+            </div>
+            
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="{{ form.nome.id_for_label }}" class="form-label">
+                        {{ form.nome.label }}
+                    </label>
+                    {{ form.nome }}
+                    {% if form.nome.errors %}
+                        <div class="form-errors">
+                            {% for error in form.nome.errors %}
+                                <span class="error-message">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="{{ form.codigo.id_for_label }}" class="form-label">
+                        {{ form.codigo.label }}
+                    </label>
+                    {{ form.codigo }}
+                    {% if form.codigo.errors %}
+                        <div class="form-errors">
+                            {% for error in form.codigo.errors %}
+                                <span class="error-message">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="{{ form.descricao.id_for_label }}" class="form-label">
+                    {{ form.descricao.label }}
+                </label>
+                {{ form.descricao }}
+                {% if form.descricao.errors %}
+                    <div class="form-errors">
+                        {% for error in form.descricao.errors %}
+                            <span class="error-message">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Vinculação e Responsabilidades -->
+        <div class="form-section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="icon-users"></i>
+                </div>
+                <h2>Vinculação e Responsabilidades</h2>
+            </div>
+            
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="{{ form.portfolio.id_for_label }}" class="form-label">
+                        {{ form.portfolio.label }}
+                    </label>
+                    {{ form.portfolio }}
+                    {% if form.portfolio.errors %}
+                        <div class="form-errors">
+                            {% for error in form.portfolio.errors %}
+                                <span class="error-message">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="{{ form.gerente_programa.id_for_label }}" class="form-label">
+                        {{ form.gerente_programa.label }}
+                    </label>
+                    {{ form.gerente_programa }}
+                    {% if form.gerente_programa.errors %}
+                        <div class="form-errors">
+                            {% for error in form.gerente_programa.errors %}
+                                <span class="error-message">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Objetivos e Benefícios -->
+        <div class="form-section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="icon-target"></i>
+                </div>
+                <h2>Objetivos e Benefícios</h2>
+            </div>
+            
+            <div class="form-group">
+                <label for="{{ form.objetivos.id_for_label }}" class="form-label">
+                    {{ form.objetivos.label }}
+                </label>
+                {{ form.objetivos }}
+                {% if form.objetivos.errors %}
+                    <div class="form-errors">
+                        {% for error in form.objetivos.errors %}
+                            <span class="error-message">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                <label for="{{ form.beneficios_esperados.id_for_label }}" class="form-label">
+                    {{ form.beneficios_esperados.label }}
+                </label>
+                {{ form.beneficios_esperados }}
+                {% if form.beneficios_esperados.errors %}
+                    <div class="form-errors">
+                        {% for error in form.beneficios_esperados.errors %}
+                            <span class="error-message">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Orçamento e Cronograma -->
+        <div class="form-section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="icon-calendar"></i>
+                </div>
+                <h2>Orçamento e Cronograma</h2>
+            </div>
+            
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="{{ form.orcamento_total.id_for_label }}" class="form-label">
+                        {{ form.orcamento_total.label }}
+                    </label>
+                    <div class="input-with-icon">
+                        <i class="icon-dollar-sign"></i>
+                        {{ form.orcamento_total }}
+                    </div>
+                    {% if form.orcamento_total.errors %}
+                        <div class="form-errors">
+                            {% for error in form.orcamento_total.errors %}
+                                <span class="error-message">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <!-- Espaçador -->
+                </div>
+            </div>
+            
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="{{ form.data_inicio.id_for_label }}" class="form-label">
+                        {{ form.data_inicio.label }}
+                    </label>
+                    {{ form.data_inicio }}
+                    {% if form.data_inicio.errors %}
+                        <div class="form-errors">
+                            {% for error in form.data_inicio.errors %}
+                                <span class="error-message">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="{{ form.data_fim_prevista.id_for_label }}" class="form-label">
+                        {{ form.data_fim_prevista.label }}
+                    </label>
+                    {{ form.data_fim_prevista }}
+                    {% if form.data_fim_prevista.errors %}
+                        <div class="form-errors">
+                            {% for error in form.data_fim_prevista.errors %}
+                                <span class="error-message">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Status e Prioridade -->
+        <div class="form-section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="icon-settings"></i>
+                </div>
+                <h2>Status e Prioridade</h2>
+            </div>
+            
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="{{ form.status.id_for_label }}" class="form-label">
+                        {{ form.status.label }}
+                    </label>
+                    {{ form.status }}
+                    {% if form.status.errors %}
+                        <div class="form-errors">
+                            {% for error in form.status.errors %}
+                                <span class="error-message">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="{{ form.prioridade.id_for_label }}" class="form-label">
+                        {{ form.prioridade.label }}
+                    </label>
+                    {{ form.prioridade }}
+                    {% if form.prioridade.errors %}
+                        <div class="form-errors">
+                            {% for error in form.prioridade.errors %}
+                                <span class="error-message">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Erros Gerais do Formulário -->
+        {% if form.non_field_errors %}
+            <div class="form-section">
+                <div class="form-errors general">
+                    {% for error in form.non_field_errors %}
+                        <span class="error-message">{{ error }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+
+        <!-- Botões de Ação -->
+        <div class="form-actions">
+            <div class="action-group">
+                <a href="{% if action == 'editar' %}{% url 'projetos:detalhar_programa' programa.uuid %}{% else %}{% url 'projetos:listar_programas' %}{% endif %}" 
+                   class="btn btn-secondary">
+                    <i class="icon-arrow-left"></i>
+                    Cancelar
+                </a>
+                
+                <button type="submit" class="btn btn-primary">
+                    <i class="icon-save"></i>
+                    {% if action == 'editar' %}
+                        Atualizar Programa
+                    {% else %}
+                        Criar Programa
+                    {% endif %}
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<style>
+/* Hero Section */
+.form-hero {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    border-radius: var(--border-radius-lg);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    color: white;
+}
+
+.hero-content {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.hero-icon {
+    width: 80px;
+    height: 80px;
+    background: rgba(255,255,255,0.15);
+    border-radius: var(--border-radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    backdrop-filter: blur(10px);
+}
+
+.hero-text h1 {
+    color: white;
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0 0 0.5rem 0;
+}
+
+.hero-subtitle {
+    color: rgba(255,255,255,0.8);
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+/* Container do Formulário */
+.form-container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.programa-form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* Seções do Formulário */
+.form-section {
+    background: var(--card-bg);
+    border-radius: var(--border-radius-lg);
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem 2rem;
+    background: var(--surface-color);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.section-icon {
+    width: 48px;
+    height: 48px;
+    background: var(--primary-bg);
+    color: var(--primary-color);
+    border-radius: var(--border-radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.section-header h2 {
+    color: var(--text-primary);
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+/* Grid do Formulário */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    padding: 2rem;
+}
+
+.form-section:has(.form-grid) {
+    padding: 0;
+}
+
+.form-section:not(:has(.form-grid)) {
+    padding: 2rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+/* Labels */
+.form-label {
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.form-label::after {
+    content: '*';
+    color: var(--danger-color);
+    margin-left: 0.25rem;
+}
+
+.form-group:has(select:not([required])) .form-label::after,
+.form-group:has(textarea:not([required])) .form-label::after,
+.form-group:has(input:not([required])) .form-label::after {
+    display: none;
+}
+
+/* Inputs */
+.form-control {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 2px solid var(--border-color);
+    border-radius: var(--border-radius);
+    background: var(--card-bg);
+    color: var(--text-primary);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.1);
+}
+
+.form-control:invalid {
+    border-color: var(--danger-color);
+}
+
+/* Input com Ícone */
+.input-with-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-with-icon i {
+    position: absolute;
+    left: 1rem;
+    color: var(--text-secondary);
+    z-index: 2;
+}
+
+.input-with-icon .form-control {
+    padding-left: 3rem;
+}
+
+/* Textarea */
+textarea.form-control {
+    resize: vertical;
+    min-height: 120px;
+    font-family: inherit;
+}
+
+/* Select */
+select.form-control {
+    cursor: pointer;
+}
+
+/* Erros */
+.form-errors {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.error-message {
+    color: var(--danger-color);
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.error-message::before {
+    content: '⚠';
+    font-size: 0.75rem;
+}
+
+.form-errors.general {
+    background: var(--danger-bg);
+    border: 1px solid var(--danger-color);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+}
+
+.form-errors.general .error-message {
+    color: var(--danger-color);
+    font-weight: 500;
+}
+
+/* Botões de Ação */
+.form-actions {
+    display: flex;
+    justify-content: center;
+    padding: 2rem 0;
+    border-top: 1px solid var(--border-color);
+    background: var(--surface-color);
+    border-radius: 0 0 var(--border-radius-lg) var(--border-radius-lg);
+}
+
+.action-group {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 2rem;
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    text-decoration: none;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+}
+
+.btn-primary {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+    background: var(--primary-dark);
+    border-color: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(var(--primary-rgb), 0.3);
+}
+
+.btn-secondary {
+    background: var(--surface-color);
+    color: var(--text-secondary);
+    border-color: var(--border-color);
+}
+
+.btn-secondary:hover {
+    background: var(--border-color);
+    color: var(--text-primary);
+    text-decoration: none;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .hero-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .hero-text h1 {
+        font-size: 1.5rem;
+    }
+    
+    .form-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        padding: 1.5rem;
+    }
+    
+    .section-header {
+        padding: 1rem 1.5rem;
+    }
+    
+    .form-section:not(:has(.form-grid)) {
+        padding: 1.5rem;
+    }
+    
+    .action-group {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* Animações */
+.form-section {
+    animation: slideUp 0.4s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.form-control:focus {
+    animation: focusGlow 0.3s ease-out;
+}
+
+@keyframes focusGlow {
+    from {
+        box-shadow: 0 0 0 0px rgba(var(--primary-rgb), 0.1);
+    }
+    to {
+        box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.1);
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Auto-resize textareas
+    const textareas = document.querySelectorAll('textarea');
+    textareas.forEach(textarea => {
+        textarea.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = this.scrollHeight + 'px';
+        });
+        
+        // Initial resize
+        textarea.style.height = textarea.scrollHeight + 'px';
+    });
+    
+    // Validação em tempo real
+    const form = document.querySelector('.programa-form');
+    const inputs = form.querySelectorAll('input, select, textarea');
+    
+    inputs.forEach(input => {
+        input.addEventListener('blur', function() {
+            validateField(this);
+        });
+        
+        input.addEventListener('input', function() {
+            if (this.classList.contains('error')) {
+                validateField(this);
+            }
+        });
+    });
+    
+    function validateField(field) {
+        const errorContainer = field.parentNode.querySelector('.form-errors');
+        
+        if (field.checkValidity()) {
+            field.classList.remove('error');
+            if (errorContainer) {
+                errorContainer.style.display = 'none';
+            }
+        } else {
+            field.classList.add('error');
+            if (errorContainer) {
+                errorContainer.style.display = 'block';
+            }
+        }
+    }
+    
+    // Preview de valores monetários
+    const orcamentoInput = document.querySelector('#id_orcamento_total');
+    if (orcamentoInput) {
+        orcamentoInput.addEventListener('input', function() {
+            const value = parseFloat(this.value) || 0;
+            const formatted = value.toLocaleString('pt-BR', {
+                style: 'currency',
+                currency: 'BRL'
+            });
+            
+            // Criar ou atualizar preview
+            let preview = this.parentNode.querySelector('.currency-preview');
+            if (!preview) {
+                preview = document.createElement('small');
+                preview.className = 'currency-preview';
+                preview.style.cssText = `
+                    color: var(--text-secondary);
+                    font-style: italic;
+                    margin-top: 0.25rem;
+                `;
+                this.parentNode.appendChild(preview);
+            }
+            
+            preview.textContent = value > 0 ? `Valor: ${formatted}` : '';
+        });
+    }
+    
+    // Animação de loading no submit
+    form.addEventListener('submit', function(e) {
+        const submitBtn = this.querySelector('button[type="submit"]');
+        const originalText = submitBtn.innerHTML;
+        
+        submitBtn.innerHTML = '<i class="icon-loader"></i> Salvando...';
+        submitBtn.disabled = true;
+        
+        // Se houver erro, restaurar o botão
+        setTimeout(() => {
+            if (submitBtn.disabled) {
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }
+        }, 5000);
+    });
+});
+</script>
+{% endblock %}

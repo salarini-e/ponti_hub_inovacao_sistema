@@ -1,0 +1,709 @@
+{% extends 'core_admin/base.html' %}
+{% load static %}
+
+{% block title %}{{ projeto.nome }} - Projeto{% endblock %}
+
+{% block breadcrumb %}
+<nav class="breadcrumb">
+    <a href="{% url 'projetos:dashboard' %}" class="breadcrumb-item">
+        <i class="icon-dashboard"></i>Dashboard
+    </a>
+    <a href="{% url 'projetos:listar_projetos' %}" class="breadcrumb-item">
+        <i class="icon-folder"></i>Projetos
+    </a>
+    <span class="breadcrumb-item active">{{ projeto.nome }}</span>
+</nav>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div style="position: relative; background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-dark) 100%); border-radius: var(--radius-lg); margin-bottom: 2rem; overflow: hidden; color: var(--white); padding: 2rem;">
+    <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.1;">
+        <div style="width: 100%; height: 100%; background-image: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 1px, transparent 1px), radial-gradient(circle at 80% 20%, rgba(255,255,255,0.1) 1px, transparent 1px), radial-gradient(circle at 40% 80%, rgba(255,255,255,0.1) 1px, transparent 1px); background-size: 50px 50px, 80px 80px, 60px 60px;"></div>
+    </div>
+    <div style="position: relative; z-index: 2;">
+        <div style="display: flex; align-items: flex-start; gap: 1.5rem; margin-bottom: 2rem;">
+            <div style="width: 80px; height: 80px; background: rgba(255,255,255,0.15); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; font-size: 2rem; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2);">
+                <i class="icon-project"></i>
+            </div>
+            <div>
+                <h1 style="color: var(--white); font-size: 2.5rem; font-weight: 700; margin: 0 0 0.5rem 0; line-height: 1.2;">{{ projeto.nome }}</h1>
+                <p style="color: rgba(255,255,255,0.8); font-size: 1.1rem; margin: 0 0 1rem 0;">{{ projeto.programa.nome }} • {{ projeto.programa.portfolio.nome }}</p>
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <div style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.875rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; background: rgba(16, 185, 129, 0.15); color: var(--success);">
+                        <i class="icon-status"></i>
+                        {{ projeto.get_status_display }}
+                    </div>
+                    <div style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.875rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; background: rgba(245, 158, 11, 0.15); color: var(--warning);">
+                        <i class="icon-priority"></i>
+                        {{ projeto.get_prioridade_display }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+            <a href="{% url 'projetos:listar_projetos' %}" style="background: rgba(255,255,255,0.1); color: var(--white); border: 1px solid rgba(255,255,255,0.3); backdrop-filter: blur(10px); display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 2rem; border-radius: var(--radius); font-weight: 600; text-decoration: none; transition: var(--transition);">
+                <i class="icon-arrow-left"></i>
+                Voltar
+            </a>
+            <div style="display: flex; gap: 1rem;">
+                <button style="background: var(--white); color: var(--gray-700); border: 2px solid var(--gray-200); display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 2rem; border-radius: var(--radius); font-weight: 600; cursor: pointer; transition: var(--transition);"
+                    <i class="icon-share"></i>
+                    Compartilhar
+                </button>
+                <button style="background: var(--primary-blue); color: var(--white); border: 2px solid var(--primary-blue); display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 2rem; border-radius: var(--radius); font-weight: 600; cursor: pointer; transition: var(--transition);"
+                    <i class="icon-edit"></i>
+                    Editar Projeto
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Progress Overview -->
+    <div style="background: rgba(255,255,255,0.1); border-radius: var(--radius); padding: 1.5rem; margin-top: 2rem; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2);">
+        <div style="margin-bottom: 2rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <span style="color: rgba(255,255,255,0.9); font-weight: 500;">Progresso Geral</span>
+                <span style="color: var(--white); font-size: 1.5rem; font-weight: 700;">{{ projeto.progresso }}%</span>
+            </div>
+            <div style="width: 100%;">
+                <div style="width: 100%; height: 12px; background: rgba(255,255,255,0.2); border-radius: 6px; overflow: hidden;">
+                    <div style="height: 100%; background: linear-gradient(90deg, #4ade80, #22c55e); border-radius: 6px; transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1); width: {{ projeto.progresso }}%;"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+            <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: rgba(255,255,255,0.05); border-radius: var(--radius); border: 1px solid rgba(255,255,255,0.1);">
+                <div style="width: 48px; height: 48px; border-radius: var(--radius); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; background: rgba(34, 197, 94, 0.2); color: #4ade80;">
+                    <i class="icon-money"></i>
+                </div>
+                <div style="display: flex; flex-direction: column;">
+                    <span style="color: var(--white); font-size: 1.25rem; font-weight: 700; line-height: 1.2;">R$ {{ projeto.orcamento_total|floatformat:0 }}</span>
+                    <span style="color: rgba(255,255,255,0.7); font-size: 0.875rem;">Orçamento Total</span>
+                </div>
+            </div>
+            
+            <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: rgba(255,255,255,0.05); border-radius: var(--radius); border: 1px solid rgba(255,255,255,0.1);">
+                <div style="width: 48px; height: 48px; border-radius: var(--radius); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; background: rgba(59, 130, 246, 0.2); color: #60a5fa;">
+                    <i class="icon-calendar"></i>
+                </div>
+                <div style="display: flex; flex-direction: column;">
+                    <span style="color: var(--white); font-size: 1.25rem; font-weight: 700; line-height: 1.2;">{{ projeto.data_fim_prevista|date:"d/m/Y" }}</span>
+                    <span style="color: rgba(255,255,255,0.7); font-size: 0.875rem;">Data de Entrega</span>
+                </div>
+            </div>
+            
+            <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: rgba(255,255,255,0.05); border-radius: var(--radius); border: 1px solid rgba(255,255,255,0.1);">
+                <div style="width: 48px; height: 48px; border-radius: var(--radius); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; background: rgba(168, 85, 247, 0.2); color: #c084fc;">
+                    <i class="icon-users"></i>
+                </div>
+                <div style="display: flex; flex-direction: column;">
+                    <span style="color: var(--white); font-size: 1.25rem; font-weight: 700; line-height: 1.2;">{{ equipe.count }}</span>
+                    <span style="color: rgba(255,255,255,0.7); font-size: 0.875rem;">Membros da Equipe</span>
+                </div>
+            </div>
+            
+            <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: rgba(255,255,255,0.05); border-radius: var(--radius); border: 1px solid rgba(255,255,255,0.1);">
+                <div style="width: 48px; height: 48px; border-radius: var(--radius); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; background: rgba(249, 115, 22, 0.2); color: #fb923c;">
+                    <i class="icon-package"></i>
+                </div>
+                <div style="display: flex; flex-direction: column;">
+                    <span style="color: white; font-size: 1.25rem; font-weight: 700; line-height: 1.2;">{{ entregas.count }}</span>
+                    <span style="color: rgba(255,255,255,0.7); font-size: 0.875rem;">Entregas</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Navegação por abas moderna -->
+<div style="margin: 2rem 0;">
+    <div style="position: relative; background: var(--white); border-radius: var(--radius-lg); padding: 0.5rem; border: 1px solid var(--gray-200);">
+        <div style="display: flex; gap: 0.25rem; position: relative;">
+            <button class="tab-btn active" data-tab="geral" style="display: flex; align-items: center; gap: 0.5rem; padding: 1rem 1.5rem; background: var(--primary-blue); border: none; border-radius: var(--radius); color: var(--white); font-weight: 500; cursor: pointer; transition: var(--transition); position: relative; z-index: 2;">
+                <i class="icon-info" style="font-size: 1.1rem;"></i>
+                <span>Visão Geral</span>
+            </button>
+            <button class="tab-btn" data-tab="cronograma" style="display: flex; align-items: center; gap: 0.5rem; padding: 1rem 1.5rem; background: transparent; border: none; border-radius: var(--radius); color: var(--gray-600); font-weight: 500; cursor: pointer; transition: var(--transition); position: relative; z-index: 2;">
+                <i class="icon-timeline" style="font-size: 1.1rem;"></i>
+                <span>Timeline</span>
+            </button>
+            <button class="tab-btn" data-tab="equipe" style="display: flex; align-items: center; gap: 0.5rem; padding: 1rem 1.5rem; background: transparent; border: none; border-radius: var(--radius); color: var(--gray-600); font-weight: 500; cursor: pointer; transition: var(--transition); position: relative; z-index: 2;">
+                <i class="icon-users" style="font-size: 1.1rem;"></i>
+                <span>Equipe</span>
+                <div style="background: var(--gray-200); color: var(--gray-500); font-size: 0.75rem; padding: 0.25rem 0.5rem; border-radius: 10px; min-width: 20px; text-align: center; transition: var(--transition);">{{ equipe.count }}</div>
+            </button>
+            <button class="tab-btn" data-tab="riscos" style="display: flex; align-items: center; gap: 0.5rem; padding: 1rem 1.5rem; background: transparent; border: none; border-radius: var(--radius); color: var(--gray-600); font-weight: 500; cursor: pointer; transition: var(--transition); position: relative; z-index: 2;">
+                <i class="icon-warning" style="font-size: 1.1rem;"></i>
+                <span>Riscos</span>
+                <div style="background: var(--gray-200); color: var(--gray-500); font-size: 0.75rem; padding: 0.25rem 0.5rem; border-radius: 10px; min-width: 20px; text-align: center; transition: var(--transition);">{{ riscos.count }}</div>
+            </button>
+            <button class="tab-btn" data-tab="entregas" style="display: flex; align-items: center; gap: 0.5rem; padding: 1rem 1.5rem; background: transparent; border: none; border-radius: var(--radius); color: var(--gray-600); font-weight: 500; cursor: pointer; transition: var(--transition); position: relative; z-index: 2;">
+                <i class="icon-package" style="font-size: 1.1rem;"></i>
+                <span>Entregas</span>
+                <div style="background: var(--gray-200); color: var(--gray-500); font-size: 0.75rem; padding: 0.25rem 0.5rem; border-radius: 10px; min-width: 20px; text-align: center; transition: var(--transition);">{{ entregas.count }}</div>
+            </button>
+            <button class="tab-btn" data-tab="anexos" style="display: flex; align-items: center; gap: 0.5rem; padding: 1rem 1.5rem; background: transparent; border: none; border-radius: var(--radius); color: var(--gray-600); font-weight: 500; cursor: pointer; transition: var(--transition); position: relative; z-index: 2;">
+                <i class="icon-attachment" style="font-size: 1.1rem;"></i>
+                <span>Anexos</span>
+                <div style="background: var(--gray-200); color: var(--gray-500); font-size: 0.75rem; padding: 0.25rem 0.5rem; border-radius: 10px; min-width: 20px; text-align: center; transition: var(--transition);">{{ anexos.count }}</div>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Aba: Visão Geral -->
+<div id="tab-geral" class="tab-content active" style="display: block; margin-top: 2rem;">
+    <div style="margin-top: 2rem;">
+        <!-- Informações Principais -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 2rem; margin-bottom: 2rem;">
+            <div style="background: var(--white); border-radius: var(--radius-lg); padding: 0; border: 1px solid var(--gray-200); overflow: hidden; transition: var(--transition);">
+                <div style="display: flex; align-items: center; gap: 1rem; padding: 1.5rem 2rem; background: var(--gray-50); border-bottom: 1px solid var(--gray-200);">
+                    <div style="width: 48px; height: 48px; border-radius: var(--radius); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; background: rgba(30, 64, 175, 0.1); color: var(--primary-blue);">
+                        <i class="icon-info-circle"></i>
+                    </div>
+                    <h3 style="color: var(--gray-800); font-size: 1.25rem; font-weight: 600; margin: 0;">Informações Básicas</h3>
+                </div>
+                <div style="padding: 2rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; border-bottom: 1px solid var(--gray-200);">
+                        <span style="color: var(--gray-600); font-weight: 500;">Código do Projeto</span>
+                        <span style="color: var(--gray-800); font-weight: 600; font-family: 'Monaco', 'Consolas', monospace; background: var(--gray-100); padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.875rem;">{{ projeto.codigo }}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; border-bottom: 1px solid var(--gray-200);">
+                        <span style="color: var(--gray-600); font-weight: 500;">Programa</span>
+                        <a href="{% url 'projetos:detalhar_programa' projeto.programa.uuid %}" style="color: var(--primary-blue); text-decoration: none; font-weight: 600;">{{ projeto.programa.nome }}</a>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; border-bottom: 1px solid var(--gray-200);">
+                        <span style="color: var(--gray-600); font-weight: 500;">Portfólio</span>
+                        <span style="color: var(--gray-800); font-weight: 600;">{{ projeto.programa.portfolio.nome }}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 0;">
+                        <span style="color: var(--gray-600); font-weight: 500;">Cliente</span>
+                        <span style="color: var(--gray-800); font-weight: 600;">{{ projeto.cliente|default:"Não informado" }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div style="background: var(--white); border-radius: var(--radius-lg); padding: 0; border: 1px solid var(--gray-200); overflow: hidden; transition: var(--transition);">
+                <div style="display: flex; align-items: center; gap: 1rem; padding: 1.5rem 2rem; background: var(--gray-50); border-bottom: 1px solid var(--gray-200);">
+                    <div style="width: 48px; height: 48px; border-radius: var(--radius); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; background: rgba(16, 185, 129, 0.1); color: var(--success);">
+                        <i class="icon-users"></i>
+                    </div>
+                    <h3 style="color: var(--gray-800); font-size: 1.25rem; font-weight: 600; margin: 0;">Responsáveis</h3>
+                </div>
+                <div style="padding: 2rem;">
+                    <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid var(--gray-200);">
+                        <div style="width: 48px; height: 48px; border-radius: 50%; background: rgba(30, 64, 175, 0.1); color: var(--primary-blue); display: flex; align-items: center; justify-content: center; font-size: 1.25rem;">
+                            <i class="icon-user"></i>
+                        </div>
+                        <div style="flex: 1;">
+                            <span style="display: block; color: var(--gray-800); font-weight: 600; margin-bottom: 0.25rem;">{{ projeto.gerente_projeto.get_full_name|default:projeto.gerente_projeto.username }}</span>
+                            <span style="color: var(--gray-600); font-size: 0.875rem;">Gerente do Projeto</span>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem 0;">
+                        <div style="width: 48px; height: 48px; border-radius: 50%; background: rgba(245, 158, 11, 0.1); color: var(--warning); display: flex; align-items: center; justify-content: center; font-size: 1.25rem;">
+                            <i class="icon-crown"></i>
+                        </div>
+                        <div style="flex: 1;">
+                            <span style="display: block; color: var(--gray-800); font-weight: 600; margin-bottom: 0.25rem;">{{ projeto.patrocinador.get_full_name|default:projeto.patrocinador.username }}</span>
+                            <span style="color: var(--gray-600); font-size: 0.875rem;">Patrocinador</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Descrição Completa -->
+        <div style="display: flex; flex-direction: column; gap: 2rem;">
+            <div style="background: var(--white); border-radius: var(--radius-lg); border: 1px solid var(--gray-200); overflow: hidden;">
+                <div style="display: flex; align-items: center; gap: 1rem; padding: 1.5rem 2rem; background: var(--gray-50); border-bottom: 1px solid var(--gray-200);">
+                    <div style="width: 48px; height: 48px; border-radius: var(--radius); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; background: rgba(30, 64, 175, 0.1); color: var(--primary-blue);">
+                        <i class="icon-file-text"></i>
+                    </div>
+                    <h3 style="color: var(--gray-800); font-size: 1.25rem; font-weight: 600; margin: 0;">Descrição do Projeto</h3>
+                </div>
+                <div style="padding: 2rem; color: var(--gray-800); line-height: 1.7;">
+                    {{ projeto.descricao|linebreaksbr }}
+                </div>
+            </div>
+            
+            {% if projeto.objetivo %}
+            <div style="background: var(--white); border-radius: var(--radius-lg); border: 1px solid var(--gray-200); overflow: hidden;">
+                <div style="display: flex; align-items: center; gap: 1rem; padding: 1.5rem 2rem; background: var(--gray-50); border-bottom: 1px solid var(--gray-200);">
+                    <div style="width: 48px; height: 48px; border-radius: var(--radius); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; background: rgba(30, 64, 175, 0.1); color: var(--primary-blue);">
+                        <i class="icon-target"></i>
+                    </div>
+                    <h3 style="color: var(--gray-800); font-size: 1.25rem; font-weight: 600; margin: 0;">Objetivos</h3>
+                </div>
+                <div style="padding: 2rem; color: var(--gray-800); line-height: 1.7;">
+                    {{ projeto.objetivo|linebreaksbr }}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Aba: Timeline -->
+<div id="tab-cronograma" class="tab-content">
+    <div style="background: var(--white); border-radius: var(--radius-lg); border: 1px solid var(--gray-200); overflow: hidden;">
+        <div style="display: flex; align-items: center; gap: 1rem; padding: 1.5rem 2rem; background: var(--gray-50); border-bottom: 1px solid var(--gray-200);">
+            <div style="width: 48px; height: 48px; border-radius: var(--radius); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; background: rgba(30, 64, 175, 0.1); color: var(--primary-blue);">
+                <i class="fas fa-calendar-alt"></i>
+            </div>
+            <h3 style="color: var(--gray-800); font-size: 1.25rem; font-weight: 600; margin: 0;">Cronograma do Projeto</h3>
+        </div>
+        <div style="padding: 2rem;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem;">
+                <div style="padding: 1.5rem; background: var(--gray-50); border-radius: var(--radius); border: 1px solid var(--gray-200);">
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                        <div style="width: 40px; height: 40px; border-radius: var(--radius); background: rgba(34, 197, 94, 0.1); color: var(--success); display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-play"></i>
+                        </div>
+                        <div>
+                            <h4 style="color: var(--gray-800); margin: 0; font-size: 1rem;">Data de Início</h4>
+                            <p style="color: var(--gray-600); margin: 0; font-size: 1.1rem; font-weight: 600;">{{ projeto.data_inicio|date:"d/m/Y" }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div style="padding: 1.5rem; background: var(--gray-50); border-radius: var(--radius); border: 1px solid var(--gray-200);">
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                        <div style="width: 40px; height: 40px; border-radius: var(--radius); background: rgba(239, 68, 68, 0.1); color: var(--error); display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-flag-checkered"></i>
+                        </div>
+                        <div>
+                            <h4 style="color: var(--gray-800); margin: 0; font-size: 1rem;">Data de Entrega</h4>
+                            <p style="color: var(--gray-600); margin: 0; font-size: 1.1rem; font-weight: 600;">{{ projeto.data_fim_prevista|date:"d/m/Y" }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Linha do tempo visual -->
+            <div style="position: relative; margin: 2rem 0;">
+                <div style="position: absolute; left: 20px; top: 20px; bottom: 20px; width: 2px; background: var(--gray-300);"></div>
+                
+                <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                    <div style="display: flex; align-items: center; gap: 1rem; position: relative;">
+                        <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--success); color: var(--white); display: flex; align-items: center; justify-content: center; position: relative; z-index: 2;">
+                            <i class="fas fa-play"></i>
+                        </div>
+                        <div style="flex: 1; background: var(--white); padding: 1rem 1.5rem; border-radius: var(--radius); border: 1px solid var(--gray-200);">
+                            <h4 style="color: var(--gray-800); margin: 0 0 0.5rem 0;">Início do Projeto</h4>
+                            <p style="color: var(--gray-600); margin: 0; font-size: 0.875rem;">{{ projeto.data_inicio|date:"d/m/Y" }} - Projeto iniciado</p>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; align-items: center; gap: 1rem; position: relative;">
+                        <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--warning); color: var(--white); display: flex; align-items: center; justify-content: center; position: relative; z-index: 2;">
+                            <i class="fas fa-cog"></i>
+                        </div>
+                        <div style="flex: 1; background: var(--white); padding: 1rem 1.5rem; border-radius: var(--radius); border: 1px solid var(--gray-200);">
+                            <h4 style="color: var(--gray-800); margin: 0 0 0.5rem 0;">Em Desenvolvimento</h4>
+                            <p style="color: var(--gray-600); margin: 0; font-size: 0.875rem;">Projeto em andamento - {{ projeto.progresso|default:0 }}% concluído</p>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; align-items: center; gap: 1rem; position: relative;">
+                        <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--gray-400); color: var(--white); display: flex; align-items: center; justify-content: center; position: relative; z-index: 2;">
+                            <i class="fas fa-flag-checkered"></i>
+                        </div>
+                        <div style="flex: 1; background: var(--white); padding: 1rem 1.5rem; border-radius: var(--radius); border: 1px solid var(--gray-200);">
+                            <h4 style="color: var(--gray-800); margin: 0 0 0.5rem 0;">Entrega Prevista</h4>
+                            <p style="color: var(--gray-600); margin: 0; font-size: 0.875rem;">{{ projeto.data_fim_prevista|date:"d/m/Y" }} - Data limite para conclusão</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Aba: Equipe -->
+<div id="tab-equipe" class="tab-content">
+    <div style="background: var(--white); border-radius: var(--radius-lg); border: 1px solid var(--gray-200); overflow: hidden;">
+        <div style="display: flex; align-items: center; gap: 1rem; padding: 1.5rem 2rem; background: var(--gray-50); border-bottom: 1px solid var(--gray-200);">
+            <div style="width: 48px; height: 48px; border-radius: var(--radius); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; background: rgba(16, 185, 129, 0.1); color: var(--success);">
+                <i class="fas fa-users"></i>
+            </div>
+            <h3 style="color: var(--gray-800); font-size: 1.25rem; font-weight: 600; margin: 0;">Equipe do Projeto</h3>
+            <span style="background: var(--gray-200); color: var(--gray-600); font-size: 0.875rem; padding: 0.25rem 0.75rem; border-radius: 12px; font-weight: 500;">3 membros</span>
+        </div>
+        <div style="padding: 2rem;">
+            <!-- Membros principais -->
+            <div style="display: grid; gap: 1.5rem;">
+                <!-- Gerente do Projeto -->
+                <div style="display: flex; align-items: center; gap: 1.5rem; padding: 1.5rem; background: var(--gray-50); border-radius: var(--radius); border: 1px solid var(--gray-200);">
+                    <div style="width: 64px; height: 64px; border-radius: 50%; background: rgba(30, 64, 175, 0.1); color: var(--primary-blue); display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <div style="flex: 1;">
+                        <h4 style="color: var(--gray-800); margin: 0 0 0.25rem 0; font-size: 1.1rem; font-weight: 600;">{{ projeto.gerente_projeto.get_full_name|default:projeto.gerente_projeto.username }}</h4>
+                        <p style="color: var(--gray-600); margin: 0 0 0.5rem 0; font-size: 0.875rem;">Gerente do Projeto</p>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <span style="display: inline-flex; align-items: center; gap: 0.25rem; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem; font-weight: 500; background: rgba(30, 64, 175, 0.1); color: var(--primary-blue);">
+                                <i class="fas fa-crown"></i>
+                                Líder
+                            </span>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button style="width: 36px; height: 36px; border-radius: var(--radius); border: 1px solid var(--gray-300); background: var(--white); color: var(--gray-600); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: var(--transition);" onmouseover="this.style.background='var(--gray-100)'" onmouseout="this.style.background='var(--white)'">
+                            <i class="fas fa-envelope"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Patrocinador -->
+                <div style="display: flex; align-items: center; gap: 1.5rem; padding: 1.5rem; background: var(--white); border-radius: var(--radius); border: 1px solid var(--gray-200);">
+                    <div style="width: 64px; height: 64px; border-radius: 50%; background: rgba(245, 158, 11, 0.1); color: var(--warning); display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">
+                        <i class="fas fa-medal"></i>
+                    </div>
+                    <div style="flex: 1;">
+                        <h4 style="color: var(--gray-800); margin: 0 0 0.25rem 0; font-size: 1.1rem; font-weight: 600;">{{ projeto.patrocinador.get_full_name|default:projeto.patrocinador.username }}</h4>
+                        <p style="color: var(--gray-600); margin: 0 0 0.5rem 0; font-size: 0.875rem;">Patrocinador do Projeto</p>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <span style="display: inline-flex; align-items: center; gap: 0.25rem; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem; font-weight: 500; background: rgba(245, 158, 11, 0.1); color: var(--warning);">
+                                <i class="fas fa-handshake"></i>
+                                Sponsor
+                            </span>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button style="width: 36px; height: 36px; border-radius: var(--radius); border: 1px solid var(--gray-300); background: var(--white); color: var(--gray-600); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: var(--transition);" onmouseover="this.style.background='var(--gray-100)'" onmouseout="this.style.background='var(--white)'">
+                            <i class="fas fa-envelope"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Aba: Riscos -->
+<div id="tab-riscos" class="tab-content">
+    <div style="background: var(--white); border-radius: var(--radius-lg); border: 1px solid var(--gray-200); overflow: hidden;">
+        <div style="display: flex; align-items: center; gap: 1rem; padding: 1.5rem 2rem; background: var(--gray-50); border-bottom: 1px solid var(--gray-200);">
+            <div style="width: 48px; height: 48px; border-radius: var(--radius); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; background: rgba(239, 68, 68, 0.1); color: var(--error);">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <h3 style="color: var(--gray-800); font-size: 1.25rem; font-weight: 600; margin: 0;">Riscos do Projeto</h3>
+            <span style="background: var(--gray-200); color: var(--gray-600); font-size: 0.875rem; padding: 0.25rem 0.75rem; border-radius: 12px; font-weight: 500;">2 riscos ativos</span>
+        </div>
+        <div style="padding: 2rem;">
+            <div style="display: grid; gap: 1rem;">
+                <!-- Risco exemplo 1 -->
+                <div style="border: 1px solid var(--gray-200); border-radius: var(--radius); padding: 1.5rem; background: var(--white);">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+                        <div style="flex: 1;">
+                            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                                <span style="display: inline-flex; align-items: center; gap: 0.25rem; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem; font-weight: 500; background: rgba(239, 68, 68, 0.1); color: var(--error);">
+                                    <i class="fas fa-exclamation-circle"></i>
+                                    Alto Risco
+                                </span>
+                            </div>
+                            <h4 style="color: var(--gray-800); margin: 0 0 0.5rem 0; font-size: 1rem; font-weight: 600;">Atraso na entrega de recursos</h4>
+                            <p style="color: var(--gray-600); margin: 0; font-size: 0.875rem; line-height: 1.5;">Possível atraso na disponibilização de recursos necessários para desenvolvimento, podendo impactar o cronograma do projeto.</p>
+                        </div>
+                    </div>
+                    <div style="display: flex; justify-content: between; align-items: center; gap: 1rem;">
+                        <div style="display: flex; gap: 1rem;">
+                            <div style="text-align: center;">
+                                <span style="display: block; color: var(--gray-800); font-weight: 600; font-size: 0.875rem;">85%</span>
+                                <span style="color: var(--gray-500); font-size: 0.75rem;">Probabilidade</span>
+                            </div>
+                            <div style="text-align: center;">
+                                <span style="display: block; color: var(--gray-800); font-weight: 600; font-size: 0.875rem;">Alto</span>
+                                <span style="color: var(--gray-500); font-size: 0.75rem;">Impacto</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Risco exemplo 2 -->
+                <div style="border: 1px solid var(--gray-200); border-radius: var(--radius); padding: 1.5rem; background: var(--white);">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+                        <div style="flex: 1;">
+                            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                                <span style="display: inline-flex; align-items: center; gap: 0.25rem; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem; font-weight: 500; background: rgba(245, 158, 11, 0.1); color: var(--warning);">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                    Médio Risco
+                                </span>
+                            </div>
+                            <h4 style="color: var(--gray-800); margin: 0 0 0.5rem 0; font-size: 1rem; font-weight: 600;">Mudanças nos requisitos</h4>
+                            <p style="color: var(--gray-600); margin: 0; font-size: 0.875rem; line-height: 1.5;">Alterações frequentes nos requisitos podem causar retrabalho e impactar o escopo original do projeto.</p>
+                        </div>
+                    </div>
+                    <div style="display: flex; justify-content: between; align-items: center; gap: 1rem;">
+                        <div style="display: flex; gap: 1rem;">
+                            <div style="text-align: center;">
+                                <span style="display: block; color: var(--gray-800); font-weight: 600; font-size: 0.875rem;">60%</span>
+                                <span style="color: var(--gray-500); font-size: 0.75rem;">Probabilidade</span>
+                            </div>
+                            <div style="text-align: center;">
+                                <span style="display: block; color: var(--gray-800); font-weight: 600; font-size: 0.875rem;">Médio</span>
+                                <span style="color: var(--gray-500); font-size: 0.75rem;">Impacto</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Aba: Entregas -->
+<div id="tab-entregas" class="tab-content">
+    <div style="background: var(--white); border-radius: var(--radius-lg); border: 1px solid var(--gray-200); overflow: hidden;">
+        <div style="display: flex; align-items: center; gap: 1rem; padding: 1.5rem 2rem; background: var(--gray-50); border-bottom: 1px solid var(--gray-200);">
+            <div style="width: 48px; height: 48px; border-radius: var(--radius); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; background: rgba(168, 85, 247, 0.1); color: #a855f7;">
+                <i class="fas fa-box"></i>
+            </div>
+            <h3 style="color: var(--gray-800); font-size: 1.25rem; font-weight: 600; margin: 0;">Entregas do Projeto</h3>
+            <span style="background: var(--gray-200); color: var(--gray-600); font-size: 0.875rem; padding: 0.25rem 0.75rem; border-radius: 12px; font-weight: 500;">3 entregas</span>
+        </div>
+        <div style="padding: 2rem;">
+            <div style="display: grid; gap: 1rem;">
+                <!-- Entrega exemplo 1 -->
+                <div style="border: 1px solid var(--gray-200); border-radius: var(--radius); padding: 1.5rem; background: var(--white);">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+                        <div style="flex: 1;">
+                            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                                <span style="display: inline-flex; align-items: center; gap: 0.25rem; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem; font-weight: 500; background: rgba(16, 185, 129, 0.1); color: var(--success);">
+                                    <i class="fas fa-check-circle"></i>
+                                    Concluído
+                                </span>
+                            </div>
+                            <h4 style="color: var(--gray-800); margin: 0 0 0.5rem 0; font-size: 1rem; font-weight: 600;">Documentação do Sistema</h4>
+                            <p style="color: var(--gray-600); margin: 0; font-size: 0.875rem; line-height: 1.5;">Documentação técnica completa do sistema, incluindo manuais de usuário e especificações técnicas.</p>
+                        </div>
+                        <div style="text-align: right;">
+                            <span style="display: block; color: var(--gray-800); font-weight: 600; font-size: 0.875rem;">15/09/2025</span>
+                            <span style="color: var(--gray-500); font-size: 0.75rem;">Entregue</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Entrega exemplo 2 -->
+                <div style="border: 1px solid var(--gray-200); border-radius: var(--radius); padding: 1.5rem; background: var(--white);">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+                        <div style="flex: 1;">
+                            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                                <span style="display: inline-flex; align-items: center; gap: 0.25rem; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem; font-weight: 500; background: rgba(245, 158, 11, 0.1); color: var(--warning);">
+                                    <i class="fas fa-clock"></i>
+                                    Em Andamento
+                                </span>
+                            </div>
+                            <h4 style="color: var(--gray-800); margin: 0 0 0.5rem 0; font-size: 1rem; font-weight: 600;">Módulo de Relatórios</h4>
+                            <p style="color: var(--gray-600); margin: 0; font-size: 0.875rem; line-height: 1.5;">Desenvolvimento do módulo de geração de relatórios automáticos e personalizáveis.</p>
+                        </div>
+                        <div style="text-align: right;">
+                            <span style="display: block; color: var(--gray-800); font-weight: 600; font-size: 0.875rem;">30/10/2025</span>
+                            <span style="color: var(--gray-500); font-size: 0.75rem;">Previsto</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Entrega exemplo 3 -->
+                <div style="border: 1px solid var(--gray-200); border-radius: var(--radius); padding: 1.5rem; background: var(--white);">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+                        <div style="flex: 1;">
+                            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                                <span style="display: inline-flex; align-items: center; gap: 0.25rem; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem; font-weight: 500; background: rgba(156, 163, 175, 0.1); color: var(--gray-500);">
+                                    <i class="fas fa-calendar"></i>
+                                    Planejado
+                                </span>
+                            </div>
+                            <h4 style="color: var(--gray-800); margin: 0 0 0.5rem 0; font-size: 1rem; font-weight: 600;">Sistema de Notificações</h4>
+                            <p style="color: var(--gray-600); margin: 0; font-size: 0.875rem; line-height: 1.5;">Implementação do sistema de notificações em tempo real para usuários.</p>
+                        </div>
+                        <div style="text-align: right;">
+                            <span style="display: block; color: var(--gray-800); font-weight: 600; font-size: 0.875rem;">15/11/2025</span>
+                            <span style="color: var(--gray-500); font-size: 0.75rem;">Planejado</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Aba: Anexos -->
+<div id="tab-anexos" class="tab-content">
+    <div style="background: var(--white); border-radius: var(--radius-lg); border: 1px solid var(--gray-200); overflow: hidden;">
+        <div style="display: flex; align-items: center; gap: 1rem; padding: 1.5rem 2rem; background: var(--gray-50); border-bottom: 1px solid var(--gray-200);">
+            <div style="width: 48px; height: 48px; border-radius: var(--radius); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; background: rgba(99, 102, 241, 0.1); color: #6366f1;">
+                <i class="fas fa-paperclip"></i>
+            </div>
+            <h3 style="color: var(--gray-800); font-size: 1.25rem; font-weight: 600; margin: 0;">Anexos e Documentos</h3>
+            <span style="background: var(--gray-200); color: var(--gray-600); font-size: 0.875rem; padding: 0.25rem 0.75rem; border-radius: 12px; font-weight: 500;">4 arquivos</span>
+        </div>
+        <div style="padding: 2rem;">
+            <div style="display: grid; gap: 1rem;">
+                <!-- Anexo exemplo 1 -->
+                <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; border: 1px solid var(--gray-200); border-radius: var(--radius); background: var(--white); transition: var(--transition);" onmouseover="this.style.background='var(--gray-50)'" onmouseout="this.style.background='var(--white)'">
+                    <div style="width: 48px; height: 48px; border-radius: var(--radius); background: rgba(239, 68, 68, 0.1); color: var(--error); display: flex; align-items: center; justify-content: center; font-size: 1.25rem;">
+                        <i class="fas fa-file-pdf"></i>
+                    </div>
+                    <div style="flex: 1;">
+                        <h4 style="color: var(--gray-800); margin: 0 0 0.25rem 0; font-size: 1rem; font-weight: 600;">Especificação Técnica.pdf</h4>
+                        <p style="color: var(--gray-600); margin: 0; font-size: 0.875rem;">2.4 MB • Adicionado em 20/09/2025</p>
+                    </div>
+                    <button style="padding: 0.5rem 1rem; background: var(--primary-blue); color: var(--white); border: none; border-radius: var(--radius); font-size: 0.875rem; cursor: pointer; transition: var(--transition);" onmouseover="this.style.background='var(--primary-blue-dark)'" onmouseout="this.style.background='var(--primary-blue)'">
+                        Download
+                    </button>
+                </div>
+                
+                <!-- Anexo exemplo 2 -->
+                <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; border: 1px solid var(--gray-200); border-radius: var(--radius); background: var(--white); transition: var(--transition);" onmouseover="this.style.background='var(--gray-50)'" onmouseout="this.style.background='var(--white)'">
+                    <div style="width: 48px; height: 48px; border-radius: var(--radius); background: rgba(34, 197, 94, 0.1); color: var(--success); display: flex; align-items: center; justify-content: center; font-size: 1.25rem;">
+                        <i class="fas fa-file-excel"></i>
+                    </div>
+                    <div style="flex: 1;">
+                        <h4 style="color: var(--gray-800); margin: 0 0 0.25rem 0; font-size: 1rem; font-weight: 600;">Planilha de Custos.xlsx</h4>
+                        <p style="color: var(--gray-600); margin: 0; font-size: 0.875rem;">856 KB • Adicionado em 18/09/2025</p>
+                    </div>
+                    <button style="padding: 0.5rem 1rem; background: var(--primary-blue); color: var(--white); border: none; border-radius: var(--radius); font-size: 0.875rem; cursor: pointer; transition: var(--transition);" onmouseover="this.style.background='var(--primary-blue-dark)'" onmouseout="this.style.background='var(--primary-blue)'">
+                        Download
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+// Navegação por abas
+function showTab(tabId) {
+    // Esconder todas as abas
+    document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.style.display = 'none';
+        tab.classList.remove('active');
+    });
+    
+    // Remover classe active de todos os botões
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('active');
+        btn.style.background = 'transparent';
+        btn.style.color = 'var(--gray-600)';
+    });
+    
+    // Mostrar aba selecionada
+    const selectedTab = document.getElementById(tabId);
+    if (selectedTab) {
+        selectedTab.style.display = 'block';
+        selectedTab.classList.add('active');
+    }
+    
+    // Ativar botão selecionado
+    const selectedBtn = document.querySelector(`[data-tab="${tabId.replace('tab-', '')}"]`);
+    if (selectedBtn) {
+        selectedBtn.classList.add('active');
+        selectedBtn.style.background = 'var(--primary-blue)';
+        selectedBtn.style.color = 'var(--white)';
+    }
+}
+
+// Event listeners para botões das abas
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const tabId = 'tab-' + this.getAttribute('data-tab');
+            showTab(tabId);
+        });
+    });
+    
+    // Mostrar primeira aba por padrão
+    showTab('tab-geral');
+});
+
+// Funções auxiliares
+function copyProjectCode() {
+    const code = "{{ projeto.codigo }}";
+    navigator.clipboard.writeText(code).then(() => {
+        alert('Código copiado para a área de transferência!');
+    });
+}
+
+function shareProject() {
+    if (navigator.share) {
+        navigator.share({
+            title: '{{ projeto.nome }}',
+            text: 'Projeto: {{ projeto.nome }}',
+            url: window.location.href
+        });
+    } else {
+        copyProjectCode();
+    }
+}
+
+function formatCurrency(value) {
+    return new Intl.NumberFormat('pt-BR', {
+        style: 'currency',
+        currency: 'BRL'
+    }).format(value);
+}
+
+function formatDate(date) {
+    return new Intl.DateTimeFormat('pt-BR').format(new Date(date));
+}
+
+// Export functions for global use
+window.projectDetail = {
+    copyProjectCode,
+    shareProject,
+    formatCurrency,
+    formatDate
+};
+
+<style>
+/* Estilos básicos para tab navigation */
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+    animation: slideUp 0.4s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.tab-btn:hover {
+}
+
+.tab-btn.active {
+}
+
+.tab-btn.active .tab-badge {
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .hero-content > div:first-child {
+    }
+    
+    .hero-content h1 {
+    }
+    
+    .hero-actions {
+    }
+    
+    .tab-nav {
+    }
+    
+    .tab-btn {
+    }
+}
+</style>
+{% endblock %}

@@ -1,0 +1,288 @@
+{% extends 'core_admin/base.html' %}
+{% load static %}
+
+{% block title %}Dashboard - Projetos | PONTI Admin{% endblock %}
+
+{% block page_title %}Dashboard de Projetos{% endblock %}
+
+{% block breadcrumb %}
+<span class="breadcrumb-item">Projetos</span>
+<span class="breadcrumb-item">Dashboard</span>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .progress-custom {
+        height: 8px;
+        border-radius: 4px;
+        background: var(--gray-200);
+    }
+    
+    .progress-bar-custom {
+        background: var(--accent-gradient);
+        border-radius: 4px;
+    }
+    
+    .status-badge {
+        padding: 4px 12px;
+        border-radius: var(--radius);
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+    
+    .status-planejamento {
+        background: #dbeafe;
+        color: #1e40af;
+    }
+    
+    .status-execucao {
+        background: #dcfce7;
+        color: #166534;
+    }
+    
+    .status-monitoramento {
+        background: #fef3c7;
+        color: #92400e;
+    }
+    
+    .status-concluido {
+        background: #d1fae5;
+        color: #065f46;
+    }
+    
+    .chart-container {
+        position: relative;
+        height: 300px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Estatísticas Principais -->
+<div class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-icon">
+            <i class="fas fa-briefcase"></i>
+        </div>
+        <div class="stat-value">{{ total_portfolios }}</div>
+        <div class="stat-label">Portfólios Ativos</div>
+    </div>
+    
+    <div class="stat-card">
+        <div class="stat-icon">
+            <i class="fas fa-layer-group"></i>
+        </div>
+        <div class="stat-value">{{ total_programas }}</div>
+        <div class="stat-label">Programas Ativos</div>
+    </div>
+    
+    <div class="stat-card">
+        <div class="stat-icon">
+            <i class="fas fa-project-diagram"></i>
+        </div>
+        <div class="stat-value">{{ total_projetos }}</div>
+        <div class="stat-label">Projetos Ativos</div>
+    </div>
+    
+    <div class="stat-card">
+        <div class="stat-icon">
+            <i class="fas fa-dollar-sign"></i>
+        </div>
+        <div class="stat-value">R$ {{ orcamento_total|floatformat:0 }}</div>
+        <div class="stat-label">Orçamento Total</div>
+    </div>
+    
+    <div class="stat-card">
+        <div class="stat-icon">
+            <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        <div class="stat-value">{{ projetos_criticos }}</div>
+        <div class="stat-label">Projetos Críticos</div>
+    </div>
+    
+    <div class="stat-card">
+        <div class="stat-icon">
+            <i class="fas fa-shield-alt"></i>
+        </div>
+        <div class="stat-value">{{ riscos_altos }}</div>
+        <div class="stat-label">Riscos Altos</div>
+    </div>
+</div>
+
+<!-- Gráficos e Indicadores -->
+<div class="grid grid-cols-2 mb-6">
+    <div class="admin-card">
+        <div class="card-header">
+            <h3 class="card-title">
+                <i class="fas fa-chart-pie"></i>
+                Projetos por Status
+            </h3>
+        </div>
+        <div class="card-content">
+            <div class="chart-container">
+                <canvas id="statusChart"></canvas>
+            </div>
+        </div>
+    </div>
+    
+    <div class="admin-card">
+        <div class="card-header">
+            <h3 class="card-title">
+                <i class="fas fa-chart-bar"></i>
+                Orçamento por Portfólio
+            </h3>
+        </div>
+        <div class="card-content">
+            <div class="chart-container">
+                <canvas id="orcamentoChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Ações Rápidas -->
+<div class="admin-card">
+    <div class="card-header">
+        <h3 class="card-title">
+            <i class="fas fa-bolt"></i>
+            Ações Rápidas
+        </h3>
+    </div>
+    <div class="card-content">
+        <div class="quick-actions">
+            <a href="{% url 'projetos:listar_portfolios' %}" class="quick-action">
+                <div class="quick-action-icon">
+                    <i class="fas fa-briefcase"></i>
+                </div>
+                <div class="quick-action-content">
+                    <h4>Gerenciar Portfólios</h4>
+                    <p>Visualizar e gerenciar todos os portfólios</p>
+                </div>
+            </a>
+            
+            <a href="{% url 'projetos:listar_programas' %}" class="quick-action">
+                <div class="quick-action-icon">
+                    <i class="fas fa-layer-group"></i>
+                </div>
+                <div class="quick-action-content">
+                    <h4>Gerenciar Programas</h4>
+                    <p>Visualizar e gerenciar todos os programas</p>
+                </div>
+            </a>
+            
+            <a href="{% url 'projetos:listar_projetos' %}" class="quick-action">
+                <div class="quick-action-icon">
+                    <i class="fas fa-project-diagram"></i>
+                </div>
+                <div class="quick-action-content">
+                    <h4>Gerenciar Projetos</h4>
+                    <p>Visualizar e gerenciar todos os projetos</p>
+                </div>
+            </a>
+            
+            <a href="{% url 'projetos:relatorios' %}" class="quick-action">
+                <div class="quick-action-icon">
+                    <i class="fas fa-chart-bar"></i>
+                </div>
+                <div class="quick-action-content">
+                    <h4>Relatórios</h4>
+                    <p>Gerar relatórios detalhados</p>
+                </div>
+            </a>
+            
+            <a href="/admin/projetos/" class="quick-action" target="_blank">
+                <div class="quick-action-icon">
+                    <i class="fas fa-cog"></i>
+                </div>
+                <div class="quick-action-content">
+                    <h4>Administração</h4>
+                    <p>Painel administrativo Django</p>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Gráfico de Status dos Projetos
+    const statusData = {
+        labels: [{% for item in projetos_por_status %}'{{ item.status|capfirst }}'{% if not forloop.last %},{% endif %}{% endfor %}],
+        datasets: [{
+            data: [{% for item in projetos_por_status %}{{ item.count }}{% if not forloop.last %},{% endif %}{% endfor %}],
+            backgroundColor: [
+                'rgb(30, 64, 175)',   // primary-blue
+                'rgb(16, 185, 129)',  // success
+                'rgb(245, 158, 11)',  // warning
+                'rgb(239, 68, 68)',   // error
+                'rgb(139, 92, 246)'   // purple
+            ],
+            borderWidth: 2,
+            borderColor: '#fff'
+        }]
+    };
+
+    new Chart(document.getElementById('statusChart'), {
+        type: 'doughnut',
+        data: statusData,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        padding: 20,
+                        usePointStyle: true,
+                        font: {
+                            family: 'Inter'
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    // Carregar dados dos gráficos via API
+    fetch('{% url "projetos:api_graficos" %}')
+        .then(response => response.json())
+        .then(data => {
+            // Atualizar gráfico de orçamento se houver dados
+            if (data.orcamento_portfolio && data.orcamento_portfolio.length > 0) {
+                const orcamentoCtx = document.getElementById('orcamentoChart').getContext('2d');
+                new Chart(orcamentoCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: data.orcamento_portfolio.map(item => item.nome),
+                        datasets: [{
+                            label: 'Orçamento (R$)',
+                            data: data.orcamento_portfolio.map(item => item.orcamento_total),
+                            backgroundColor: 'rgb(30, 64, 175)'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    callback: function(value) {
+                                        return 'R$ ' + value.toLocaleString('pt-BR');
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        })
+        .catch(error => console.error('Erro ao carregar dados dos gráficos:', error));
+});
+</script>
+{% endblock %}

@@ -284,6 +284,36 @@
     background: var(--gray-200);
 }
 
+.btn-anexos {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    position: relative;
+}
+
+.btn-anexos:hover {
+    background: linear-gradient(135deg, #059669, #047857);
+    color: white;
+}
+
+.btn-anexos .badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #f59e0b;
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 5px;
+    border-radius: 10px;
+    min-width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    border: 2px solid white;
+}
+
 .btn-edit {
     background: linear-gradient(135deg, #3b82f6, #2563eb);
     color: white;
@@ -606,6 +636,15 @@
                         <i class="fas fa-eye"></i>
                     </a>
                     
+                    <a href="{% url 'editais:admin_anexos_edital' edital.id %}" 
+                       class="action-btn btn-anexos" 
+                       title="Anexos ({{ edital.count_anexos }})">
+                        <i class="fas fa-paperclip"></i>
+                        {% if edital.count_anexos > 0 %}
+                            <span class="badge">{{ edital.count_anexos }}</span>
+                        {% endif %}
+                    </a>
+                    
                     <a href="{% url 'editais:admin_editar_edital' edital.id %}" 
                        class="action-btn btn-edit" 
                        title="Editar">
@@ -705,6 +744,15 @@
                        class="action-btn btn-view" 
                        title="Visualizar">
                         <i class="fas fa-eye"></i>
+                    </a>
+                    
+                    <a href="{% url 'editais:admin_anexos_edital' edital.id %}" 
+                       class="action-btn btn-anexos" 
+                       title="Anexos ({{ edital.count_anexos }})">
+                        <i class="fas fa-paperclip"></i>
+                        {% if edital.count_anexos > 0 %}
+                            <span class="badge">{{ edital.count_anexos }}</span>
+                        {% endif %}
                     </a>
                     
                     <a href="{% url 'editais:admin_editar_edital' edital.id %}" 

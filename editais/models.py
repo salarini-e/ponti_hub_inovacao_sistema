@@ -367,6 +367,26 @@ class Edital(models.Model):
         """Incrementa o contador de visualizações"""
         self.visualizacoes += 1
         self.save(update_fields=['visualizacoes'])
+    
+    def get_anexos(self):
+        """Retorna lista de anexos ativos ordenados"""
+        return self.anexos.filter(ativo=True).order_by('ordem', 'titulo')
+    
+    def get_anexos_obrigatorios(self):
+        """Retorna apenas anexos obrigatórios"""
+        return self.get_anexos().filter(obrigatorio=True)
+    
+    def get_anexos_opcionais(self):
+        """Retorna apenas anexos opcionais"""
+        return self.get_anexos().filter(obrigatorio=False)
+    
+    def tem_anexos(self):
+        """Verifica se o edital tem anexos ativos"""
+        return self.get_anexos().exists()
+    
+    def count_anexos(self):
+        """Conta o número de anexos ativos"""
+        return self.get_anexos().count()
 
 
 class NotificacaoEdital(models.Model):
@@ -473,3 +493,182 @@ class NotificacaoEdital(models.Model):
     
     def __str__(self):
         return f"{self.email} - {self.edital.titulo}"
+
+
+def anexo_upload_path(instance, filename):
+    """Função para definir o caminho de upload dos anexos"""
+    return f'anexos/{instance.edital.slug}/{filename}'
+
+
+class AnexoEdital(models.Model):
+    """Anexos dos editais (arquivos ou links)"""
+    
+    TIPO_CHOICES = [
+        ('arquivo', 'Arquivo'),
+        ('link', 'Link Externo'),
+    ]
+    
+    edital = models.ForeignKey(
+        Edital,
+        on_delete=models.CASCADE,
+        related_name='anexos',
+        verbose_name="Edital"
+    )
+    
+    tipo = models.CharField(
+        max_length=10,
+        choices=TIPO_CHOICES,
+        default='arquivo',
+        verbose_name="Tipo de Anexo"
+    )
+    
+    titulo = models.CharField(
+        max_length=200,
+        verbose_name="Título do Anexo",
+        help_text="Nome descritivo do anexo (ex: 'Formulário de Inscrição', 'Planilha de Orçamento')"
+    )
+    
+    descricao = models.TextField(
+        blank=True,
+        verbose_name="Descrição",
+        help_text="Descrição opcional do anexo"
+    )
+    
+    # Para arquivos
+    arquivo = models.FileField(
+        upload_to=anexo_upload_path,
+        blank=True,
+        null=True,
+        verbose_name="Arquivo",
+        help_text="Upload do arquivo anexo",
+        validators=[FileExtensionValidator(allowed_extensions=['pdf', 'doc', 'docx', 'xls', 'xlsx', 'zip', 'rar'])]
+    )
+    
+    # Para links
+    link_url = models.URLField(
+        blank=True,
+        verbose_name="URL do Link",
+        help_text="URL completa do link externo"
+    )
+    
+    # Metadados
+    obrigatorio = models.BooleanField(
+        default=False,
+        verbose_name="Obrigatório",
+        help_text="Se este anexo é obrigatório para a inscrição"
+    )
+    
+    ordem = models.PositiveIntegerField(
+        default=0,
+        verbose_name="Ordem",
+        help_text="Ordem de exibição (0 = primeiro)"
+    )
+    
+    ativo = models.BooleanField(
+        default=True,
+        verbose_name="Ativo"
+    )
+    
+    # Controle
+    data_criacao = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name="Data de Criação"
+    )
+    
+    data_atualizacao = models.DateTimeField(
+        auto_now=True,
+        verbose_name="Última Atualização"
+    )
+    
+    criado_por = models.ForeignKey(
+        'auth.User',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Criado por"
+    )
+    
+    class Meta:
+        verbose_name = "Anexo do Edital"
+        verbose_name_plural = "Anexos dos Editais"
+        ordering = ['ordem', 'titulo']
+        unique_together = ['edital', 'titulo']
+    
+    def __str__(self):
+        tipo_str = self.get_tipo_display()
+        return f"{self.edital.titulo} - {self.titulo} ({tipo_str})"
+    
+    def clean(self):
+        """Validação customizada"""
+        from django.core.exceptions import ValidationError
+        
+        if self.tipo == 'arquivo' and not self.arquivo:
+            raise ValidationError({'arquivo': 'Arquivo é obrigatório quando o tipo é "Arquivo".'})
+        
+        if self.tipo == 'link' and not self.link_url:
+            raise ValidationError({'link_url': 'URL é obrigatória quando o tipo é "Link Externo".'})
+        
+        if self.tipo == 'arquivo' and self.link_url:
+            raise ValidationError({'link_url': 'URL deve estar vazia quando o tipo é "Arquivo".'})
+        
+        if self.tipo == 'link' and self.arquivo:
+            raise ValidationError({'arquivo': 'Arquivo deve estar vazio quando o tipo é "Link Externo".'})
+    
+    def save(self, *args, **kwargs):
+        self.clean()
+        super().save(*args, **kwargs)
+    
+    @property
+    def icone(self):
+        """Retorna o ícone FontAwesome baseado no tipo"""
+        if self.tipo == 'arquivo':
+            if self.arquivo:
+                extensao = self.arquivo.name.split('.')[-1].lower()
+                icones = {
+                    'pdf': 'fas fa-file-pdf',
+                    'doc': 'fas fa-file-word',
+                    'docx': 'fas fa-file-word',
+                    'xls': 'fas fa-file-excel',
+                    'xlsx': 'fas fa-file-excel',
+                    'zip': 'fas fa-file-archive',
+                    'rar': 'fas fa-file-archive',
+                }
+                return icones.get(extensao, 'fas fa-file')
+            return 'fas fa-file'
+        else:
+            return 'fas fa-external-link-alt'
+    
+    @property
+    def url(self):
+        """Retorna a URL do anexo (arquivo ou link)"""
+        if self.tipo == 'arquivo' and self.arquivo:
+            return self.arquivo.url
+        elif self.tipo == 'link' and self.link_url:
+            return self.link_url
+        return None
+    
+    @property
+    def tamanho_arquivo(self):
+        """Retorna o tamanho do arquivo formatado"""
+        if self.tipo == 'arquivo' and self.arquivo:
+            try:
+                size = self.arquivo.size
+                if size < 1024:
+                    return f"{size} B"
+                elif size < 1024 * 1024:
+                    return f"{size / 1024:.1f} KB"
+                else:
+                    return f"{size / (1024 * 1024):.1f} MB"
+            except:
+                return "Tamanho desconhecido"
+        return None
+    
+    def delete(self, *args, **kwargs):
+        """Sobrescrever delete para remover arquivo físico"""
+        from django.core.files.storage import default_storage
+        
+        if self.arquivo and self.arquivo.name:
+            # Verificar se arquivo existe antes de tentar deletar
+            if default_storage.exists(self.arquivo.name):
+                default_storage.delete(self.arquivo.name)
+        super().delete(*args, **kwargs)

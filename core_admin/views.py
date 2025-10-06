@@ -148,8 +148,10 @@ def onde_atuamos(request):
     sessao, created = SessaoOndeAtuamos.objects.get_or_create(
         defaults={
             'nome_sessao': 'Onde Atuamos',
-            'titulo_principal': 'Áreas de Atuação',
-            'descricao': 'Conheça as principais áreas onde o PONTI Hub de Inovação atua para transformar Nova Friburgo em uma cidade mais inteligente e inovadora.',
+            'emoji_badge': '🎯',
+            'titulo_badge': 'Onde Atuamos',
+            'subtitulo': 'Foco na transformação digital com desenvolvimento científico, tecnológico, inovador e econômico',
+            'titulo_principal': 'Formação, Inovação e Oportunidades',
             'ativo': True
         }
     )
@@ -163,9 +165,16 @@ def onde_atuamos(request):
         if action == 'update_sessao':
             try:
                 sessao.nome_sessao = request.POST.get('nome_sessao', sessao.nome_sessao)
+                sessao.emoji_badge = request.POST.get('emoji_badge', sessao.emoji_badge)
+                sessao.titulo_badge = request.POST.get('titulo_badge', sessao.titulo_badge)
+                sessao.subtitulo = request.POST.get('subtitulo', sessao.subtitulo)
                 sessao.titulo_principal = request.POST.get('titulo_principal', sessao.titulo_principal)
-                sessao.descricao = request.POST.get('descricao', sessao.descricao)
+                sessao.descricao_principal = request.POST.get('descricao_principal', sessao.descricao_principal)
+                sessao.url_imagem_principal = request.POST.get('url_imagem_principal', sessao.url_imagem_principal)
                 sessao.ativo = 'ativo' in request.POST
+                
+                if 'imagem_principal' in request.FILES:
+                    sessao.imagem_principal = request.FILES['imagem_principal']
                 
                 sessao.full_clean()
                 sessao.save()
@@ -180,7 +189,7 @@ def onde_atuamos(request):
             try:
                 area = AreaAtuacao(
                     titulo=request.POST.get('titulo'),
-                    descricao=request.POST.get('descricao'),
+                    corpo=request.POST.get('corpo'),
                     badges=request.POST.get('badges', ''),
                     icone=request.POST.get('icone', 'fas fa-star'),
                     ordem=request.POST.get('ordem', 1),

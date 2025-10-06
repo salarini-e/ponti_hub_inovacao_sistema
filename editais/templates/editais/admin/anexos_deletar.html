@@ -1,0 +1,261 @@
+{% extends 'core_admin/base.html' %}
+{% load static %}
+
+{% block title %}Deletar Anexo - {{ anexo.titulo }}{% endblock %}
+
+{% block extra_css %}
+<style>
+    .delete-card {
+        background: linear-gradient(145deg, #fef2f2, #fff5f5);
+        border: 2px solid #fecaca;
+        border-radius: 20px;
+        padding: 40px;
+        text-align: center;
+        max-width: 600px;
+        margin: 40px auto;
+        box-shadow: 0 10px 30px rgba(239, 68, 68, 0.1);
+    }
+    
+    .delete-icon {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, #ef4444, #dc2626);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 32px;
+        color: white;
+        margin: 0 auto 30px auto;
+        box-shadow: 0 8px 20px rgba(239, 68, 68, 0.3);
+    }
+    
+    .anexo-preview {
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 15px;
+        padding: 20px;
+        margin: 30px 0;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        text-align: left;
+    }
+    
+    .anexo-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        color: white;
+    }
+    
+    .arquivo-icon {
+        background: linear-gradient(135deg, #3b82f6, #2563eb);
+    }
+    
+    .link-icon {
+        background: linear-gradient(135deg, #10b981, #059669);
+    }
+    
+    .warning-list {
+        background: rgba(245, 158, 11, 0.1);
+        border: 1px solid rgba(245, 158, 11, 0.3);
+        border-radius: 10px;
+        padding: 20px;
+        margin: 25px 0;
+        text-align: left;
+    }
+    
+    .warning-list h6 {
+        color: #d97706;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    .warning-list ul {
+        color: #92400e;
+        margin: 0;
+        padding-left: 20px;
+    }
+    
+    .warning-list li {
+        margin-bottom: 8px;
+    }
+    
+    .actions {
+        margin-top: 30px;
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+    }
+    
+    .btn-danger-confirm {
+        background: linear-gradient(135deg, #ef4444, #dc2626);
+        border: none;
+        color: white;
+        padding: 12px 30px;
+        border-radius: 10px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+    }
+    
+    .btn-danger-confirm:hover {
+        background: linear-gradient(135deg, #dc2626, #b91c1c);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(239, 68, 68, 0.4);
+        color: white;
+    }
+    
+    .confirmation-checkbox {
+        background: rgba(239, 68, 68, 0.1);
+        border: 1px solid rgba(239, 68, 68, 0.3);
+        border-radius: 10px;
+        padding: 15px;
+        margin: 20px 0;
+        text-align: left;
+    }
+    
+    .form-check-input {
+        margin-right: 10px;
+        transform: scale(1.2);
+    }
+    
+    .form-check-label {
+        font-weight: 500;
+        color: #dc2626;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="content-header">
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <h1>Deletar Anexo</h1>
+            <p class="text-muted mb-0">{{ edital.titulo }}</p>
+        </div>
+        <a href="{% url 'editais:admin_anexos_edital' edital.id %}" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left"></i> Voltar aos Anexos
+        </a>
+    </div>
+</div>
+
+<div class="content-body">
+    <div class="delete-card">
+        <div class="delete-icon">
+            <i class="fas fa-trash-alt"></i>
+        </div>
+        
+        <h2 class="text-danger mb-3">Confirmar Exclusão</h2>
+        <p class="lead mb-4">Você está prestes a deletar permanentemente este anexo:</p>
+        
+        <!-- Preview do Anexo -->
+        <div class="anexo-preview">
+            <div class="anexo-icon {% if anexo.tipo == 'arquivo' %}arquivo-icon{% else %}link-icon{% endif %}">
+                <i class="{{ anexo.icone }}"></i>
+            </div>
+            <div class="flex-grow-1">
+                <h5 class="mb-1">{{ anexo.titulo }}</h5>
+                {% if anexo.descricao %}
+                    <p class="text-muted mb-1" style="font-size: 14px;">{{ anexo.descricao }}</p>
+                {% endif %}
+                <div class="d-flex gap-3" style="font-size: 12px; color: #6b7280;">
+                    <span><i class="fas fa-tag me-1"></i>{{ anexo.get_tipo_display }}</span>
+                    {% if anexo.obrigatorio %}
+                        <span><i class="fas fa-exclamation-circle me-1"></i>Obrigatório</span>
+                    {% else %}
+                        <span><i class="fas fa-info-circle me-1"></i>Opcional</span>
+                    {% endif %}
+                    {% if anexo.tipo == 'arquivo' and anexo.tamanho_arquivo %}
+                        <span><i class="fas fa-weight me-1"></i>{{ anexo.tamanho_arquivo }}</span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <!-- Avisos -->
+        <div class="warning-list">
+            <h6>
+                <i class="fas fa-exclamation-triangle"></i>
+                Atenção! Esta ação é irreversível:
+            </h6>
+            <ul>
+                <li>O anexo será removido permanentemente da base de dados</li>
+                {% if anexo.tipo == 'arquivo' and anexo.arquivo %}
+                    <li>O arquivo <strong>{{ anexo.arquivo.name }}</strong> será deletado do servidor</li>
+                {% endif %}
+                <li>Usuários não poderão mais acessar este anexo</li>
+                <li>Esta ação não pode ser desfeita</li>
+            </ul>
+        </div>
+        
+        <!-- Formulário de Confirmação -->
+        <form method="post" id="deleteForm">
+            {% csrf_token %}
+            
+            <div class="confirmation-checkbox">
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="confirmDelete" required>
+                    <label class="form-check-label" for="confirmDelete">
+                        Eu entendo que esta ação é irreversível e confirmo a exclusão deste anexo
+                    </label>
+                </div>
+            </div>
+            
+            <div class="actions">
+                <a href="{% url 'editais:admin_anexos_edital' edital.id %}" class="btn btn-outline-secondary">
+                    <i class="fas fa-times"></i> Cancelar
+                </a>
+                <button type="submit" class="btn btn-danger-confirm" id="confirmButton" disabled>
+                    <i class="fas fa-trash-alt"></i> Sim, Deletar Anexo
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Habilitar botão apenas quando checkbox estiver marcado
+    document.getElementById('confirmDelete').addEventListener('change', function() {
+        const button = document.getElementById('confirmButton');
+        button.disabled = !this.checked;
+        
+        if (this.checked) {
+            button.classList.add('pulse-animation');
+        } else {
+            button.classList.remove('pulse-animation');
+        }
+    });
+    
+    // Confirmação adicional antes de enviar
+    document.getElementById('deleteForm').addEventListener('submit', function(e) {
+        if (!confirm('Tem certeza absoluta de que deseja deletar este anexo? Esta ação não pode ser desfeita.')) {
+            e.preventDefault();
+        }
+    });
+    
+    // Adicionar CSS para animação
+    const style = document.createElement('style');
+    style.textContent = `
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+    `;
+    document.head.appendChild(style);
+</script>
+{% endblock %}
